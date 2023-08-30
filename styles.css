@@ -1,0 +1,127 @@
+body {
+  margin: 0;
+  background-color: #F0EBE3;
+  text-align: center;
+}
+
+p {
+  font-family: 'Nunito', sans-serif;
+}
+
+.first_point {
+  text-align: left;
+  padding-top: 50px;
+}
+
+li {
+  text-align: left;
+}
+
+hr {
+  border-style: none;
+  border-style: solid none none;
+  border-width: 2px;
+  border-color: #7D9D9C;
+  width: 90%;
+}
+
+.name {
+  font-size: 500%;
+  position: absolute;
+  top: 5%;
+  left: 37.5%;
+  font-family: 'Sacramento', cursive;
+}
+
+h2 {
+  font-family: 'Ibarra Real Nova', serif;
+}
+
+h3 {
+  position: absolute;
+  font-family: 'Ibarra Real Nova', serif;
+}
+
+.title {
+  position: absolute;
+  top: 155px;
+  left: 41.5%;
+  color: #0AA1DD;
+  font-weight: bold;
+}
+
+.top-container {
+  background-color: #B5EAEA;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  height: 480px;
+}
+
+.middle-container {
+}
+
+.bottom-container {
+}
+
+.vr_pic {
+  width: 35%;
+  position: absolute;
+  left: 50px;
+}
+
+.smart_robot_pic {
+  width: 35%;
+  position: absolute;
+  right: 50px;
+}
+
+.skills {
+  height: 400px;
+}
+
+.skills_pic {
+  position: absolute;
+  right: 500px;
+  top: 610px;
+  width: 5%;
+}
+
+.projects_pic {
+  position: absolute;
+  right: 500px;
+  top: 1045px;
+  width: 5%;
+}
+
+.programming {
+  margin: 20px 50px 20px 20px;
+  height: 300px;
+  width: 300px;
+  background-color: #7D9D9C;
+  position: absolute;
+  left: 100px;
+  padding-left: 15px;
+}
+
+.hardware {
+  margin: 20px;
+  height: 300px;
+  width: 300px;
+  background-color: #7D9D9C;
+  position: absolute;
+  left: 454px;
+  padding-left: 15px;
+  text-align: left;
+}
+
+.lab {
+  margin: 20px 20px 20px 50px;
+  height: 300px;
+  width: 300px;
+  background-color: #7D9D9C;
+  position: absolute;
+  right: 100px;
+  padding-left: 15px;
+}
