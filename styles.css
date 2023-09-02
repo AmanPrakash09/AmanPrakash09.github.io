@@ -25,11 +25,14 @@ hr {
   width: 90%;
 }
 
+.name-title {
+  text-align: center;
+}
+
 .name {
-  font-size: 500%;
-  position: absolute;
-  top: 5%;
-  left: 37.5%;
+  font-size: 6vw;
+  margin: 0;
+  margin-left: 30px;
   font-family: 'Sacramento', cursive;
 }
 
@@ -38,25 +41,39 @@ h2 {
 }
 
 h3 {
-  position: absolute;
   font-family: 'Ibarra Real Nova', serif;
 }
 
 .title {
-  position: absolute;
-  top: 155px;
-  left: 41.5%;
+  font-size: 1.5vw;
+  margin-top: 0;
   color: #0AA1DD;
   font-weight: bold;
 }
 
 .top-container {
+  display: flex;
   background-color: #B5EAEA;
-  margin-top: 0;
-  margin-left: 0;
-  margin-right: 0;
-  width: 100%;
+  justify-content: center;
+  align-items: center;
   height: 480px;
+}
+
+/* Media query for smaller screens (adjust breakpoint as needed) */
+@media (max-width: 768px) {
+  .name {
+    font-size: 6vw; /* Increase font size for smaller screens */
+  }
+
+  .title {
+    font-size: 3vw; /* Increase font size for smaller screens */
+  }
+
+  /* Adjust other elements or layout as needed for smaller screens */
+  .vr_pic,
+  .smart_robot_pic {
+    width: 30%; /* Adjust image size for smaller screens */
+  }
 }
 
 .middle-container {
@@ -78,14 +95,71 @@ h3 {
 }
 
 .skills {
-  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: relative;
+  text-align: center;
 }
 
-.skills_pic {
-  position: absolute;
-  right: 500px;
-  top: 610px;
+.section-header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-heading {
+  font-size: 2.5vw;
+  font-family: 'Ibarra Real Nova', serif;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.skills-boxes {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.section_pic {
   width: 5%;
+  margin-left: 10px;
+}
+
+.program_pic {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.motherboard_pic {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.prototype_pic {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .projects_pic {
@@ -95,33 +169,170 @@ h3 {
   width: 5%;
 }
 
-.programming {
-  margin: 20px 50px 20px 20px;
-  height: 300px;
-  width: 300px;
+.programming, .hardware, .lab {
   background-color: #7D9D9C;
-  position: absolute;
-  left: 100px;
-  padding-left: 15px;
+  border-radius: 15px;
+  flex: 1;
+  margin: 10px;
+  text-align: center;
+  
+  width: calc(33.33% - 20px);
+  max-width: 300px;
+  position: relative;
+  padding: 30px;
 }
 
-.hardware {
-  margin: 20px;
-  height: 300px;
-  width: 300px;
-  background-color: #7D9D9C;
-  position: absolute;
-  left: 454px;
-  padding-left: 15px;
+/* Media query for smaller screens (adjust breakpoint as needed) */
+@media (max-width: 768px) {
+  .skills {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    align-items: center;
+  }
+
+  .programming,
+  .hardware,
+  .lab {
+    max-width: 100%; /* Allow divs to take full width on smaller screens */
+    padding: 5px;
+  }
+
+  .skills-heading {
+    font-size: 3vw; /* Increase font size for smaller screens if necessary */
+  }
+
+  .skills-boxes {
+    flex-direction: column; /* Stack boxes vertically on smaller screens */
+  }
+}
+
+.programming:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.hardware:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.lab:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.languages-list {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  margin-top: 10;
+}
+
+.programming:hover .languages-list {
+  opacity: 1;
+}
+
+.programming:hover .program_pic {
+  opacity: 0;
+}
+
+.languages-list li {
   text-align: left;
 }
 
-.lab {
-  margin: 20px 20px 20px 50px;
-  height: 300px;
-  width: 300px;
-  background-color: #7D9D9C;
-  position: absolute;
-  right: 100px;
-  padding-left: 15px;
+.hlanguages-list {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
+
+.hardware:hover .hlanguages-list {
+  opacity: 1;
+}
+
+.hardware:hover .motherboard_pic {
+  opacity: 0;
+}
+
+.hlanguages-list li {
+  text-align: left;
+}
+
+.exp-list {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.lab:hover .exp-list {
+  opacity: 1;
+}
+
+.lab:hover .prototype_pic {
+  opacity: 0;
+}
+
+.exp-list li {
+  text-align: left;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.btn img {
+  width: 40px;
+  height: 40px;
+}
+
+.btn:hover img {
+  opacity: 0.8;
+  width: 45px;
+  height: 45px;
+}
+
+.projects-table {
+  border-collapse: collapse;
+  width: 300px;
+  margin: 0 auto; 
+}
+
+.circle {
+  width: 150px;
+  height: 150px;
+  background-color: #7D9D9C;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  margin: 5px;
+}
+
+.reg-image {
+  opacity: 0.8;
+  width: 120px;
+  height: 120px;
+}
+
+.big-image {
+  opacity: 0.8;
+  width: 100px;
+  height: 100px;
+}
+
+.circle:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.circle:hover .reg-image {
+  opacity: 1;
+}
+
+.circle:hover .big-image {
+  opacity: 1;
+}
+

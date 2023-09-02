@@ -11,9 +11,57 @@
   </head>
 
   <body>
-    <div class="top-container">
+
+    <script>
+      const popupTriggers = document.querySelectorAll('.popup-trigger');
+    
+      popupTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', (event) => {
+          const targetId = trigger.getAttribute('data-target');
+          const targetPopup = document.getElementById(targetId);
+    
+          // Hide all pop-ups
+          document.querySelectorAll('.popup').forEach((popup) => {
+            if (popup !== targetPopup) {
+              popup.style.display = 'none';
+            }
+          });
+    
+          // Toggle the selected pop-up
+          if (targetPopup.style.display === 'block') {
+            targetPopup.style.display = 'none';
+          } else {
+            targetPopup.style.display = 'block';
+          }
+    
+          // Prevent the click event from propagating further
+          event.stopPropagation();
+        });
+      });
+    
+      // Close the pop-up when clicking outside of it
+      document.addEventListener('click', (event) => {
+        if (!event.target.classList.contains('popup-trigger')) {
+          document.querySelectorAll('.popup').forEach((popup) => {
+            popup.style.display = 'none';
+          });
+        }
+      });
+    </script>
+    
+
+    <!-- <div class="top-container">
       <h1 class="name">I'm Aman,</h1>
       <p class="title">a Computer Engineering Student.</p>
+      <img src="images/VR.png" alt="Virtual Reality PNG" class="vr_pic">
+      <img src="images/smart_robot.png" alt="Smart Robot PNG" class="smart_robot_pic">
+    </div> -->
+
+    <div class="top-container">
+      <div class="name-title">
+        <h1 class="name">I'm Aman,</h1>
+        <p class="title">a Computer Engineering Student.</p>
+      </div>
       <img src="images/VR.png" alt="Virtual Reality PNG" class="vr_pic">
       <img src="images/smart_robot.png" alt="Smart Robot PNG" class="smart_robot_pic">
     </div>
@@ -26,61 +74,119 @@
       </div>
       <hr>
 
+      <div class="section-header-container">
+        <h2 class="section-heading">My Skills</h2>
+        <img class="section_pic" src="images/skills.png" alt="Skills PNG from Flaticon">
+      </div>
+
       <div class="skills">
-        <h2>My Skills</h2>
-        <img class="skills_pic" src="images/skills.png" alt="Skills PNG from Flaticon">
-        <div class="programming">
-          <h3>Programming Languages</h3>
-          <ul>
-            <li class="first_point"><p>Python</p></li>
-            <li><p>C</p></li>
-            <li><p>HTML</p></li>
-            <li><p>CSS</p></li>
-          </ul>
-        </div>
 
-        <div class="hardware">
-          <h3>Hardware Describing/Verification Languages</h3>
-          <ul>
-            <li class="first_point"><p>SystemVerilog</p></li>
-            <li><p>Verilog</p></li>
-            <li><p>ARM Assembly</p></li>
-          </ul>
-        </div>
+        <div class="skills-boxes"></div>
+          <div class="programming">
+            <h3>Computer Languages</h3>
+            <img class="program_pic" src="images/program.png" alt="Program PNG from Flaticon">
+            <ul class="languages-list">
+              <li class="first_point"><p>Java</p></li>
+              <li><p>Python</p></li>
+              <li><p>C++ / C</p></li>
+              <li><p>React</p></li>
+              <li><p>HTML / CSS</p></li>
+            </ul>
+          </div>        
 
-        <div class="lab">
-          <h3>Laboratory Experience</h3>
+          <div class="hardware">
+            <h3>Hardware Describing/Verification Languages</h3>
+            <img class="motherboard_pic" src="images/motherboard.png" alt="Motherboard PNG from Flaticon">
+            <ul class="hlanguages-list">
+              <li class="first_point"><p>SystemVerilog</p></li>
+              <li><p>Verilog</p></li>
+              <li><p>ARM Assembly</p></li>
+            </ul>
+          </div>
+
+          <div class="lab">
+            <h3>Laboratory Experience</h3>
+            <img class="prototype_pic" src="images/prototype.png" alt="Prototype PNG from Flaticon">
+            <ul class="exp-list">
+              <li class="first_point"><p>GitHub</p>
+              <li><p>Object Oriented Programming</p></li>
+              <li><p>Robotics</p></li>
+              <li><p>Microcontrollers</p></li>
+              <li><p>ASIC / SoC</p></li>
+              </li>
+            </ul>
+          </div>
         </div>
+        
 
       </div>
       <hr>
 
+      <div class="section-header-container">
+        <h2 class="section-heading">My Projects</h2>
+        <img class="section_pic" src="images/idea.png" alt="Idea PNG from Flaticon">
+      </div>
+
       <div class="projects">
-        <h2>My Projects</h2>
-        <img class="projects_pic" src="images/idea.png" alt="Idea PNG from Flaticon">
-        <div class="project-row">
-          <h3>Lorem & Ipsum</h3>
-          <p>Lorem ipsum dolor sit amet, quis in duis, iaculis id felis. Consectetuer vestibulum, nunc urna lectus, erat ligula. Hendrerit nam, lectus ante, ut lorem eros.</p>
-        </div>
-        <div class="project-row">
-          <img class="" src="" alt="">
-          <h3>Lorem Ipsum Dolor</h3>
-          <p>Lorem ipsum dolor sit amet, mauris sed consectetuer. Etiam et eu, bibendum interdum, lacus quis mauris. Curabitur wisi, quisque vel eu, rutrum nam.</p>
-        </div>
+
+        <table class="projects-table">
+          <tr>
+            <td><a class="circle" href="https://github.com/AmanPrakash09/Batman---Rooftop-Rumble" target="_blank">
+              <img class="reg-image" src="images/mask.png" alt="Batman Project">
+            </a></td>
+            <td><a class="circle" href="https://github.com/AmanPrakash09/Digital-Image-Processing" target="_blank">
+              <img class="reg-image" src="images/photo.png" alt="Batman Project">
+            </a></td>
+            <td><a class="circle" href="https://github.com/AmanPrakash09/Time-Travel-with-Spotify" target="_blank">
+              <img class="reg-image" src="images/spotify.png" alt="Batman Project">
+            </a></td>
+          </tr>
+          <tr>
+            <td><a class="circle" href="https://github.com/AmanPrakash09/Flight-Tracker-App" target="_blank">
+              <img class="reg-image" src="images/ticket-flight.png" alt="Batman Project">
+            </a></td>
+            <td><a class="circle" href="https://github.com/AmanPrakash09/Stock-Trading-News-Alert-Project" target="_blank">
+              <img class="big-image" src="images/stock.png" alt="Batman Project">
+            </a></td>
+            <td><a class="circle" href="https://github.com/AmanPrakash09/Bresenham-s-Algorithms" target="_blank">
+              <img class="reg-image" src="images/venn-diagram.png" alt="Batman Project">
+            </a></td>
+          </tr>
+          <tr>
+            <td><a class="circle" href="https://github.com/AmanPrakash09/Encrypting-and-Decrypting-Messages-in-Memory" target="_blank">
+              <img class="big-image" src="images/lock.png" alt="Batman Project">
+            </a></td>
+            <td><a class="circle" href="https://github.com/AmanPrakash09/Coin-Picking-Robot" target="_blank">
+              <img class="big-image" src="images/robot.png" alt="Batman Project">
+            </a></td>
+            <td><a class="circle" href="https://github.com/AmanPrakash09/Reduced-Instruction-Set-Computer" target="_blank">
+              <img class="big-image" src="images/bit.png" alt="Batman Project">
+            </a></td>
+          </tr>
+        </table>
+
       </div>
       <hr>
 
       <div class="contact-me">
         <h2>Get In Touch</h2>
         <p>Please feel free to contact me or view my socials.</p>
-        <a class="btn" href="mailto:apraka01@student.ubc.ca">CONTACT ME</a>
-      </div>
-    </div>
+        <!-- Email Button -->
+        <a class="btn" href="mailto:apraka01@student.ubc.ca" target="_blank">
+        <img src="images/email.png" alt="Email Button">
+        </a>
 
-    <div class="bottom-container">
-      <a class="footer-link" href="https://www.linkedin.com/in/aman-prakash-aa48b421b/">LinkedIn</a>
-      <a class="footer-link" href="https://github.com/AmanPrakash09">GitHub</a>
-      <p>© 2022 Aman Prakash.</p>
+        <!-- LinkedIn Button -->
+        <a class="btn" href="https://www.linkedin.com/in/aman-prakash-aa48b421b/" target="_blank">
+          <img src="images/linkedin.png" alt="LinkedIn Button">
+        </a>
+
+        <!-- GitHub Button -->
+        <a class="btn" href="https://github.com/AmanPrakash09" target="_blank">
+          <img src="images/github.png" alt="GitHub Button">
+        </a>
+      <p>© 2023 Aman Prakash.</p>
+      </div>
     </div>
 
   </body>
