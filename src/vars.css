@@ -1,0 +1,13 @@
+:root {
+  /* Colours */
+  --color-text: #06D001;
+  --color-primary: #576cbc;
+  --color-secondary: #19376d;
+  --color-dark: #0b2447;
+  --color-bg: #000000;
+
+  /* Fonts */
+  --font-vt323: "VT323";
+  --font-ubuntu-mono: "Ubuntu Mono";
+  --font-orbitron: "Orbitron";
+}

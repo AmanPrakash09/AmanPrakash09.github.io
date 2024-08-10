@@ -1,0 +1,226 @@
+@import "../vars.css";
+
+.experienceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5rem;
+  position: relative; /* Ensure the blur is positioned relative to this container */
+  overflow: hidden; /* Hide any overflow caused by the blur */
+}
+
+.experienceList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-basis: 40%;
+  z-index: 1; /* Ensure the experience list stays on top of the blur */
+}
+
+.experienceList p {
+  font-family: var(--font-vt323);
+  color: var(--color-text);
+}
+
+.listItem {
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 1rem;
+  border-left: 4px solid transparent;
+  transition: border-color 0.3s;
+  background-color: var(--color-dark);
+}
+
+.listItem:hover,
+.listItem.active {
+  border-color: var(--color-text);
+  background-color: var(--color-primary);
+}
+
+.experienceDetailsContainer {
+  flex-basis: 55%;
+  background-color: var(--color-primary);
+  padding: 2rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1; /* Ensure the experience details stay on top of the blur */
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.experienceDetails h2 {
+  font-size: 28px;
+  margin-bottom: 0.5rem;
+  color: var(--color-bg);
+}
+
+.experienceDetails h3 {
+  font-size: 22px;
+  color: var(--color-dark);
+  margin-bottom: 0.5rem;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Space between logos */
+  margin-bottom: 1rem;
+}
+
+.logoContainer.singleLogo .logo {
+  max-width: 80%;
+}
+
+.logoContainer.multipleLogos .logo {
+  max-width: 40%;
+}
+
+.experienceDetails p {
+  font-size: 20px;
+  color: var(--color-secondary);
+  margin-bottom: 1rem;
+}
+
+.learnMoreButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-vt323);
+  font-size: 22px;
+}
+
+.learnMoreButton:hover {
+  background-color: var(--color-text);
+  color: var(--color-secondary);
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  overflow: auto; /* Allow scrolling if content is too tall */
+}
+
+.modalContent {
+  background-color: var(--color-primary);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  text-align: center;
+  max-width: 800px; /* Ensure the modal remains wide */
+  width: 90%; /* Ensure it adjusts well on smaller screens */
+  max-height: 80vh; /* Set a maximum height based on the viewport height */
+  overflow-y: auto; /* Add vertical scrolling when content exceeds max-height */
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--color-bg);
+}
+
+.modalLogoContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.modalLogo {
+  max-width: 30%; /* Adjust logo size to fit within the wider modal */
+  margin-bottom: 1rem;
+}
+
+.modalContent h2 {
+  font-size: 24px;
+  color: var(--color-bg);
+  margin-bottom: 0.5rem;
+}
+
+.modalContent h3 {
+  font-size: 18px;
+  color: var(--color-dark);
+  margin-bottom: 0.5rem;
+}
+
+.modalContent .descriptionContainer p {
+  font-size: 22px;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.middleBlur {
+  position: absolute;
+  width: 30vw;
+  height: 20vw;
+  min-width: 250px;
+  top: 60%; /* Center it vertically */
+  left: 20%; /* Center it horizontally */
+  transform: translate(-50%, -50%); /* Perfectly center the blur */
+  border-radius: 764px;
+  background: rgba(25, 55, 109, 0.7);
+  filter: blur(100px);
+  z-index: 0; /* Ensure it's behind the content */
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 1000px) {
+  .experienceContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .experienceList {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .experienceDetailsContainer {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .logoContainer {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .logoContainer.singleLogo .logo {
+    max-width: 60%;
+  }
+
+  .logoContainer.multipleLogos .logo {
+    max-width: 60%;
+  }
+
+  .modalContent {
+    max-width: 95%;
+    padding: 1.5rem;
+  }
+
+  .modalLogo {
+    max-width: 50%;
+  }
+}

@@ -1,0 +1,238 @@
+@import "../vars.css";
+
+.projectContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5rem;
+  flex-direction: row-reverse;
+  position: relative; /* Ensure that the blurs are positioned relative to this container */
+  overflow: hidden; /* Hide any overflow caused by the blurs */
+}
+
+.projectList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-basis: 40%;
+  z-index: 2; /* Ensure the project list stays on top of the blurs */
+  margin-left: 2rem;
+}
+
+.projectList p {
+  font-family: var(--font-vt323);
+  color: var(--color-text);
+}
+
+.listItem {
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 1rem;
+  border-left: 4px solid transparent;
+  transition: border-color 0.3s;
+  background-color: var(--color-dark);
+}
+
+.listItem:hover,
+.listItem.active {
+  border-color: var(--color-text);
+  background-color: var(--color-primary);
+}
+
+.projectDetailsContainer {
+  flex-basis: 60%;
+  background-color: var(--color-primary);
+  padding: 2rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 2; /* Ensure the project details stay on top of the blurs */
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.projectDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.projectInfo {
+  flex-basis: 60%;
+  text-align: left;
+}
+
+.projectInfo h2 {
+  font-size: 28px;
+  margin-bottom: 0.5rem;
+  color: var(--color-bg);
+}
+
+.projectInfo h3 {
+  font-size: 22px;
+  color: var(--color-dark);
+  margin-bottom: 0.5rem;
+}
+
+.projectInfo p {
+  font-size: 20px;
+  color: var(--color-secondary);
+  margin-bottom: 1rem;
+}
+
+.projectImage {
+  flex-basis: 35%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.projectImage .logo {
+  max-width: 100%;
+}
+
+.learnMoreButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-vt323);
+  font-size: 22px;
+}
+
+.learnMoreButton:hover {
+  background-color: var(--color-text);
+  color: var(--color-secondary);
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  overflow: auto;
+}
+
+.modalContent {
+  background-color: var(--color-primary);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  text-align: center;
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--color-bg);
+}
+
+.modalLogoContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.modalLogo {
+  max-width: 30%;
+  margin-bottom: 1rem;
+}
+
+.modalContent h2 {
+  font-size: 24px;
+  color: var(--color-bg);
+  margin-bottom: 0.5rem;
+}
+
+.modalContent h3 {
+  font-size: 18px;
+  color: var(--color-dark);
+  margin-bottom: 0.5rem;
+}
+
+.modalContent .descriptionContainer p {
+  font-size: 22px;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.bottomBlur {
+  position: absolute;
+  width: 80vw; /* Increase width to make sure it extends more */
+  height: 60vw; /* Increase height to make sure it extends more */
+  min-width: 250px;
+  top: 200px; /* Adjust to make sure the blur affects the content */
+  right: -25vw; /* Adjust to make the blur more prominent */
+  border-radius: 764px;
+  background: rgba(25, 55, 109, 0.7);
+  filter: blur(100px);
+  z-index: 0; /* Make sure it's behind the content */
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 1000px) {
+  .projectContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .projectList {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .projectDetailsContainer {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .projectDetails {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .projectInfo {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .projectImage {
+    justify-content: center;
+  }
+
+  .modalContent {
+    max-width: 95%;
+    padding: 1.5rem;
+  }
+
+  .modalLogo {
+    max-width: 50%;
+  }
+
+  .projectImage .logo {
+    max-width: 50%;
+  }
+}

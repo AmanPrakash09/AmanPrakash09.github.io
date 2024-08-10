@@ -1,0 +1,45 @@
+@import "./vars.css";
+
+.App {
+  background-color: var(--color-bg);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative; /* Make sure the stars and UFO are positioned relative to the entire app */
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Ensure the stars don't interfere with any interactions */
+  z-index: 0; /* Place stars behind all content */
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkling 1.5s infinite ease-in-out;
+  opacity: 0.5;
+}
+
+@keyframes twinkling {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* UFO styling */
+.ufo {
+  position: fixed;
+  width: 100px; /* Adjust size of UFO */
+  height: auto;
+  z-index: 0; /* Place UFO above the stars but behind main content */
+  transition: all 5s ease-in-out; /* Smooth movement for the UFO */
+}
