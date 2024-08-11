@@ -8,7 +8,7 @@ export const NavBar = () => {
     const [isFixed, setIsFixed] = useState(false);
 
     const changeBackground = () => {
-        if (window.scrollY >= 650) {
+        if (window.scrollY >= 550) {
             setNavBar(true);
             setIsFixed(true);
         } else {
