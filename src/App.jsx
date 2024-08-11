@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './App.module.css';
 import { NavBar } from './components/NavBar';
 import { Hero } from './components/Hero';
+import { Skills } from './components/Skills';
 import { Experience } from './components/Experience';
 import { Projects } from './components/Projects';
 import { getImageUrl } from './utils'; // Importing the getImageUrl function
@@ -48,6 +49,7 @@ function App() {
     <div className={styles.App}>
       <NavBar />
       <Hero />
+      <Skills />
       <Experience />
       <Projects />
       <div className={styles.stars}>{stars}</div> {/* Stars overlay for the entire app */}
