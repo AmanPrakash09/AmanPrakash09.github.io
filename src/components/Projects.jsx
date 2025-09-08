@@ -3,10 +3,17 @@ import styles from './Projects.module.css';
 import { getImageUrl } from '../utils';
 
 export const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState('EasyText');
+  const [selectedProject, setSelectedProject] = useState('SightSteer');
   const [showModal, setShowModal] = useState(false);
 
   const projects = {
+    SightSteer: {
+      title: 'SightSteer',
+      detailedTitle: 'SightSteer – Client-Server Based Remote Control System',
+      technologies: 'Rust, Python, Networking, Computer Vision, ESP32',
+      date: 'April 2025',
+      logo: 'sightsteer.png',
+    },
     EasyText: {
       title: 'EasyText',
       detailedTitle: 'EasyText - Messaging App with AI Features',
@@ -31,6 +38,15 @@ export const Projects = () => {
   };
 
   const projectsDetails = {
+    SightSteer: {
+      title: 'SightSteer – Client-Server Based Remote Control System',
+      technologies: 'Rust, Python, Networking, Computer Vision, ESP32',
+      date: 'April 2025',
+      logo: 'sightsteer.png',
+      description: `- Engineered a Rust server that broadcasts its IP over UDP for discovery and establishes TCP connections to stream data to clients\n
+                    - Created a client that connects to Wi-Fi, parses server IP/port via UDP discovery, and maintains a fault-tolerant TCP connection\n
+                    - Built a hand-recognition system that computes wrist–fingertip angles with normalization and smoothing using computer vision`,
+    },
     EasyText: {
       title: 'EasyText - Messaging App with AI Features',
       technologies: 'Node.js, Express.js, MongoDB Atlas, OpenAI, Amazon EC2, Docker, WebSocket, face-api.js',
