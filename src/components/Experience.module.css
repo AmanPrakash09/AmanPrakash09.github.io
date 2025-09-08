@@ -138,7 +138,7 @@
   border: none;
   font-size: 32px;
   cursor: pointer;
-  color: var(--color-bg);
+  color: var(--color-text);
 }
 
 .modalLogoContainer {
