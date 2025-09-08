@@ -8,20 +8,20 @@ export const Experience = () => {
 
   const experiences = {
     Asana: {
+      company: 'Asana',
       title: 'Software Engineering Intern',
-      organization: 'Asana',
       date: 'May 2025 - August 2025',
       logos: ['asana.png'],
     },
     CIC: {
+      company: 'Amazon Web Services • CIC',
       title: 'Software Developer Intern',
-      organization: 'Amazon Web Services • Cloud Innovation Centre',
       date: 'May 2024 - April 2025',
-      logos: ['CIC.png', 'AWS.png'],
+      logos: ['AWS.png', 'CIC.png'],
     },
     Intel: {
-      title: 'ASIC Design Co-op',
-      organization: 'Intel',
+      company: 'Intel',
+      title: 'ASIC Design Intern',
       date: 'Sep 2022 - April 2023',
       logos: ['intel.png'],
     }
@@ -29,8 +29,8 @@ export const Experience = () => {
 
   const experiencesDetails = {
     Asana: {
+      company: 'Asana',
       title: 'Software Engineering Intern',
-      organization: 'Asana',
       date: 'May 2025 - August 2025',
       logos: ['asana.png'],
       description: `- Optimized billing checkout flow with refactored logic, raising 0.32% success rate to 3% and projecting $1,000,000+ in ARR\n
@@ -39,10 +39,10 @@ export const Experience = () => {
                     - Developed an Asana–Discord integration that earned 1st place in Asana’s company-wide internal hackathon`,
     },
     CIC: {
+      company: 'Amazon Web Services • Cloud Innovation Centre',
       title: 'Software Developer Intern',
-      organization: 'Amazon Web Services • Cloud Innovation Centre',
       date: 'May 2024 - April 2025',
-      logos: ['CIC.png', 'AWS.png'],
+      logos: ['AWS.png', 'CIC.png'],
       description: ` September 2024 – April 2025:\n
                     - Instituted a virtual patient simulator and student teaching assistant using retrieval augmented generation\n
                     - Architected a serverless and scalable backend with AWS Lambda and API Gateway to support high-concurrency workloads\n
@@ -61,8 +61,8 @@ export const Experience = () => {
                     - Showcased project to the President of UBC, sparking plans for university-wide deployment to support all students`,
     },
     Intel: {
-      title: 'ASIC Design Co-op',
-      organization: 'Intel',
+      company: 'Intel',
+      title: 'ASIC Design Intern',
       date: 'Sep 2022 - April 2023',
       logos: ['intel.png'],
       description: `- Designed and implemented the Interrupt Controller in the CXL, managing inter & intra-component communicative signals\n
@@ -80,15 +80,15 @@ export const Experience = () => {
 
     return (
       <div className={styles.experienceDetails}>
-        <h2>{experience.title}</h2>
-        <h3>{experience.organization}</h3>
+        <h2>{experience.company}</h2>
+        <h3>{experience.title}</h3>
         <p>{experience.date}</p>
         <div className={`${styles.logoContainer} ${isSingleLogo ? styles.singleLogo : styles.multipleLogos}`}>
           {experience.logos.map((logo, index) => (
             <img
               key={index}
               src={getImageUrl(logo)}
-              alt={`${experience.title} logo ${index + 1}`}
+              alt={`${experience.company} logo ${index + 1}`}
               className={styles.logo}
             />
           ))}
@@ -108,8 +108,8 @@ export const Experience = () => {
       <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
         <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
           <button className={styles.closeButton} onClick={() => setShowModal(false)}>&times;</button>
-          <h2>{experience.title}</h2>
-          <h3>{experience.organization}</h3>
+          <h2>{experience.company}</h2>
+          <h3>{experience.title}</h3>
           <p>{experience.date}</p>
           <div className={styles.descriptionContainer}>
             {descriptionLines.map((line, index) => (
@@ -121,7 +121,7 @@ export const Experience = () => {
               <img
                 key={index}
                 src={getImageUrl(logo)}
-                alt={`${experience.title} logo ${index + 1}`}
+                alt={`${experience.company} logo ${index + 1}`}
                 className={styles.modalLogo}
               />
             ))}
@@ -140,7 +140,7 @@ export const Experience = () => {
             className={`${styles.listItem} ${selectedExperience === key ? styles.active : ''}`}
             onClick={() => setSelectedExperience(key)}
           >
-            <p>{experiences[key].title}</p>
+            <p>{experiences[key].company}</p>
           </li>
         ))}
       </ul>
