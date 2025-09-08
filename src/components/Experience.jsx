@@ -3,38 +3,62 @@ import styles from './Experience.module.css';
 import { getImageUrl } from '../utils';
 
 export const Experience = () => {
-  const [selectedExperience, setSelectedExperience] = useState('CIC');
+  const [selectedExperience, setSelectedExperience] = useState('Asana');
   const [showModal, setShowModal] = useState(false);
 
   const experiences = {
+    Asana: {
+      title: 'Software Engineering Intern',
+      organization: 'Asana',
+      date: 'May 2025 - August 2025',
+      logos: ['asana.png'],
+    },
     CIC: {
       title: 'Software Developer Intern',
-      organization: 'UBC Cloud Innovation Centre • Amazon Web Services',
-      date: 'May 2024 - PRESENT',
+      organization: 'Amazon Web Services • Cloud Innovation Centre',
+      date: 'May 2024 - April 2025',
       logos: ['CIC.png', 'AWS.png'],
     },
     Intel: {
       title: 'ASIC Design Co-op',
       organization: 'Intel',
       date: 'Sep 2022 - April 2023',
-      logos: ['intel.png'],  // Changed to an array for consistency
+      logos: ['intel.png'],
     }
   };
 
   const experiencesDetails = {
+    Asana: {
+      title: 'Software Engineering Intern',
+      organization: 'Asana',
+      date: 'May 2025 - August 2025',
+      logos: ['asana.png'],
+      description: `- Optimized billing checkout flow with refactored logic, raising 0.32% success rate to 3% and projecting $1,000,000+ in ARR\n
+                    - Connected Asana’s most popular premium and core features to increase paid-tier adoption, mitigating 26% of churned users\n
+                    - Crafted new components via React TypeScript with client-server mutations, server-computed values, and GraphQL projections\n
+                    - Developed an Asana–Discord integration that earned 1st place in Asana’s company-wide internal hackathon`,
+    },
     CIC: {
       title: 'Software Developer Intern',
-      organization: 'UBC Cloud Innovation Centre • Amazon Web Services',
-      date: 'May 2024 - PRESENT',
+      organization: 'Amazon Web Services • Cloud Innovation Centre',
+      date: 'May 2024 - April 2025',
       logos: ['CIC.png', 'AWS.png'],
-      description: `- Developed a student advising assistant using retrieval augmented generation to address UBC course and policy inquiries\n
-                    - Integrated Amazon Bedrock to improve previous architecture, improving efficiency and saving $4,897 USD per year\n
+      description: ` September 2024 – April 2025:\n
+                    - Instituted a virtual patient simulator and student teaching assistant using retrieval augmented generation\n
+                    - Architected a serverless and scalable backend with AWS Lambda and API Gateway to support high-concurrency workloads\n
+                    - Applied data modelling principles to design a relational database schema in a PostgreSQL RDS, ensuring optimized queries\n
+                    - Containerized data ingestion and text generation workflows with Docker on Amazon ECR for portable execution environments\n
+                    - Leveraged LangChain to parse S3 files, create embeddings, store vectors in indexed RDS tables, and perform similarity search\n
+                    - Implemented a chat log export feature using AppSync for real-time updates and SQS to queue and process asynchronous tasks\n
+                    - Designed a VPC with private subnets, an internet gateway, a NAT gateway, and AWS service endpoints for secure networking\n
+                    - Automated deployment with AWS CDK stacks across multiple faculties, enhancing the learning of 100+ active student users\n
+                     May 2024 – August 2024 :\n
+                    - Constructed a student advising assistant using retrieval augmented generation to address UBC course and policy inquiries\n
+                    - Integrated Amazon Bedrock to improve the previous architecture, improving efficiency and saving $4,897 USD per year\n
                     - Enhanced request handling capacity by 1500% to support more concurrent users and text generation speed by 85% per query\n
-                    - Optimized semantic search using HNSW vector indexing and Euclidean distance with KNN in PGVector for efficient retrieval\n
-                    - Implemented Flask App with LangChain and Amazon Lambda to interact with PostgreSQL Database and Amazon ECS tasks\n
-                    - Deployed project following strict security protocols by configuring a private VPC with isolated subnets\n
-                    - Managed IAM roles for different services like Amazon Beanstalk, EC2, containers on ECS, and Lambda functions\n
-                    - Presented progress and goals to sponsors, demonstrating strong communication and stakeholder engagement skills`,
+                    - Accelerated semantic search using HNSW vector indexing and KNN search with PGVector for efficient retrieval\n
+                    - Established Flask App with LangChain in Amazon Beanstalk to interact with PostgreSQL RDS and Amazon ECS tasks\n
+                    - Showcased project to the President of UBC, sparking plans for university-wide deployment to support all students`,
     },
     Intel: {
       title: 'ASIC Design Co-op',
