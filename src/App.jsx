@@ -45,13 +45,15 @@ function App() {
     return () => clearInterval(interval); // Cleanup on component unmount
   }, []);
 
+  const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
+
   return (
     <div className={styles.App}>
-      <NavBar />
+      {!isExperienceModalOpen && <NavBar />}
       <Hero />
       <Skills />
-      <Experience />
-      <Projects />
+      <Experience onRenderModal={setIsExperienceModalOpen}/>
+      <Projects onRenderModal={setIsExperienceModalOpen}/>
       <div className={styles.stars}>{stars}</div> {/* Stars overlay for the entire app */}
       <img
         src={getImageUrl('ufo.png')} // Using the getImageUrl function for the UFO image
