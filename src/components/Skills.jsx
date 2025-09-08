@@ -11,22 +11,24 @@ export const Skills = () => {
 
   const languages = {
     Python: { title: 'Python', logo: 'python.png' },
-    JavaScript: { title: 'JavaScript', logo: 'javascript.png' },
     TypeScript: { title: 'TypeScript', logo: 'typescript.png' },
+    JavaScript: { title: 'JavaScript', logo: 'javascript.png' },
     Java: { title: 'Java', logo: 'java.png' },
+    Rust: { title: 'Rust', logo: 'rust.png' },
     Cpp: { title: 'C++', logo: 'cpp.png' },
     C: { title: 'C', logo: 'c.png' },
     SQL: { title: 'SQL', logo: 'sql.png' },
+    GraphQL: { title: 'GraphQL', logo: 'graphql.png' },
     HTML: { title: 'HTML', logo: 'html.png' },
     CSS: { title: 'CSS', logo: 'css.png' },
   };
 
   const frameworks = {
+    React: { title: 'React', logo: 'react.png' },
     Flask: { title: 'Flask', logo: 'flask.png' },
     Django: { title: 'Django', logo: 'django.png' },
     Node: { title: 'Node.js', logo: 'node.png' },
     Express: { title: 'Express', logo: 'express.png' },
-    React: { title: 'React', logo: 'react.png' },
     LangChain: { title: 'LangChain', logo: 'langchain.png' },
     Locust: { title: 'Locust', logo: 'locust.png' },
     Vite: { title: 'Vite', logo: 'vite.png' },
@@ -38,6 +40,7 @@ export const Skills = () => {
     AWS: { title: 'AWS', logo: 'AWS.png' },
     GitHub: { title: 'GitHub', logo: 'github-og.png' },
     Git: { title: 'Git', logo: 'git.png' },
+    Graphite: { title: 'Graphite', logo: 'graphite.png' },
     MySQL: { title: 'MySQL', logo: 'mysql.png' },
     MongoDB: { title: 'MongoDB', logo: 'mongodb.png' },
     PostgreSQL: { title: 'PostgreSQL', logo: 'postgresql.png' },
