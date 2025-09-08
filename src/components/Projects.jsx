@@ -13,42 +13,13 @@ export const Projects = () => {
       technologies: 'Rust, Python, Networking, Computer Vision, ESP32',
       date: 'April 2025',
       logo: 'sightsteer.png',
-    },
-    EasyText: {
-      title: 'EasyText',
-      detailedTitle: 'EasyText - Messaging App with AI Features',
-      technologies: 'Node.js, Express.js, MongoDB Atlas, OpenAI, Amazon EC2, Docker, WebSocket, face-api.js',
-      date: 'April 2024',
-      logo: 'easytext.png',
-    },
-    PokeDex: {
-      title: 'PokéDex Master',
-      detailedTitle: 'PokéDex Master - Pokémon Database Web App',
-      technologies: 'Django, React.tsx, SQL, Amazon RDS, MySQL Workbench, JSON Web Token',
-      date: 'March 2024',
-      logo: 'PokedexLogo.png',
-    },
-    BookIt: {
-      title: 'BookIt',
-      detailedTitle: 'BookIt - Study Space Booking System Android App',
-      technologies: 'Java, Python, Node.js, Express.js, MongoDB, GoogleOAuth & Maps, Firebase, Geoapify, Espresso, Microsoft Azure',
-      date: 'December 2023',
-      logo: 'bookit.png',
-    }
-  };
-
-  const projectsDetails = {
-    SightSteer: {
-      title: 'SightSteer – Client-Server Based Remote Control System',
-      technologies: 'Rust, Python, Networking, Computer Vision, ESP32',
-      date: 'April 2025',
-      logo: 'sightsteer.png',
       description: `- Engineered a Rust server that broadcasts its IP over UDP for discovery and establishes TCP connections to stream data to clients\n
                     - Created a client that connects to Wi-Fi, parses server IP/port via UDP discovery, and maintains a fault-tolerant TCP connection\n
                     - Built a hand-recognition system that computes wrist–fingertip angles with normalization and smoothing using computer vision`,
     },
     EasyText: {
-      title: 'EasyText - Messaging App with AI Features',
+      title: 'EasyText',
+      detailedTitle: 'EasyText - Messaging App with AI Features',
       technologies: 'Node.js, Express.js, MongoDB Atlas, OpenAI, Amazon EC2, Docker, WebSocket, face-api.js',
       date: 'April 2024',
       logo: 'easytext.png',
@@ -59,7 +30,8 @@ export const Projects = () => {
                     - Containerized application with Docker and deployed project to an Amazon EC2 instance for efficient hosting`,
     },
     PokeDex: {
-      title: 'PokéDex Master - Pokémon Database Web App',
+      title: 'PokéDex Master',
+      detailedTitle: 'PokéDex Master - Pokémon Database Web App',
       technologies: 'Django, React.tsx, SQL, Amazon RDS, MySQL Workbench, JSON Web Token',
       date: 'March 2024',
       logo: 'PokedexLogo.png',
@@ -69,7 +41,8 @@ export const Projects = () => {
                     - Employed an Amazon RDS instance with a MySQL Engine to maintain a synchronized database for team collaboration`,
     },
     BookIt: {
-      title: 'BookIt - Study Space Booking System Android App',
+      title: 'BookIt',
+      detailedTitle: 'BookIt - Study Space Booking System Android App',
       technologies: 'Java, Python, Node.js, Express.js, MongoDB, GoogleOAuth & Maps, Firebase, Geoapify, Espresso, Microsoft Azure',
       date: 'December 2023',
       logo: 'bookit.png',
@@ -105,14 +78,14 @@ export const Projects = () => {
   const renderModal = () => {
     if (!showModal) return null;
 
-    const project = projectsDetails[selectedProject];
+    const project = projects[selectedProject];
     const descriptionLines = project.description.trim().split('\n');
 
     return (
       <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
         <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
           <button className={styles.closeButton} onClick={() => setShowModal(false)}>&times;</button>
-          <h2>{project.title}</h2>
+          <h2>{project.detailedTitle}</h2>
           <h3>{project.technologies}</h3>
           <p>{project.date}</p>
           <div className={styles.descriptionContainer}>

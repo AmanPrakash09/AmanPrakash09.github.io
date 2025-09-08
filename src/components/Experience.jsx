@@ -12,34 +12,13 @@ export const Experience = () => {
       title: 'Software Engineering Intern',
       date: 'May 2025 - August 2025',
       logos: ['asana.png'],
-    },
-    CIC: {
-      company: 'Amazon Web Services • CIC',
-      title: 'Software Developer Intern',
-      date: 'May 2024 - April 2025',
-      logos: ['AWS.png', 'CIC.png'],
-    },
-    Intel: {
-      company: 'Intel',
-      title: 'ASIC Design Intern',
-      date: 'Sep 2022 - April 2023',
-      logos: ['intel.png'],
-    }
-  };
-
-  const experiencesDetails = {
-    Asana: {
-      company: 'Asana',
-      title: 'Software Engineering Intern',
-      date: 'May 2025 - August 2025',
-      logos: ['asana.png'],
       description: `- Optimized billing checkout flow with refactored logic, raising 0.32% success rate to 3% and projecting $1,000,000+ in ARR\n
                     - Connected Asana’s most popular premium and core features to increase paid-tier adoption, mitigating 26% of churned users\n
                     - Crafted new components via React TypeScript with client-server mutations, server-computed values, and GraphQL projections\n
                     - Developed an Asana–Discord integration that earned 1st place in Asana’s company-wide internal hackathon`,
     },
     CIC: {
-      company: 'Amazon Web Services • Cloud Innovation Centre',
+      company: 'Amazon Web Services • CIC',
       title: 'Software Developer Intern',
       date: 'May 2024 - April 2025',
       logos: ['AWS.png', 'CIC.png'],
@@ -101,7 +80,7 @@ export const Experience = () => {
   const renderModal = () => {
     if (!showModal) return null;
 
-    const experience = experiencesDetails[selectedExperience];
+    const experience = experiences[selectedExperience];
     const descriptionLines = experience.description.trim().split('\n');
 
     return (
