@@ -266,7 +266,7 @@
   will-change: transform;
 }
 
-.batman[data-motion='dropping'][data-descent^='diagonal'] .batmanFrame {
+.batman[data-motion='dropping'][data-descent='diagonal'] .batmanFrame {
   right: auto;
   left: 50%;
   width: 201.5873%;
@@ -274,11 +274,11 @@
   transform-origin: center;
 }
 
-.batman[data-motion='dropping'][data-descent='diagonal-left'] .batmanFrame {
+.batman[data-motion='dropping'][data-descent='diagonal'][data-direction='left'] .batmanFrame {
   transform: translateX(-50%) scaleX(-1);
 }
 
-.batman[data-motion='dropping'][data-descent^='diagonal'] .batmanSpriteSheet {
+.batman[data-motion='dropping'][data-descent='diagonal'] .batmanSpriteSheet {
   top: -868.75%;
   left: -527.9412%;
   width: 1882.3529%;
@@ -291,6 +291,10 @@
   width: 89.1667%;
   height: 142.1875%;
   transform: translateX(-50%);
+}
+
+.batman[data-motion='dropping'][data-descent='vertical'][data-direction='left'] .batmanFrame {
+  transform: translateX(-50%) scaleX(-1);
 }
 
 .batman[data-motion='dropping'][data-descent='vertical'] .batmanSpriteSheet {
@@ -308,12 +312,20 @@
   transform: translateX(-50%);
 }
 
+.batman[data-motion='perched'][data-direction='left'] .batmanFrame {
+  transform: translateX(-50%) scaleX(-1);
+}
+
 .batman[data-motion='perched'] .batmanSpriteSheet {
   top: -982.6923%;
   left: -2386.6667%;
   width: 3413.3333%;
   animation: none;
   will-change: auto;
+}
+
+.batman:is([data-motion='grounded'], [data-motion='grappling'])[data-direction='left'] .batmanFrame {
+  transform: scaleX(-1);
 }
 
 @keyframes batmanStanding {

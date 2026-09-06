@@ -75,7 +75,15 @@ function chooseDropPosition(current, sceneWidth, batmanWidth) {
   return { x: clamp(current.x + shift * direction, 0, maximumX), y: 0 };
 }
 
-export function useBatmanMovement({ batmanRef, grappleLineRef, sceneRef, skylineRef }) {
+export function useBatmanMovement({
+  batmanRef,
+  grappleLineRef,
+  sceneRef,
+  skylineRef,
+  setMotion,
+  setDirection,
+  setDescent,
+}) {
   useEffect(() => {
     const batman = batmanRef.current;
     const grappleLine = grappleLineRef.current;
@@ -192,23 +200,23 @@ export function useBatmanMovement({ batmanRef, grappleLineRef, sceneRef, skyline
           continue;
         }
 
-        batman.dataset.motion = 'grappling';
+        setDirection(rooftop.x < current.x ? 'left' : 'right');
+        setMotion('grappling');
         if (!(await grappleTo(rooftop))) return;
 
         previousBuildingId = rooftop.id;
-        batman.dataset.motion = 'perched';
+        setMotion('perched');
         if (!(await wait(randomBetween(...ROOFTOP_PAUSE)))) return;
 
         const destination = chooseDropPosition(current, scene.clientWidth, batman.offsetWidth);
         const dropDistance = Math.hypot(destination.x - current.x, destination.y - current.y);
         const horizontalDistance = destination.x - current.x;
-        batman.dataset.descent =
-          Math.abs(horizontalDistance) < 1
-            ? 'vertical'
-            : horizontalDistance > 0
-              ? 'diagonal-right'
-              : 'diagonal-left';
-        batman.dataset.motion = 'dropping';
+        const descent = Math.abs(horizontalDistance) < 1 ? 'vertical' : 'diagonal';
+
+        setDescent(descent);
+        if (horizontalDistance < -1) setDirection('left');
+        if (horizontalDistance > 1) setDirection('right');
+        setMotion('dropping');
         if (
           !(await moveBatman(destination, {
             duration: clamp(dropDistance * 1.45, 500, 1050),
@@ -218,8 +226,8 @@ export function useBatmanMovement({ batmanRef, grappleLineRef, sceneRef, skyline
           return;
         }
 
-        batman.dataset.motion = 'grounded';
-        delete batman.dataset.descent;
+        setMotion('grounded');
+        setDescent(null);
         if (!(await wait(randomBetween(...GROUND_PAUSE)))) return;
       }
     };
@@ -236,5 +244,5 @@ export function useBatmanMovement({ batmanRef, grappleLineRef, sceneRef, skyline
       hideGrappleLine();
       animations.forEach((animation) => animation.cancel());
     };
-  }, [batmanRef, grappleLineRef, sceneRef, skylineRef]);
+  }, [batmanRef, grappleLineRef, sceneRef, setDescent, setDirection, setMotion, skylineRef]);
 }
