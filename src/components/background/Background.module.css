@@ -266,6 +266,44 @@
   will-change: transform;
 }
 
+.batman[data-motion='grapple-shooting'] .batmanFrame {
+  inset: auto auto -3px 50%;
+  width: 128.3333%;
+  height: 118.75%;
+  transform: translateX(-50%);
+}
+
+.batman[data-motion='grapple-shooting'][data-direction='left'] .batmanFrame {
+  transform: translateX(-50%) scaleX(-1);
+}
+
+.batman[data-motion='grapple-shooting'] .batmanSpriteSheet {
+  top: -990.7895%;
+  left: -1576.6234%;
+  width: 3324.6753%;
+  animation: none;
+  will-change: auto;
+}
+
+.batman[data-motion='grappling'] .batmanFrame {
+  inset: 50% auto auto 50%;
+  width: 205%;
+  height: 81.25%;
+  transform: translate(-50%, -50%);
+}
+
+.batman[data-motion='grappling'][data-direction='left'] .batmanFrame {
+  transform: translate(-50%, -50%) scaleX(-1);
+}
+
+.batman[data-motion='grappling'] .batmanSpriteSheet {
+  top: -2413.4615%;
+  left: -1501.626%;
+  width: 2081.3008%;
+  animation: none;
+  will-change: auto;
+}
+
 .batman[data-motion='dropping'][data-descent='diagonal'] .batmanFrame {
   right: auto;
   left: 50%;
@@ -324,7 +362,7 @@
   will-change: auto;
 }
 
-.batman:is([data-motion='grounded'], [data-motion='grappling'])[data-direction='left'] .batmanFrame {
+.batman[data-motion='grounded'][data-direction='left'] .batmanFrame {
   transform: scaleX(-1);
 }
 

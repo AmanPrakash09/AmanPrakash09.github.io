@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 const ASCENT_DELAY = [900, 1800];
+const GRAPPLE_SHOT_DURATION = 450;
 const ROOFTOP_PAUSE = [1800, 3600];
 const GROUND_PAUSE = [700, 1500];
 
@@ -147,22 +148,30 @@ export function useBatmanMovement({
       grappleLine.style.opacity = '0';
     };
 
-    const aimGrappleLine = (rooftop) => {
-      const updateLine = () => {
+    const aimGrappleLine = (rooftop, grapple) => {
+      const shotStartedAt = window.performance.now();
+
+      const updateLine = (timestamp = window.performance.now()) => {
         if (!isActive) return;
 
         const batmanRect = batman.getBoundingClientRect();
         const rooftopRect = rooftop.rooftop.getBoundingClientRect();
-        const originX = batmanRect.left + batmanRect.width / 2;
-        const originY = batmanRect.top + batmanRect.height * 0.28;
+        const anchorDirection = grapple.direction === 'left' ? -1 : 1;
+        const horizontalAnchor = 0.5 + anchorDirection * (grapple.isMoving ? 0.55 : 0.58);
+        const verticalAnchor = grapple.isMoving ? 0.32 : 0.05;
+        const originX = batmanRect.left + batmanRect.width * horizontalAnchor;
+        const originY = batmanRect.top + batmanRect.height * verticalAnchor;
         const targetX = rooftopRect.left + rooftopRect.width * rooftop.landingPoint;
         const targetY = rooftopRect.top;
         const deltaX = targetX - originX;
         const deltaY = targetY - originY;
         const distance = Math.hypot(deltaX, deltaY);
         const angle = Math.atan2(deltaX, -deltaY) * (180 / Math.PI);
+        const extension = grapple.isMoving ? 1 : clamp((timestamp - shotStartedAt) / GRAPPLE_SHOT_DURATION, 0, 1);
 
-        grappleLine.style.height = `${distance}px`;
+        grappleLine.style.left = `${horizontalAnchor * 100}%`;
+        grappleLine.style.bottom = `${(1 - verticalAnchor) * 100}%`;
+        grappleLine.style.height = `${distance * extension}px`;
         grappleLine.style.transform = `rotate(${angle}deg)`;
         grappleLine.style.opacity = '0.72';
         grappleFrame = window.requestAnimationFrame(updateLine);
@@ -171,13 +180,21 @@ export function useBatmanMovement({
       updateLine();
     };
 
-    const grappleTo = async (rooftop) => {
+    const grappleTo = async (rooftop, direction) => {
       const deltaX = rooftop.x - current.x;
       const deltaY = rooftop.y - current.y;
       const distance = Math.hypot(deltaX, deltaY);
       const duration = clamp(distance * 2.1, 850, 1800);
+      const grapple = { direction, isMoving: false };
 
-      aimGrappleLine(rooftop);
+      aimGrappleLine(rooftop, grapple);
+      if (!(await wait(GRAPPLE_SHOT_DURATION))) {
+        hideGrappleLine();
+        return false;
+      }
+
+      grapple.isMoving = true;
+      setMotion('grappling');
       const completed = await moveBatman(rooftop, {
         duration,
         easing: 'cubic-bezier(0.42, 0, 0.2, 1)',
@@ -200,9 +217,10 @@ export function useBatmanMovement({
           continue;
         }
 
-        setDirection(rooftop.x < current.x ? 'left' : 'right');
-        setMotion('grappling');
-        if (!(await grappleTo(rooftop))) return;
+        const grappleDirection = rooftop.x < current.x ? 'left' : 'right';
+        setDirection(grappleDirection);
+        setMotion('grapple-shooting');
+        if (!(await grappleTo(rooftop, grappleDirection))) return;
 
         previousBuildingId = rooftop.id;
         setMotion('perched');
