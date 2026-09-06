@@ -1,3 +1,4 @@
+import { Batman } from './Batman';
 import { Building } from './Building';
 import styles from './Background.module.css';
 import { distantBuildings, foregroundBuildings } from './sceneData';
@@ -25,6 +26,7 @@ export function Background() {
       </div>
 
       <div className={styles.ground} aria-hidden="true" />
+      <Batman />
     </section>
   );
 }

@@ -212,6 +212,68 @@
   box-shadow: 0 -8px 18px rgba(0, 0, 0, 0.3);
 }
 
+.batman {
+  position: absolute;
+  z-index: 5;
+  left: clamp(18px, 7vw, 110px);
+  bottom: calc(var(--ground-height) - 1px);
+  width: clamp(56px, 7.4vw, 112px);
+  aspect-ratio: 15 / 16;
+  overflow: hidden;
+  pointer-events: none;
+  filter: drop-shadow(0 5px 4px rgba(0, 0, 0, 0.5));
+}
+
+.batmanSpriteSheet {
+  position: absolute;
+  top: -103.90625%;
+  left: 0;
+  display: block;
+  width: 4266.6667%;
+  max-width: none;
+  height: auto;
+  animation: batmanStanding 900ms linear infinite alternate;
+  will-change: transform;
+}
+
+@keyframes batmanStanding {
+  0%,
+  16.66% {
+    transform: translateX(0);
+  }
+
+  16.67%,
+  33.32% {
+    transform: translateX(-2.1484375%);
+  }
+
+  33.33%,
+  49.99% {
+    transform: translateX(-4.39453125%);
+  }
+
+  50%,
+  66.66% {
+    transform: translateX(-6.7578125%);
+  }
+
+  66.67%,
+  83.32% {
+    transform: translateX(-9.140625%);
+  }
+
+  83.33%,
+  100% {
+    transform: translateX(-11.5234375%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .batmanSpriteSheet {
+    animation: none;
+  }
+}
+
 @media (max-width: 700px) {
   .background {
     --ground-height: clamp(28px, 5svh, 46px);
