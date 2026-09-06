@@ -286,6 +286,21 @@
   will-change: auto;
 }
 
+.batman[data-motion='dropping'][data-descent='vertical'] .batmanFrame {
+  inset: auto auto 0 50%;
+  width: 89.1667%;
+  height: 142.1875%;
+  transform: translateX(-50%);
+}
+
+.batman[data-motion='dropping'][data-descent='vertical'] .batmanSpriteSheet {
+  top: -435.1648%;
+  left: -577.5701%;
+  width: 4785.0467%;
+  animation: none;
+  will-change: auto;
+}
+
 @keyframes batmanStanding {
   0%,
   16.66% {
