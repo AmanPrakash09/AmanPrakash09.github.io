@@ -179,6 +179,14 @@
   background: #101321;
 }
 
+.rooftop {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .windows {
   --window-cell-size: clamp(9px, 0.9vw, 15px);
   position: absolute;

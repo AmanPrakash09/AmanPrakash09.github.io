@@ -21,7 +21,12 @@ export function Building({ building, depth }) {
       data-light={building.light ?? 'dim'}
       style={buildingStyle}
     >
-      {depth === 'foreground' && <div className={styles.windows} />}
+      {depth === 'foreground' && (
+        <>
+          <div className={styles.rooftop} data-rooftop />
+          <div className={styles.windows} />
+        </>
+      )}
     </div>
   );
 }
