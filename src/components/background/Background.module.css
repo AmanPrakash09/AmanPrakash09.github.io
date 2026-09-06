@@ -162,7 +162,7 @@
   left: 50%;
   bottom: 100%;
   width: max(2px, 1.5%);
-  height: clamp(11px, 2.5svh, 32px);
+  height: clamp(9px, 2svh, 25px);
   transform: translateX(-50%);
   background: #090b14;
   box-shadow: 0 0 8px rgba(215, 81, 55, 0.16);
@@ -174,13 +174,13 @@
   left: 16%;
   bottom: 100%;
   width: 68%;
-  height: clamp(10px, 2.3svh, 28px);
+  height: clamp(8px, 1.8svh, 22px);
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
   background: #101321;
 }
 
 .windows {
-  --window-cell-size: clamp(11px, 1.15vw, 18px);
+  --window-cell-size: clamp(9px, 0.9vw, 15px);
   position: absolute;
   inset: 13% 12% 7%;
   opacity: 0.68;
