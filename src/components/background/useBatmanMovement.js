@@ -8,31 +8,41 @@ const randomBetween = (minimum, maximum) => minimum + Math.random() * (maximum -
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
 const translate = ({ x, y }) => `translate3d(${x}px, ${y}px, 0)`;
 
-function getRoofPosition(building, sceneRect, batmanWidth) {
-  const buildingRect = building.getBoundingClientRect();
-  const roof = building.dataset.roof;
-  const landingPoint = roof === 'sloped' ? 0.72 : roof === 'spire' || roof === 'antenna' ? 0.28 : 0.5;
+function getRoofPosition(building, sceneRect, batmanWidth, baselineBottom) {
+  const rooftop = building.querySelector('[data-rooftop]');
+
+  if (!rooftop) return null;
+
+  const rooftopRect = rooftop.getBoundingClientRect();
+  const landingPoint = 0.5;
+  const roofX = rooftopRect.left - sceneRect.left + rooftopRect.width * landingPoint;
+  const roofY = rooftopRect.top - sceneRect.top;
 
   return {
     id: building.dataset.buildingId,
-    x: buildingRect.left - sceneRect.left + buildingRect.width * landingPoint - batmanWidth / 2,
-    y: buildingRect.top - buildingRect.bottom,
-    roofX: buildingRect.left - sceneRect.left + buildingRect.width * landingPoint,
-    roofTop: buildingRect.top,
+    rooftop,
+    landingPoint,
+    x: roofX - batmanWidth / 2,
+    y: roofY - baselineBottom,
+    roofX,
+    roofY,
   };
 }
 
 function chooseRooftop({ batman, current, scene, skyline, previousBuildingId }) {
   const sceneRect = scene.getBoundingClientRect();
   const batmanWidth = batman.offsetWidth;
+  const batmanBottom = Number.parseFloat(window.getComputedStyle(batman).bottom);
+  const baselineBottom = sceneRect.height - batmanBottom;
   const maximumX = Math.max(0, sceneRect.width - batmanWidth);
   const minimumDiagonalDistance = Math.min(80, Math.max(34, sceneRect.width * 0.055));
   const buildings = [...skyline.querySelectorAll('[data-building-id]')];
 
   const visibleRooftops = buildings
-    .map((building) => getRoofPosition(building, sceneRect, batmanWidth))
+    .map((building) => getRoofPosition(building, sceneRect, batmanWidth, baselineBottom))
+    .filter(Boolean)
     .filter((roof) => roof.roofX >= batmanWidth / 2 && roof.roofX <= sceneRect.width - batmanWidth / 2)
-    .filter((roof) => roof.roofTop >= sceneRect.top && roof.roofTop < sceneRect.bottom)
+    .filter((roof) => roof.roofY >= 0 && roof.roofY < sceneRect.height)
     .map((roof) => ({ ...roof, x: clamp(roof.x, 0, maximumX) }));
 
   const diagonalRooftops = visibleRooftops.filter(
@@ -78,6 +88,7 @@ export function useBatmanMovement({ batmanRef, grappleLineRef, sceneRef, skyline
     const timers = new Map();
     const animations = new Set();
     let isActive = true;
+    let grappleFrame = null;
     let previousBuildingId = null;
     let current = {
       x: clamp(scene.clientWidth * 0.07, 18, Math.min(110, scene.clientWidth - batman.offsetWidth)),
@@ -120,30 +131,51 @@ export function useBatmanMovement({ batmanRef, grappleLineRef, sceneRef, skyline
       return true;
     };
 
+    const hideGrappleLine = () => {
+      if (grappleFrame !== null) {
+        window.cancelAnimationFrame(grappleFrame);
+        grappleFrame = null;
+      }
+      grappleLine.style.opacity = '0';
+    };
+
+    const aimGrappleLine = (rooftop) => {
+      const updateLine = () => {
+        if (!isActive) return;
+
+        const batmanRect = batman.getBoundingClientRect();
+        const rooftopRect = rooftop.rooftop.getBoundingClientRect();
+        const originX = batmanRect.left + batmanRect.width / 2;
+        const originY = batmanRect.top + batmanRect.height * 0.28;
+        const targetX = rooftopRect.left + rooftopRect.width * rooftop.landingPoint;
+        const targetY = rooftopRect.top;
+        const deltaX = targetX - originX;
+        const deltaY = targetY - originY;
+        const distance = Math.hypot(deltaX, deltaY);
+        const angle = Math.atan2(deltaX, -deltaY) * (180 / Math.PI);
+
+        grappleLine.style.height = `${distance}px`;
+        grappleLine.style.transform = `rotate(${angle}deg)`;
+        grappleLine.style.opacity = '0.72';
+        grappleFrame = window.requestAnimationFrame(updateLine);
+      };
+
+      updateLine();
+    };
+
     const grappleTo = async (rooftop) => {
       const deltaX = rooftop.x - current.x;
       const deltaY = rooftop.y - current.y;
       const distance = Math.hypot(deltaX, deltaY);
-      const angle = Math.atan2(deltaX, -deltaY) * (180 / Math.PI);
       const duration = clamp(distance * 2.1, 850, 1800);
 
-      grappleLine.style.height = `${distance}px`;
-      const lineAnimation = grappleLine.animate(
-        [
-          { opacity: 0.72, transform: `rotate(${angle}deg) scaleY(1)` },
-          { opacity: 0.35, transform: `rotate(${angle}deg) scaleY(0.04)` },
-        ],
-        { duration, easing: 'cubic-bezier(0.42, 0, 0.2, 1)', fill: 'forwards' },
-      );
-      animations.add(lineAnimation);
-
+      aimGrappleLine(rooftop);
       const completed = await moveBatman(rooftop, {
         duration,
         easing: 'cubic-bezier(0.42, 0, 0.2, 1)',
       });
 
-      lineAnimation.cancel();
-      animations.delete(lineAnimation);
+      hideGrappleLine();
       return completed;
     };
 
@@ -193,6 +225,7 @@ export function useBatmanMovement({ batmanRef, grappleLineRef, sceneRef, skyline
         resolve(false);
       });
       timers.clear();
+      hideGrappleLine();
       animations.forEach((animation) => animation.cancel());
     };
   }, [batmanRef, grappleLineRef, sceneRef, skylineRef]);
