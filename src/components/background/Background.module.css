@@ -1,0 +1,254 @@
+.background {
+  --ground-height: clamp(72px, 12svh, 132px);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #05070d;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      #02050e 0%,
+      #0a1024 24%,
+      #27213a 51%,
+      #713b47 74%,
+      #cf704f 100%
+    );
+}
+
+.sky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.42;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.13) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 74% 11%, rgba(255, 255, 255, 0.11) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 39% 28%, rgba(255, 255, 255, 0.09) 0 1px, transparent 1.5px);
+  background-size: 149px 131px, 211px 173px, 263px 197px;
+}
+
+.sky::after {
+  content: '';
+  position: absolute;
+  inset: auto -10% 15% -10%;
+  height: 42%;
+  background: linear-gradient(180deg, transparent, rgba(244, 122, 76, 0.2));
+  filter: blur(24px);
+}
+
+.horizonGlow {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: min(94vw, 1100px);
+  height: 48%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 151, 83, 0.34), transparent 68%);
+  filter: blur(18px);
+}
+
+.cloud {
+  position: absolute;
+  width: clamp(240px, 34vw, 620px);
+  height: clamp(30px, 5vw, 74px);
+  opacity: 0.3;
+  border-radius: 50%;
+  background: #030713;
+  filter: blur(clamp(10px, 1.7vw, 24px));
+  transform: skewX(-24deg);
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  border-radius: inherit;
+  background: inherit;
+}
+
+.cloud::before {
+  inset: -55% 18% 30% -12%;
+}
+
+.cloud::after {
+  inset: 42% -16% -38% 31%;
+}
+
+.cloudOne {
+  top: 17%;
+  left: -7%;
+}
+
+.cloudTwo {
+  top: 34%;
+  right: -9%;
+  opacity: 0.2;
+  transform: scale(0.8) skewX(22deg);
+}
+
+.cloudThree {
+  top: 48%;
+  left: 23%;
+  opacity: 0.13;
+  transform: scale(1.35) skewX(-16deg);
+}
+
+.distantSkyline,
+.foregroundSkyline {
+  position: absolute;
+  inset: 0;
+  bottom: var(--ground-height);
+  pointer-events: none;
+}
+
+.distantSkyline {
+  z-index: 1;
+  opacity: 0.78;
+  filter: saturate(0.75);
+}
+
+.foregroundSkyline {
+  z-index: 2;
+}
+
+.building {
+  position: absolute;
+  left: var(--building-left);
+  bottom: 0;
+  width: var(--building-width);
+  height: clamp(150px, var(--building-height), 720px);
+  transform-origin: bottom center;
+}
+
+.distant {
+  background: linear-gradient(90deg, #111426, #24243a 52%, #0b0e1b);
+  border-top: 1px solid rgba(176, 126, 120, 0.22);
+  box-shadow: inset -8px 0 rgba(0, 0, 0, 0.18);
+}
+
+.foreground {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025), transparent 18%),
+    linear-gradient(90deg, #080b14, #171827 58%, #05070d);
+  border: 1px solid rgba(110, 100, 118, 0.24);
+  border-bottom: 0;
+  box-shadow:
+    inset -12px 0 rgba(0, 0, 0, 0.28),
+    -12px 0 28px rgba(0, 0, 0, 0.16);
+}
+
+.building[data-roof='stepped'] {
+  clip-path: polygon(0 9%, 18% 9%, 18% 4%, 40% 4%, 40% 0, 62% 0, 62% 4%, 84% 4%, 84% 9%, 100% 9%, 100% 100%, 0 100%);
+}
+
+.building[data-roof='sloped'] {
+  clip-path: polygon(0 8%, 72% 0, 100% 8%, 100% 100%, 0 100%);
+}
+
+.building[data-roof='crown'] {
+  clip-path: polygon(0 8%, 18% 8%, 26% 2%, 39% 8%, 50% 0, 61% 8%, 74% 2%, 82% 8%, 100% 8%, 100% 100%, 0 100%);
+}
+
+.building[data-roof='spire']::before,
+.building[data-roof='antenna']::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 100%;
+  width: max(2px, 1.5%);
+  height: clamp(32px, 9svh, 100px);
+  transform: translateX(-50%);
+  background: #090b14;
+  box-shadow: 0 0 8px rgba(215, 81, 55, 0.16);
+}
+
+.building[data-roof='spire']::after {
+  content: '';
+  position: absolute;
+  left: 16%;
+  bottom: 100%;
+  width: 68%;
+  height: clamp(30px, 7svh, 76px);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: #101321;
+}
+
+.windows {
+  position: absolute;
+  inset: 13% 12% 7%;
+  opacity: 0.68;
+  background-color: #e79b5c;
+  background-image: linear-gradient(180deg, rgba(255, 236, 172, 0.88), rgba(179, 92, 61, 0.46));
+  -webkit-mask:
+    repeating-linear-gradient(90deg, #000 0 34%, transparent 34% 100%) 0 0 / clamp(13px, 1.7vw, 26px) 100%,
+    repeating-linear-gradient(180deg, #000 0 42%, transparent 42% 100%) 0 0 / 100% clamp(17px, 2.8svh, 32px);
+  -webkit-mask-composite: source-in;
+  mask:
+    repeating-linear-gradient(90deg, #000 0 34%, transparent 34% 100%) 0 0 / clamp(13px, 1.7vw, 26px) 100%,
+    repeating-linear-gradient(180deg, #000 0 42%, transparent 42% 100%) 0 0 / 100% clamp(17px, 2.8svh, 32px);
+  mask-composite: intersect;
+}
+
+.building[data-light='cool'] .windows {
+  opacity: 0.48;
+  background-color: #82a8bb;
+  background-image: linear-gradient(180deg, #9fc1c8, #526981);
+}
+
+.distant .windows {
+  inset: 12% 16% 8%;
+  opacity: 0.23;
+}
+
+.ground {
+  position: absolute;
+  z-index: 4;
+  inset: auto 0 0;
+  height: var(--ground-height);
+  background: #010204;
+  border-top: 2px solid rgba(116, 76, 76, 0.32);
+  box-shadow: 0 -18px 40px rgba(0, 0, 0, 0.38);
+}
+
+@media (max-width: 700px) {
+  .background {
+    --ground-height: clamp(78px, 13svh, 116px);
+  }
+
+  .foregroundSkyline {
+    width: 142%;
+    left: -21%;
+  }
+
+  .distantSkyline {
+    width: 126%;
+    left: -13%;
+  }
+
+  .cloudThree {
+    left: -5%;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .background {
+    --ground-height: clamp(46px, 14svh, 74px);
+  }
+
+  .building {
+    height: clamp(110px, var(--building-height), 390px);
+  }
+
+  .cloud {
+    opacity: 0.16;
+  }
+}
