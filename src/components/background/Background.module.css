@@ -14,11 +14,11 @@
   background:
     linear-gradient(
       180deg,
-      #02050e 0%,
-      #0a1024 24%,
-      #27213a 51%,
-      #713b47 74%,
-      #cf704f 100%
+      #080001 0%,
+      #180002 24%,
+      #350004 51%,
+      #600006 74%,
+      #920008 100%
     );
 }
 
@@ -26,7 +26,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.42;
+  opacity: 0.16;
   background:
     radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.13) 0 1px, transparent 1.5px),
     radial-gradient(circle at 74% 11%, rgba(255, 255, 255, 0.11) 0 1px, transparent 1.5px),
@@ -39,7 +39,7 @@
   position: absolute;
   inset: auto -10% 15% -10%;
   height: 42%;
-  background: linear-gradient(180deg, transparent, rgba(244, 122, 76, 0.2));
+  background: linear-gradient(180deg, transparent, rgba(126, 0, 7, 0.16));
   filter: blur(24px);
 }
 
@@ -51,7 +51,7 @@
   height: 48%;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(255, 151, 83, 0.34), transparent 68%);
+  background: radial-gradient(ellipse, rgba(167, 4, 12, 0.16), transparent 68%);
   filter: blur(18px);
 }
 
@@ -183,7 +183,7 @@
   --window-cell-size: clamp(9px, 0.9vw, 15px);
   position: absolute;
   inset: 13% 12% 7%;
-  opacity: 0.68;
+  opacity: 0.48;
   background-color: #e79b5c;
   background-image: linear-gradient(180deg, rgba(255, 236, 172, 0.88), rgba(179, 92, 61, 0.46));
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Crect x='3' y='3' width='9' height='9' rx='1' fill='white'/%3E%3C/svg%3E");
@@ -197,7 +197,7 @@
 }
 
 .building[data-light='cool'] .windows {
-  opacity: 0.48;
+  opacity: 0.34;
   background-color: #82a8bb;
   background-image: linear-gradient(180deg, #9fc1c8, #526981);
 }
