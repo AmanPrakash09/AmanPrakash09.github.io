@@ -1,5 +1,5 @@
 .background {
-  --ground-height: clamp(72px, 12svh, 132px);
+  --ground-height: clamp(42px, 7svh, 76px);
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -218,7 +218,7 @@
 
 @media (max-width: 700px) {
   .background {
-    --ground-height: clamp(78px, 13svh, 116px);
+    --ground-height: clamp(48px, 8svh, 72px);
   }
 
   .foregroundSkyline {
@@ -238,7 +238,7 @@
 
 @media (max-height: 520px) and (orientation: landscape) {
   .background {
-    --ground-height: clamp(46px, 14svh, 74px);
+    --ground-height: clamp(30px, 8svh, 46px);
   }
 
   .building {
