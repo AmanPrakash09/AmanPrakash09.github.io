@@ -215,13 +215,35 @@
 .batman {
   position: absolute;
   z-index: 5;
-  left: clamp(18px, 7vw, 110px);
+  left: 0;
   bottom: calc(var(--ground-height) - 1px);
   width: 42px;
   aspect-ratio: 15 / 16;
-  overflow: hidden;
   pointer-events: none;
+  transform: translate3d(clamp(18px, 7vw, 110px), 0, 0);
+  will-change: transform;
+}
+
+.batmanFrame {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  overflow: hidden;
   filter: drop-shadow(0 5px 4px rgba(0, 0, 0, 0.5));
+}
+
+.grappleLine {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 72%;
+  width: 1px;
+  height: 0;
+  opacity: 0;
+  transform-origin: bottom center;
+  background: linear-gradient(180deg, rgba(220, 224, 229, 0.42), rgba(137, 143, 153, 0.88));
+  box-shadow: 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
 .batmanSpriteSheet {
