@@ -121,6 +121,7 @@
 
 .building {
   position: absolute;
+  z-index: var(--building-stack);
   left: var(--building-left);
   bottom: 0;
   width: var(--building-width);

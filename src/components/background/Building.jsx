@@ -7,6 +7,7 @@ export function Building({ building, depth }) {
     '--building-left': `${building.left}%`,
     '--building-width': `${building.width}%`,
     '--building-height': `${building.height}svh`,
+    '--building-stack': building.stack,
   };
 
   return (
