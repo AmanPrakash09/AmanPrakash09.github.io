@@ -301,6 +301,21 @@
   will-change: auto;
 }
 
+.batman[data-motion='perched'] .batmanFrame {
+  inset: auto auto -2px 50%;
+  width: 125%;
+  height: 81.25%;
+  transform: translateX(-50%);
+}
+
+.batman[data-motion='perched'] .batmanSpriteSheet {
+  top: -982.6923%;
+  left: -2386.6667%;
+  width: 3413.3333%;
+  animation: none;
+  will-change: auto;
+}
+
 @keyframes batmanStanding {
   0%,
   16.66% {
