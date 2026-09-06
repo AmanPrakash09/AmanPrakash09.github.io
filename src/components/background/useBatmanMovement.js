@@ -201,6 +201,13 @@ export function useBatmanMovement({ batmanRef, grappleLineRef, sceneRef, skyline
 
         const destination = chooseDropPosition(current, scene.clientWidth, batman.offsetWidth);
         const dropDistance = Math.hypot(destination.x - current.x, destination.y - current.y);
+        const horizontalDistance = destination.x - current.x;
+        batman.dataset.descent =
+          Math.abs(horizontalDistance) < 1
+            ? 'vertical'
+            : horizontalDistance > 0
+              ? 'diagonal-right'
+              : 'diagonal-left';
         batman.dataset.motion = 'dropping';
         if (
           !(await moveBatman(destination, {
@@ -212,6 +219,7 @@ export function useBatmanMovement({ batmanRef, grappleLineRef, sceneRef, skyline
         }
 
         batman.dataset.motion = 'grounded';
+        delete batman.dataset.descent;
         if (!(await wait(randomBetween(...GROUND_PAUSE)))) return;
       }
     };

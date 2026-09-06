@@ -266,6 +266,26 @@
   will-change: transform;
 }
 
+.batman[data-motion='dropping'][data-descent^='diagonal'] .batmanFrame {
+  right: auto;
+  left: 50%;
+  width: 201.5873%;
+  transform: translateX(-50%);
+  transform-origin: center;
+}
+
+.batman[data-motion='dropping'][data-descent='diagonal-left'] .batmanFrame {
+  transform: translateX(-50%) scaleX(-1);
+}
+
+.batman[data-motion='dropping'][data-descent^='diagonal'] .batmanSpriteSheet {
+  top: -868.75%;
+  left: -527.9412%;
+  width: 1882.3529%;
+  animation: none;
+  will-change: auto;
+}
+
 @keyframes batmanStanding {
   0%,
   16.66% {
