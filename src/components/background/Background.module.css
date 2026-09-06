@@ -131,7 +131,6 @@
 .distant {
   background: linear-gradient(90deg, #111426, #24243a 52%, #0b0e1b);
   border-top: 1px solid rgba(176, 126, 120, 0.22);
-  box-shadow: inset -8px 0 rgba(0, 0, 0, 0.18);
 }
 
 .foreground {
@@ -140,9 +139,6 @@
     linear-gradient(90deg, #080b14, #171827 58%, #05070d);
   border: 1px solid rgba(110, 100, 118, 0.24);
   border-bottom: 0;
-  box-shadow:
-    inset -12px 0 rgba(0, 0, 0, 0.28),
-    -12px 0 28px rgba(0, 0, 0, 0.16);
 }
 
 .building[data-roof='stepped'] {
@@ -183,19 +179,20 @@
 }
 
 .windows {
+  --window-cell-size: clamp(16px, 1.8vw, 27px);
   position: absolute;
   inset: 13% 12% 7%;
   opacity: 0.68;
   background-color: #e79b5c;
   background-image: linear-gradient(180deg, rgba(255, 236, 172, 0.88), rgba(179, 92, 61, 0.46));
-  -webkit-mask:
-    repeating-linear-gradient(90deg, #000 0 34%, transparent 34% 100%) 0 0 / clamp(13px, 1.7vw, 26px) 100%,
-    repeating-linear-gradient(180deg, #000 0 42%, transparent 42% 100%) 0 0 / 100% clamp(17px, 2.8svh, 32px);
-  -webkit-mask-composite: source-in;
-  mask:
-    repeating-linear-gradient(90deg, #000 0 34%, transparent 34% 100%) 0 0 / clamp(13px, 1.7vw, 26px) 100%,
-    repeating-linear-gradient(180deg, #000 0 42%, transparent 42% 100%) 0 0 / 100% clamp(17px, 2.8svh, 32px);
-  mask-composite: intersect;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Crect x='3' y='3' width='9' height='9' rx='1' fill='white'/%3E%3C/svg%3E");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: space;
+  -webkit-mask-size: var(--window-cell-size) var(--window-cell-size);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Crect x='3' y='3' width='9' height='9' rx='1' fill='white'/%3E%3C/svg%3E");
+  mask-position: center;
+  mask-repeat: space;
+  mask-size: var(--window-cell-size) var(--window-cell-size);
 }
 
 .building[data-light='cool'] .windows {
