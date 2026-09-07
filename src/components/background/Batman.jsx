@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import batmanMeleeSprites from '../../assets/background/batman_melee.png';
 import batmanSprites from '../../assets/background/batman_sprites.png';
 import styles from './Background.module.css';
 import { Joker } from './Joker';
@@ -14,6 +15,7 @@ export function Batman({ sceneRef, skylineRef }) {
   const [direction, setDirection] = useState('right');
   const [descent, setDescent] = useState(null);
   const [joker, setJoker] = useState({ visible: false, direction: 'left' });
+  const activeSprites = motion === 'melee-attacking' ? batmanMeleeSprites : batmanSprites;
 
   useBatmanMovement({
     batmanRef,
@@ -39,7 +41,7 @@ export function Batman({ sceneRef, skylineRef }) {
       >
         <span ref={grappleLineRef} className={styles.grappleLine} />
         <span className={styles.batmanFrame}>
-          <img className={styles.batmanSpriteSheet} src={batmanSprites} alt="" />
+          <img className={styles.batmanSpriteSheet} src={activeSprites} alt="" />
         </span>
       </div>
       <Joker jokerRef={jokerRef} visible={joker.visible} direction={joker.direction} />

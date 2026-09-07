@@ -7,7 +7,7 @@ const GROUND_PAUSE = [700, 1500];
 const JOKER_ENCOUNTER_CHANCE = 0.5;
 const JOKER_DISTANT_SPAWN_CHANCE = 0.65;
 const JOKER_SPAWN_LEAD = 100;
-const JOKER_ENCOUNTER_DURATION = 3000;
+const MELEE_ATTACK_DURATION = 1000;
 
 const randomBetween = (minimum, maximum) => minimum + Math.random() * (maximum - minimum);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
@@ -312,9 +312,11 @@ export function useBatmanMovement({
       if (!(await wait(JOKER_SPAWN_LEAD))) return false;
 
       if (!(await dropBatman(batmanDestination))) return false;
-      if (!(await wait(JOKER_ENCOUNTER_DURATION))) return false;
+      setMotion('melee-attacking');
+      if (!(await wait(MELEE_ATTACK_DURATION))) return false;
 
       setJoker({ visible: false, direction: currentDirection === 'right' ? 'left' : 'right' });
+      setMotion('grounded');
       return true;
     };
 

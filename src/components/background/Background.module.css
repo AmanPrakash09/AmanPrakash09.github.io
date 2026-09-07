@@ -366,6 +366,23 @@
   transform: scaleX(-1);
 }
 
+.batman[data-motion='melee-attacking'] .batmanFrame {
+  inset: auto auto -3px 50%;
+  width: 183.3333%;
+  height: 112.5%;
+  transform: translateX(-50%);
+}
+
+.batman[data-motion='melee-attacking'][data-direction='left'] .batmanFrame {
+  transform: translateX(-50%) scaleX(-1);
+}
+
+.batman[data-motion='melee-attacking'] .batmanSpriteSheet {
+  inset: 0 auto auto 0;
+  width: 1000%;
+  animation: batmanMeleeAttack 1000ms linear 1 forwards;
+}
+
 .joker {
   position: absolute;
   z-index: 5;
@@ -444,6 +461,58 @@
   85.71%,
   100% {
     transform: translateX(-85.7143%);
+  }
+}
+
+@keyframes batmanMeleeAttack {
+  0%,
+  9.99% {
+    transform: translateX(0);
+  }
+
+  10%,
+  19.99% {
+    transform: translateX(-10%);
+  }
+
+  20%,
+  29.99% {
+    transform: translateX(-20%);
+  }
+
+  30%,
+  39.99% {
+    transform: translateX(-30%);
+  }
+
+  40%,
+  49.99% {
+    transform: translateX(-40%);
+  }
+
+  50%,
+  59.99% {
+    transform: translateX(-50%);
+  }
+
+  60%,
+  69.99% {
+    transform: translateX(-60%);
+  }
+
+  70%,
+  79.99% {
+    transform: translateX(-70%);
+  }
+
+  80%,
+  89.99% {
+    transform: translateX(-80%);
+  }
+
+  90%,
+  100% {
+    transform: translateX(-90%);
   }
 }
 
