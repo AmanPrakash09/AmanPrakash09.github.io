@@ -21,15 +21,27 @@
 .title {
   width: 9ch;
   margin-bottom: clamp(12px, 2.5svh, 28px);
-  overflow: hidden;
-  border-right: 0.12em solid var(--color-text);
   color: var(--color-text);
   font-family: var(--font-vt323);
   font-size: clamp(46px, 6vw, 76px);
   font-weight: 900;
   line-height: 0.95;
   white-space: nowrap;
-  animation: typing 1.5s steps(9, end) forwards, blinkCaret 750ms step-end infinite;
+}
+
+.typedText {
+  white-space: pre;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.11em;
+  height: 0.78em;
+  margin-left: 0.055em;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  vertical-align: -0.02em;
+  animation: blinkCursor 680ms steps(1, end) infinite;
 }
 
 .description {
@@ -51,13 +63,9 @@
   animation: floating 3s ease-in-out infinite;
 }
 
-@keyframes typing {
-  from { width: 0; }
-  to { width: 9ch; }
-}
-
-@keyframes blinkCaret {
-  50% { border-color: transparent; }
+@keyframes blinkCursor {
+  0%, 44% { opacity: 1; }
+  45%, 100% { opacity: 0; }
 }
 
 @keyframes slideIn {
@@ -124,9 +132,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .title,
   .description,
   .heroImg {
+    animation: none;
+  }
+
+  .cursor {
     animation: none;
   }
 }
