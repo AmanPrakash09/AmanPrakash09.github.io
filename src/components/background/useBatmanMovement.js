@@ -5,6 +5,7 @@ const GRAPPLE_SHOT_DURATION = 450;
 const ROOFTOP_PAUSE = [1800, 3600];
 const GROUND_PAUSE = [700, 1500];
 const JOKER_ENCOUNTER_CHANCE = 0.5;
+const JOKER_DISTANT_SPAWN_CHANCE = 0.65;
 const JOKER_SPAWN_LEAD = 100;
 const JOKER_ENCOUNTER_DURATION = 3000;
 
@@ -227,7 +228,7 @@ export function useBatmanMovement({
       setMotion('dropping');
 
       const completed = await moveBatman(destination, {
-        duration: clamp(dropDistance * 1.45, 500, 1050),
+        duration: clamp(dropDistance * 1.45, 500, 1800),
         easing: 'cubic-bezier(0.45, 0, 0.9, 0.55)',
       });
 
@@ -238,28 +239,79 @@ export function useBatmanMovement({
       return true;
     };
 
-    const spawnJoker = () => {
-      const gap = randomBetween(6, 10);
-      const maximumX = Math.max(0, scene.clientWidth - joker.offsetWidth);
-      const positionJoker = () =>
-        currentDirection === 'right' ? current.x + batman.offsetWidth + gap : current.x - joker.offsetWidth - gap;
+    const chooseNearbyJokerEncounter = (gap) => {
+      const batmanWidth = batman.offsetWidth;
+      const jokerWidth = joker.offsetWidth;
+      const maximumJokerX = Math.max(0, scene.clientWidth - jokerWidth);
+      const maximumBatmanX = Math.max(0, scene.clientWidth - batmanWidth);
+      const positionJoker = (direction) =>
+        direction === 'right' ? current.x + batmanWidth + gap : current.x - jokerWidth - gap;
+      let batmanDirection = currentDirection;
+      let jokerX = positionJoker(batmanDirection);
 
-      let jokerX = positionJoker();
-      if (jokerX < 0 || jokerX > maximumX) {
-        face(currentDirection === 'right' ? 'left' : 'right');
-        jokerX = positionJoker();
+      if (jokerX < 0 || jokerX > maximumJokerX) {
+        batmanDirection = batmanDirection === 'right' ? 'left' : 'right';
+        jokerX = positionJoker(batmanDirection);
       }
 
-      const jokerDirection = currentDirection === 'right' ? 'left' : 'right';
-      joker.style.transform = translate({ x: clamp(jokerX, 0, maximumX), y: 0 });
-      setJoker({ visible: true, direction: jokerDirection });
+      return {
+        batmanDirection,
+        batmanDestination: { x: clamp(current.x, 0, maximumBatmanX), y: 0 },
+        jokerDirection: batmanDirection === 'right' ? 'left' : 'right',
+        jokerX: clamp(jokerX, 0, maximumJokerX),
+      };
+    };
+
+    const chooseDistantJokerEncounter = (gap) => {
+      const batmanWidth = batman.offsetWidth;
+      const jokerWidth = joker.offsetWidth;
+      const maximumJokerX = Math.max(0, scene.clientWidth - jokerWidth);
+      const maximumBatmanX = Math.max(0, scene.clientWidth - batmanWidth);
+      const minimumGlide = clamp(scene.clientWidth * 0.18, 80, 240);
+      const leftMaximum = current.x - minimumGlide - jokerWidth - gap;
+      const rightMinimum = current.x + minimumGlide + batmanWidth + gap;
+      const availableDirections = [];
+
+      if (leftMaximum >= 0) availableDirections.push('left');
+      if (rightMinimum <= maximumJokerX) availableDirections.push('right');
+      if (availableDirections.length === 0) return null;
+
+      const batmanDirection =
+        availableDirections[Math.floor(Math.random() * availableDirections.length)];
+      const jokerX =
+        batmanDirection === 'left'
+          ? randomBetween(0, leftMaximum)
+          : randomBetween(rightMinimum, maximumJokerX);
+      const batmanX =
+        batmanDirection === 'left'
+          ? jokerX + jokerWidth + gap
+          : jokerX - batmanWidth - gap;
+
+      return {
+        batmanDirection,
+        batmanDestination: { x: clamp(batmanX, 0, maximumBatmanX), y: 0 },
+        jokerDirection: batmanDirection === 'right' ? 'left' : 'right',
+        jokerX,
+      };
+    };
+
+    const spawnJoker = () => {
+      const gap = randomBetween(6, 10);
+      const distantEncounter =
+        Math.random() < JOKER_DISTANT_SPAWN_CHANCE ? chooseDistantJokerEncounter(gap) : null;
+      const encounter = distantEncounter ?? chooseNearbyJokerEncounter(gap);
+
+      face(encounter.batmanDirection);
+      joker.style.transform = translate({ x: encounter.jokerX, y: 0 });
+      setJoker({ visible: true, direction: encounter.jokerDirection });
+      return encounter.batmanDestination;
     };
 
     const runJokerEncounter = async () => {
-      spawnJoker();
+      const batmanDestination = spawnJoker();
       if (!(await wait(JOKER_SPAWN_LEAD))) return false;
 
-      if (!(await dropBatman({ x: current.x, y: 0 }))) return false;
+      if (!(await dropBatman(batmanDestination))) return false;
       if (!(await wait(JOKER_ENCOUNTER_DURATION))) return false;
 
       setJoker({ visible: false, direction: currentDirection === 'right' ? 'left' : 'right' });

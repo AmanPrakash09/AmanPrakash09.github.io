@@ -401,44 +401,49 @@
   position: absolute;
   inset: 0 auto auto 0;
   display: block;
-  width: 600%;
+  width: 700%;
   max-width: none;
   height: auto;
 }
 
 .joker[data-visible='true'] .jokerSpriteSheet {
-  animation: jokerTaunt 900ms linear infinite;
+  animation: jokerTaunt 1050ms linear infinite;
 }
 
 @keyframes jokerTaunt {
   0%,
-  16.66% {
+  14.28% {
     transform: translateX(0);
   }
 
-  16.67%,
-  33.32% {
-    transform: translateX(-16.6667%);
+  14.29%,
+  28.56% {
+    transform: translateX(-14.2857%);
   }
 
-  33.33%,
-  49.99% {
-    transform: translateX(-33.3333%);
+  28.57%,
+  42.85% {
+    transform: translateX(-28.5714%);
   }
 
-  50%,
-  66.66% {
-    transform: translateX(-50%);
+  42.86%,
+  57.13% {
+    transform: translateX(-42.8571%);
   }
 
-  66.67%,
-  83.32% {
-    transform: translateX(-66.6667%);
+  57.14%,
+  71.42% {
+    transform: translateX(-57.1429%);
   }
 
-  83.33%,
+  71.43%,
+  85.7% {
+    transform: translateX(-71.4286%);
+  }
+
+  85.71%,
   100% {
-    transform: translateX(-83.3333%);
+    transform: translateX(-85.7143%);
   }
 }
 
