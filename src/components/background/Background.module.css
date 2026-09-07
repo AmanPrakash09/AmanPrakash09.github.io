@@ -462,8 +462,8 @@
 }
 
 .joker[data-damage='falling'] .jokerSpriteSheet {
-  width: 300%;
-  animation: jokerDamageFall 600ms linear 1 forwards;
+  width: 400%;
+  animation: jokerDamageFall 800ms linear 1 forwards;
 }
 
 .jokerSmoke {
@@ -679,18 +679,23 @@
 
 @keyframes jokerDamageFall {
   0%,
-  33.32% {
+  24.99% {
     transform: translateX(0);
   }
 
-  33.33%,
-  66.65% {
-    transform: translateX(-33.3333%);
+  25%,
+  49.99% {
+    transform: translateX(-25%);
   }
 
-  66.66%,
+  50%,
+  74.99% {
+    transform: translateX(-50%);
+  }
+
+  75%,
   100% {
-    transform: translateX(-66.6667%);
+    transform: translateX(-75%);
   }
 }
 

@@ -11,7 +11,7 @@ const JOKER_REVEAL_DELAY = 300;
 const JOKER_DAMAGE_FRAME_DURATION = 130;
 const JOKER_HIT_DURATION = JOKER_DAMAGE_FRAME_DURATION * 3 * 2;
 const JOKER_COLLAPSE_DURATION = JOKER_DAMAGE_FRAME_DURATION * 4;
-const JOKER_FALL_DURATION = 600;
+const JOKER_FALL_DURATION = 800;
 
 const randomBetween = (minimum, maximum) => minimum + Math.random() * (maximum - minimum);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
