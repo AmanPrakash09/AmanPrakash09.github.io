@@ -19,7 +19,7 @@
 .title,
 .menuItems button {
   border: 0;
-  color: var(--color-text);
+  color: var(--color-signal-yellow);
   font-family: var(--font-vt323);
   background: transparent;
   cursor: pointer;
