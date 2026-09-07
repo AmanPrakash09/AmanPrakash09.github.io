@@ -8,7 +8,9 @@ const JOKER_ENCOUNTER_CHANCE = 0.5;
 const JOKER_DISTANT_SPAWN_CHANCE = 0.65;
 const JOKER_SMOKE_DURATION = 1000;
 const JOKER_REVEAL_DELAY = 300;
-const MELEE_ATTACK_DURATION = 1000;
+const JOKER_DAMAGE_FRAME_DURATION = 130;
+const JOKER_HIT_DURATION = JOKER_DAMAGE_FRAME_DURATION * 3 * 2;
+const JOKER_COLLAPSE_DURATION = JOKER_DAMAGE_FRAME_DURATION * 4;
 
 const randomBetween = (minimum, maximum) => minimum + Math.random() * (maximum - minimum);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
@@ -304,7 +306,12 @@ export function useBatmanMovement({
 
       face(encounter.batmanDirection);
       joker.style.transform = translate({ x: encounter.jokerX, y: 0 });
-      setJoker({ visible: false, smokeVisible: true, direction: encounter.jokerDirection });
+      setJoker({
+        visible: false,
+        smokeVisible: true,
+        direction: encounter.jokerDirection,
+        damage: null,
+      });
       return encounter.batmanDestination;
     };
 
@@ -317,13 +324,19 @@ export function useBatmanMovement({
 
       setJoker((currentJoker) => ({ ...currentJoker, smokeVisible: false }));
       if (!(await dropBatman(batmanDestination))) return false;
+
       setMotion('melee-attacking');
-      if (!(await wait(MELEE_ATTACK_DURATION))) return false;
+      setJoker((currentJoker) => ({ ...currentJoker, damage: 'hit' }));
+      if (!(await wait(JOKER_HIT_DURATION))) return false;
+
+      setJoker((currentJoker) => ({ ...currentJoker, damage: 'collapse' }));
+      if (!(await wait(JOKER_COLLAPSE_DURATION))) return false;
 
       setJoker({
         visible: false,
         smokeVisible: false,
         direction: currentDirection === 'right' ? 'left' : 'right',
+        damage: null,
       });
       setMotion('grounded');
       return true;
@@ -370,7 +383,7 @@ export function useBatmanMovement({
         resolve(false);
       });
       timers.clear();
-      setJoker({ visible: false, smokeVisible: false, direction: 'left' });
+      setJoker({ visible: false, smokeVisible: false, direction: 'left', damage: null });
       hideGrappleLine();
       animations.forEach((animation) => animation.cancel());
     };

@@ -380,7 +380,7 @@
 .batman[data-motion='melee-attacking'] .batmanSpriteSheet {
   inset: 0 auto auto 0;
   width: 1000%;
-  animation: batmanMeleeAttack 1000ms linear 1 forwards;
+  animation: batmanMeleeAttack 1000ms linear infinite;
 }
 
 .joker {
@@ -430,6 +430,31 @@
 
 .joker[data-visible='true'] .jokerSpriteSheet {
   animation: jokerTaunt 1050ms linear infinite;
+}
+
+.joker[data-damage] .jokerFrame {
+  inset: auto auto 0 50%;
+  width: 115.3846%;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.joker[data-damage][data-direction='left'] .jokerFrame {
+  transform: translateX(-50%) scaleX(-1);
+}
+
+.joker[data-damage] .jokerSpriteSheet {
+  inset: 0 auto auto 0;
+}
+
+.joker[data-damage='hit'] .jokerSpriteSheet {
+  width: 300%;
+  animation: jokerDamageHit 390ms linear 2;
+}
+
+.joker[data-damage='collapse'] .jokerSpriteSheet {
+  width: 400%;
+  animation: jokerDamageCollapse 520ms linear 1 forwards;
 }
 
 .jokerSmoke {
@@ -601,6 +626,45 @@
   90%,
   100% {
     transform: translateX(-90%);
+  }
+}
+
+@keyframes jokerDamageHit {
+  0%,
+  33.32% {
+    transform: translateX(0);
+  }
+
+  33.33%,
+  66.65% {
+    transform: translateX(-33.3333%);
+  }
+
+  66.66%,
+  100% {
+    transform: translateX(-66.6667%);
+  }
+}
+
+@keyframes jokerDamageCollapse {
+  0%,
+  24.99% {
+    transform: translateX(0);
+  }
+
+  25%,
+  49.99% {
+    transform: translateX(-25%);
+  }
+
+  50%,
+  74.99% {
+    transform: translateX(-50%);
+  }
+
+  75%,
+  100% {
+    transform: translateX(-75%);
   }
 }
 

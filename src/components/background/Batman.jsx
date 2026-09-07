@@ -14,7 +14,12 @@ export function Batman({ sceneRef, skylineRef }) {
   const [motion, setMotion] = useState('grounded');
   const [direction, setDirection] = useState('right');
   const [descent, setDescent] = useState(null);
-  const [joker, setJoker] = useState({ visible: false, smokeVisible: false, direction: 'left' });
+  const [joker, setJoker] = useState({
+    visible: false,
+    smokeVisible: false,
+    direction: 'left',
+    damage: null,
+  });
   const activeSprites = motion === 'melee-attacking' ? batmanMeleeSprites : batmanSprites;
 
   useBatmanMovement({
@@ -49,6 +54,7 @@ export function Batman({ sceneRef, skylineRef }) {
         visible={joker.visible}
         smokeVisible={joker.smokeVisible}
         direction={joker.direction}
+        damage={joker.damage}
       />
     </>
   );
