@@ -127,7 +127,6 @@ export const Experience = () => {
         {renderExperienceDetails()}
       </div>
       {renderModal()}
-      <div className={styles.middleBlur} />
     </div>
   );
 };

@@ -122,7 +122,6 @@ export const Projects = () => {
         {renderProjectDetails()}
       </div>
       {renderModal()}
-      <div className={styles.bottomBlur} />
     </div>
   );
 };

@@ -51,28 +51,6 @@
   animation: floating 3s ease-in-out infinite;
 }
 
-.topBlur,
-.bottomBlur {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(75, 132, 194, 0.22);
-  filter: blur(70px);
-}
-
-.topBlur {
-  top: -35%;
-  left: -8%;
-  width: 55%;
-  height: 85%;
-}
-
-.bottomBlur {
-  right: -12%;
-  bottom: -45%;
-  width: 65%;
-  height: 90%;
-}
-
 @keyframes typing {
   from { width: 0; }
   to { width: 9ch; }
