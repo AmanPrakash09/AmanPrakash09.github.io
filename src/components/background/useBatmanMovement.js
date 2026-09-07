@@ -12,6 +12,7 @@ const JOKER_DAMAGE_FRAME_DURATION = 130;
 const JOKER_HIT_DURATION = JOKER_DAMAGE_FRAME_DURATION * 3 * 2;
 const JOKER_COLLAPSE_DURATION = JOKER_DAMAGE_FRAME_DURATION * 4;
 const JOKER_FALL_DURATION = 800;
+const JOKER_MELEE_GAP = 0;
 
 const randomBetween = (minimum, maximum) => minimum + Math.random() * (maximum - minimum);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
@@ -300,10 +301,11 @@ export function useBatmanMovement({
     };
 
     const spawnJoker = () => {
-      const gap = randomBetween(6, 10);
       const distantEncounter =
-        Math.random() < JOKER_DISTANT_SPAWN_CHANCE ? chooseDistantJokerEncounter(gap) : null;
-      const encounter = distantEncounter ?? chooseNearbyJokerEncounter(gap);
+        Math.random() < JOKER_DISTANT_SPAWN_CHANCE
+          ? chooseDistantJokerEncounter(JOKER_MELEE_GAP)
+          : null;
+      const encounter = distantEncounter ?? chooseNearbyJokerEncounter(JOKER_MELEE_GAP);
 
       face(encounter.batmanDirection);
       joker.style.transform = translate({ x: encounter.jokerX, y: 0 });
