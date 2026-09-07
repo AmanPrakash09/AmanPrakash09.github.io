@@ -6,7 +6,8 @@ const ROOFTOP_PAUSE = [1800, 3600];
 const GROUND_PAUSE = [700, 1500];
 const JOKER_ENCOUNTER_CHANCE = 0.5;
 const JOKER_DISTANT_SPAWN_CHANCE = 0.65;
-const JOKER_SPAWN_LEAD = 100;
+const JOKER_SMOKE_DURATION = 1000;
+const JOKER_REVEAL_DELAY = 300;
 const MELEE_ATTACK_DURATION = 1000;
 
 const randomBetween = (minimum, maximum) => minimum + Math.random() * (maximum - minimum);
@@ -303,19 +304,27 @@ export function useBatmanMovement({
 
       face(encounter.batmanDirection);
       joker.style.transform = translate({ x: encounter.jokerX, y: 0 });
-      setJoker({ visible: true, direction: encounter.jokerDirection });
+      setJoker({ visible: false, smokeVisible: true, direction: encounter.jokerDirection });
       return encounter.batmanDestination;
     };
 
     const runJokerEncounter = async () => {
       const batmanDestination = spawnJoker();
-      if (!(await wait(JOKER_SPAWN_LEAD))) return false;
+      if (!(await wait(JOKER_REVEAL_DELAY))) return false;
 
+      setJoker((currentJoker) => ({ ...currentJoker, visible: true }));
+      if (!(await wait(JOKER_SMOKE_DURATION - JOKER_REVEAL_DELAY))) return false;
+
+      setJoker((currentJoker) => ({ ...currentJoker, smokeVisible: false }));
       if (!(await dropBatman(batmanDestination))) return false;
       setMotion('melee-attacking');
       if (!(await wait(MELEE_ATTACK_DURATION))) return false;
 
-      setJoker({ visible: false, direction: currentDirection === 'right' ? 'left' : 'right' });
+      setJoker({
+        visible: false,
+        smokeVisible: false,
+        direction: currentDirection === 'right' ? 'left' : 'right',
+      });
       setMotion('grounded');
       return true;
     };
@@ -361,7 +370,7 @@ export function useBatmanMovement({
         resolve(false);
       });
       timers.clear();
-      setJoker({ visible: false, direction: 'left' });
+      setJoker({ visible: false, smokeVisible: false, direction: 'left' });
       hideGrappleLine();
       animations.forEach((animation) => animation.cancel());
     };
