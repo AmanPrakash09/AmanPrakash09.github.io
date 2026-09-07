@@ -4,6 +4,9 @@ const ASCENT_DELAY = [900, 1800];
 const GRAPPLE_SHOT_DURATION = 450;
 const ROOFTOP_PAUSE = [1800, 3600];
 const GROUND_PAUSE = [700, 1500];
+const JOKER_ENCOUNTER_CHANCE = 0.5;
+const JOKER_SPAWN_LEAD = 100;
+const JOKER_ENCOUNTER_DURATION = 3000;
 
 const randomBetween = (minimum, maximum) => minimum + Math.random() * (maximum - minimum);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
@@ -79,19 +82,22 @@ function chooseDropPosition(current, sceneWidth, batmanWidth) {
 export function useBatmanMovement({
   batmanRef,
   grappleLineRef,
+  jokerRef,
   sceneRef,
   skylineRef,
   setMotion,
   setDirection,
   setDescent,
+  setJoker,
 }) {
   useEffect(() => {
     const batman = batmanRef.current;
     const grappleLine = grappleLineRef.current;
+    const joker = jokerRef.current;
     const scene = sceneRef.current;
     const skyline = skylineRef.current;
 
-    if (!batman || !grappleLine || !scene || !skyline) return undefined;
+    if (!batman || !grappleLine || !joker || !scene || !skyline) return undefined;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const timers = new Map();
@@ -99,6 +105,7 @@ export function useBatmanMovement({
     let isActive = true;
     let grappleFrame = null;
     let previousBuildingId = null;
+    let currentDirection = 'right';
     let current = {
       x: clamp(scene.clientWidth * 0.07, 18, Math.min(110, scene.clientWidth - batman.offsetWidth)),
       y: 0,
@@ -106,6 +113,11 @@ export function useBatmanMovement({
 
     const placeBatman = (position) => {
       batman.style.transform = translate(position);
+    };
+
+    const face = (direction) => {
+      currentDirection = direction;
+      setDirection(direction);
     };
 
     const wait = (duration) =>
@@ -204,6 +216,56 @@ export function useBatmanMovement({
       return completed;
     };
 
+    const dropBatman = async (destination) => {
+      const dropDistance = Math.hypot(destination.x - current.x, destination.y - current.y);
+      const horizontalDistance = destination.x - current.x;
+      const descent = Math.abs(horizontalDistance) < 1 ? 'vertical' : 'diagonal';
+
+      setDescent(descent);
+      if (horizontalDistance < -1) face('left');
+      if (horizontalDistance > 1) face('right');
+      setMotion('dropping');
+
+      const completed = await moveBatman(destination, {
+        duration: clamp(dropDistance * 1.45, 500, 1050),
+        easing: 'cubic-bezier(0.45, 0, 0.9, 0.55)',
+      });
+
+      if (!completed) return false;
+
+      setMotion('grounded');
+      setDescent(null);
+      return true;
+    };
+
+    const spawnJoker = () => {
+      const gap = randomBetween(6, 10);
+      const maximumX = Math.max(0, scene.clientWidth - joker.offsetWidth);
+      const positionJoker = () =>
+        currentDirection === 'right' ? current.x + batman.offsetWidth + gap : current.x - joker.offsetWidth - gap;
+
+      let jokerX = positionJoker();
+      if (jokerX < 0 || jokerX > maximumX) {
+        face(currentDirection === 'right' ? 'left' : 'right');
+        jokerX = positionJoker();
+      }
+
+      const jokerDirection = currentDirection === 'right' ? 'left' : 'right';
+      joker.style.transform = translate({ x: clamp(jokerX, 0, maximumX), y: 0 });
+      setJoker({ visible: true, direction: jokerDirection });
+    };
+
+    const runJokerEncounter = async () => {
+      spawnJoker();
+      if (!(await wait(JOKER_SPAWN_LEAD))) return false;
+
+      if (!(await dropBatman({ x: current.x, y: 0 }))) return false;
+      if (!(await wait(JOKER_ENCOUNTER_DURATION))) return false;
+
+      setJoker({ visible: false, direction: currentDirection === 'right' ? 'left' : 'right' });
+      return true;
+    };
+
     const runPatrol = async () => {
       placeBatman(current);
 
@@ -218,7 +280,7 @@ export function useBatmanMovement({
         }
 
         const grappleDirection = rooftop.x < current.x ? 'left' : 'right';
-        setDirection(grappleDirection);
+        face(grappleDirection);
         setMotion('grapple-shooting');
         if (!(await grappleTo(rooftop, grappleDirection))) return;
 
@@ -226,27 +288,13 @@ export function useBatmanMovement({
         setMotion('perched');
         if (!(await wait(randomBetween(...ROOFTOP_PAUSE)))) return;
 
-        const destination = chooseDropPosition(current, scene.clientWidth, batman.offsetWidth);
-        const dropDistance = Math.hypot(destination.x - current.x, destination.y - current.y);
-        const horizontalDistance = destination.x - current.x;
-        const descent = Math.abs(horizontalDistance) < 1 ? 'vertical' : 'diagonal';
-
-        setDescent(descent);
-        if (horizontalDistance < -1) setDirection('left');
-        if (horizontalDistance > 1) setDirection('right');
-        setMotion('dropping');
-        if (
-          !(await moveBatman(destination, {
-            duration: clamp(dropDistance * 1.45, 500, 1050),
-            easing: 'cubic-bezier(0.45, 0, 0.9, 0.55)',
-          }))
-        ) {
-          return;
+        if (Math.random() < JOKER_ENCOUNTER_CHANCE) {
+          if (!(await runJokerEncounter())) return;
+        } else {
+          const destination = chooseDropPosition(current, scene.clientWidth, batman.offsetWidth);
+          if (!(await dropBatman(destination))) return;
+          if (!(await wait(randomBetween(...GROUND_PAUSE)))) return;
         }
-
-        setMotion('grounded');
-        setDescent(null);
-        if (!(await wait(randomBetween(...GROUND_PAUSE)))) return;
       }
     };
 
@@ -259,8 +307,19 @@ export function useBatmanMovement({
         resolve(false);
       });
       timers.clear();
+      setJoker({ visible: false, direction: 'left' });
       hideGrappleLine();
       animations.forEach((animation) => animation.cancel());
     };
-  }, [batmanRef, grappleLineRef, sceneRef, setDescent, setDirection, setMotion, skylineRef]);
+  }, [
+    batmanRef,
+    grappleLineRef,
+    jokerRef,
+    sceneRef,
+    setDescent,
+    setDirection,
+    setJoker,
+    setMotion,
+    skylineRef,
+  ]);
 }
