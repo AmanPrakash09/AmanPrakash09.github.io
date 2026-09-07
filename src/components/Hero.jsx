@@ -7,7 +7,7 @@ export const Hero = () => {
       <div className={styles.content}>
         <h1 className={styles.title}>{"I'm Aman"}</h1>
         <p className={styles.description}>
-          {"I'm a driven Computer Engineering student at UBC, dedicated to crafting innovative and impactful projects that make a difference"}
+          {"I'm a Software Engineer who builds cool things"}
         </p>
       </div>
       <img
