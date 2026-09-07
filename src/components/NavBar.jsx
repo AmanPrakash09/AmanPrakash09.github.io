@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import styles from "./Navbar.module.css";
-import { getImageUrl } from "../utils";
+import { useState } from 'react';
+import styles from './NavBar.module.css';
+import { getImageUrl } from '../utils';
 
-export const NavBar = () => {
+/* Navigation configuration is owned by App and kept internal to the portfolio. */
+/* eslint-disable react/prop-types */
+export const NavBar = ({ activeSection, sections, onSectionChange }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY >= 1);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const selectSection = (section) => {
+    onSectionChange(section);
+    setMenuOpen(false);
+  };
 
   return (
-    <nav
-      className={`${styles.navbar} ${scrolled ? styles.active : ''}`}
-      aria-label="Primary"
-    >
-      <a className={styles.title} href="#top">
+    <nav className={styles.navbar} aria-label="Primary">
+      <button className={styles.title} type="button" onClick={() => selectSection('home')}>
         Aman Prakash
-      </a>
+      </button>
 
       <div className={styles.menu}>
         <button
@@ -28,11 +24,11 @@ export const NavBar = () => {
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
           aria-controls="primary-menu"
-          onClick={() => setMenuOpen(o => !o)}
+          onClick={() => setMenuOpen((open) => !open)}
           type="button"
         >
           <img
-            src={menuOpen ? getImageUrl("closeIcon.png") : getImageUrl("menuIcon.png")}
+            src={getImageUrl(menuOpen ? 'closeIcon.png' : 'menuIcon.png')}
             alt=""
             aria-hidden="true"
           />
@@ -41,11 +37,19 @@ export const NavBar = () => {
         <ul
           id="primary-menu"
           className={`${styles.menuItems} ${menuOpen ? styles.menuOpen : ''}`}
-          onClick={() => setMenuOpen(false)}
         >
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
+          {Object.entries(sections).map(([section, { label }]) => (
+            <li key={section}>
+              <button
+                className={activeSection === section ? styles.activeSection : ''}
+                type="button"
+                aria-current={activeSection === section ? 'page' : undefined}
+                onClick={() => selectSection(section)}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
         </ul>
 
         <div className={styles.icons}>
@@ -55,7 +59,7 @@ export const NavBar = () => {
             rel="noopener noreferrer"
             aria-label="LinkedIn"
           >
-            <img src={getImageUrl("LinkedIn.png")} alt="" loading="lazy" decoding="async" />
+            <img src={getImageUrl('LinkedIn.png')} alt="" decoding="async" />
           </a>
           <a
             href="https://github.com/AmanPrakash09"
@@ -63,10 +67,10 @@ export const NavBar = () => {
             rel="noopener noreferrer"
             aria-label="GitHub"
           >
-            <img src={getImageUrl("GitHub.png")} alt="" loading="lazy" decoding="async" />
+            <img src={getImageUrl('GitHub.png')} alt="" decoding="async" />
           </a>
           <a href="mailto:apraka01@student.ubc.ca" aria-label="Email Aman">
-            <img src={getImageUrl("Mail.png")} alt="" loading="lazy" decoding="async" />
+            <img src={getImageUrl('Mail.png')} alt="" decoding="async" />
           </a>
         </div>
       </div>

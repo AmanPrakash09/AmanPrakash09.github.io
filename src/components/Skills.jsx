@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './Skills.module.css';
 import { getImageUrl } from '../utils';
 
@@ -88,6 +88,7 @@ export const Skills = () => {
 
     // Cleanup event listener on component unmount
     return () => {
+      clearInterval(scrollIntervalRef.current);
       window.removeEventListener('resize', updateArrowsState);
     };
   }, [selectedTab]);

@@ -1,96 +1,159 @@
+@import '../vars.css';
+
 .skills {
-    position: relative;
-    padding: 20px;
-    margin-top: 40px;
-    z-index: 1;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: clamp(18px, 3vw, 44px);
+  overflow: hidden;
+}
+
+.tabsContainer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(8px, 1.5vw, 18px);
+}
+
+.tabs {
+  display: flex;
+  min-width: 0;
+  justify-content: center;
+  gap: clamp(5px, 1vw, 12px);
+}
+
+.tabButton,
+.scrollLeft,
+.scrollRight {
+  border: 1px solid rgba(180, 210, 238, 0.18);
+  color: white;
+  background: rgba(25, 55, 109, 0.85);
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+
+.tabButton {
+  min-width: 0;
+  padding: 8px clamp(9px, 2vw, 22px);
+  border-radius: 6px;
+}
+
+.tabs p {
+  color: var(--color-text);
+  font-family: var(--font-vt323);
+  font-size: clamp(18px, 2.2vw, 26px);
+  white-space: nowrap;
+}
+
+.tabButton:hover,
+.tabButton.active {
+  background: rgba(87, 108, 188, 0.95);
+}
+
+.scrollLeft,
+.scrollRight {
+  width: clamp(34px, 4vw, 44px);
+  height: clamp(34px, 4vw, 44px);
+  border-radius: 50%;
+  color: var(--color-text);
+  font-size: 22px;
+}
+
+.scrollLeft.disabled,
+.scrollRight.disabled {
+  color: rgba(151, 174, 201, 0.38);
+  background: rgba(11, 36, 71, 0.45);
+  cursor: default;
+}
+
+.skillsList {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.skillsList::-webkit-scrollbar {
+  display: none;
+}
+
+.skillsContainer {
+  display: flex;
+  width: max-content;
+  margin: auto;
+  padding: 12px;
+}
+
+.skillItem {
+  width: clamp(74px, 10vw, 112px);
+  flex-shrink: 0;
+  margin: 0 clamp(6px, 1.2vw, 15px);
+  text-align: center;
+}
+
+.skillItem img {
+  width: clamp(58px, 8vw, 96px);
+  height: clamp(58px, 8vw, 96px);
+  object-fit: contain;
+}
+
+.skillItem p {
+  margin-top: 8px;
+  color: #c2d8f0;
+  font-size: clamp(14px, 1.5vw, 19px);
+}
+
+@media (max-width: 700px) {
+  .skills {
+    padding: 14px 10px;
   }
-  
+
   .tabsContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
+    gap: 5px;
   }
-  
+
   .tabs {
-    display: flex;
-    justify-content: center;
-    margin: 0 10px;
+    gap: 3px;
   }
-  
-  .tabs p {
-    font-family: var(--font-vt323);
-    color: var(--color-text);
-    font-size: 25px;
-  }
-  
+
   .tabButton {
-    padding: 10px 20px;
-    margin: 0 10px;
-    border: none;
-    background-color: var(--color-secondary);
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 7px 5px;
   }
-  
-  .tabButton:hover,
-  .tabButton.active {
-    background-color: var(--color-primary);
+
+  .tabs p {
+    font-size: clamp(15px, 4.2vw, 20px);
   }
-  
-  .skillsList {
-    display: flex;
-    overflow-x: auto;
-    padding: 10px;
-    scrollbar-width: none; /* Firefox */
-    margin-bottom: 10px;
-  }
-  
-  .skillsList::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
-  
-  .skillsContainer {
-    display: flex;
-    margin: auto;
-    padding: 2rem;
-  }
-  
-  .skillsContainer p {
-    color: var(--color-primary);
-    font-size: 20px;
-  }
-  
+
   .skillItem {
-    flex-shrink: 0;
-    width: 100px;
-    text-align: center;
-    margin: 0 15px;
+    width: 76px;
+    margin: 0 6px;
   }
-  
+
   .skillItem img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
+    width: 60px;
+    height: 60px;
   }
-  
-  .scrollLeft,
-  .scrollRight {
-    background-color: var(--color-primary);
-    border: none;
-    color: var(--color-text);
-    font-size: 20px;
-    cursor: pointer;
-    padding: 10px;
-    transition: background-color 0.3s;
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .skills {
+    padding: 8px 16px;
   }
-  
-  .scrollLeft.disabled,
-  .scrollRight.disabled {
-    color: var(--color-primary);
-    background-color: var(--color-secondary);
-    cursor: not-allowed;
+
+  .tabButton {
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
-  
+
+  .skillItem img {
+    width: clamp(42px, 12svh, 62px);
+    height: clamp(42px, 12svh, 62px);
+  }
+}

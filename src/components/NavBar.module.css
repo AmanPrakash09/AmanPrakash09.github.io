@@ -1,131 +1,171 @@
-@import "../vars.css";
+@import '../vars.css';
 
 .navbar {
-  position: fixed;
+  position: absolute;
+  z-index: 1000;
   top: 0;
-  left: 0;
   right: 0;
-
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 7%;
-  margin: 0;
-
-  height: 5em;
-  background-color: transparent;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
-  z-index: 1000;
+  height: clamp(58px, 8svh, 76px);
+  padding: 0 clamp(18px, 6vw, 100px);
+  border-bottom: 1px solid rgba(125, 176, 224, 0.18);
+  background: rgba(3, 8, 18, 0.56);
+  backdrop-filter: blur(8px);
 }
-.navbar.active {
-  background-color: var(--color-primary);
-  border-bottom: 5px solid var(--color-text);
- 
+
+.title,
+.menuItems button {
+  border: 0;
+  color: var(--color-text);
+  font-family: var(--font-vt323);
+  background: transparent;
+  cursor: pointer;
 }
 
 .title {
-  font-size: 30px;
+  padding: 4px 0;
+  font-size: clamp(25px, 2.3vw, 32px);
   font-weight: 600;
-  text-decoration: none;
-  color: var(--color-text);
-  font-family: var(--font-vt323);
-  z-index: 1000;
-}
-
-.menuBtn {
-  display: none;
+  white-space: nowrap;
 }
 
 .menu {
   display: flex;
   align-items: center;
-  background-color: transparent;
+}
+
+.menuBtn {
+  display: none;
+  width: 34px;
+  height: 34px;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menuBtn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .menuItems {
   display: flex;
-  gap: 39px;
+  align-items: center;
+  gap: clamp(16px, 2.2vw, 34px);
   list-style: none;
 }
 
-.menuItems a {
-  font-size: 25px;
-  color: var(--color-text);
-  text-decoration: none;
-  font-family: var(--font-vt323);
+.menuItems button {
+  position: relative;
+  padding: 8px 0;
+  font-size: clamp(20px, 1.8vw, 25px);
+}
+
+.menuItems button::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  left: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 180ms ease;
+}
+
+.menuItems button:hover::after,
+.menuItems button:focus-visible::after,
+.menuItems .activeSection::after {
+  transform: scaleX(1);
 }
 
 .icons {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-left: 20px;
-  background-color: transparent;
+  gap: 12px;
+  margin-left: clamp(14px, 2vw, 24px);
+}
+
+.icons a {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
 }
 
 .icons img {
-  width: 30px;
-  height: 30px;
-  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-@media screen and (max-width: 830px) {
+@media (max-width: 830px) {
   .navbar {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    padding: 0 18px;
   }
 
   .menu {
     position: relative;
-    right: 0;
-    margin-right: 0;
-    flex-direction: row;
-    align-items: center;
-    gap: 11px;
-    z-index: 1001;
+    gap: 10px;
   }
 
   .menuBtn {
     display: block;
-    cursor: pointer;
-    margin-left: auto;
-    background: none;
-    border: none;
-    padding: 0;
   }
 
   .menuItems {
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 13px;
-    border-radius: 10px;
-    background: rgb(25, 55, 109);
-    background: linear-gradient(
-      0deg,
-      rgba(25, 55, 109, 0.2) 0%,
-      rgba(25, 55, 109, 1) 100%
-    );
-    padding: 24px 33px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
     position: absolute;
-    top: calc(100% + 10px);
+    top: calc(100% + 14px);
     right: 0;
+    display: none;
     width: max-content;
-    z-index: 1002;
+    min-width: 150px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 14px 22px;
+    border: 1px solid rgba(125, 176, 224, 0.32);
+    border-radius: 10px;
+    background: rgba(7, 25, 52, 0.97);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
   }
 
   .menuOpen {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  }
+
+  .menuItems button {
+    width: 100%;
+    text-align: left;
   }
 
   .icons {
-    display: flex;
-    position: relative;
-    top: 0;
-    margin-left: auto;
+    gap: 8px;
+    margin-left: 0;
+  }
+
+  .icons a {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 430px) {
+  .navbar {
+    padding: 0 12px;
+  }
+
+  .title {
+    font-size: 23px;
+  }
+
+  .icons a {
+    width: 23px;
+    height: 23px;
   }
 }

@@ -1,51 +1,76 @@
-@import "../vars.css";
+@import '../vars.css';
 
 .container {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(180px, 0.9fr);
   align-items: center;
-  justify-content: space-between;
-  margin-top: 49px;
-  z-index: 1;
-  margin-left: 10%;
-  margin-right: 10%;
+  gap: clamp(16px, 4vw, 64px);
+  width: 100%;
+  height: 100%;
+  padding: clamp(20px, 4vw, 64px);
+  overflow: hidden;
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: var(--color-text);
-  background-color: transparent;
+  position: relative;
   z-index: 1;
+  color: var(--color-text);
 }
 
 .title {
-  font-size: 72px;
-  font-weight: 900;
-  margin-bottom: 33px;
-  font-family: var(--font-vt323);
+  width: 9ch;
+  margin-bottom: clamp(12px, 2.5svh, 28px);
+  overflow: hidden;
+  border-right: 0.12em solid var(--color-text);
   color: var(--color-text);
-  
-  /* Typing animation */
-  overflow: hidden; /* Ensures the text stays within the bounds */
-  border-right: .15em solid var(--color-text); /* Creates a cursor effect */
-  white-space: nowrap; /* Prevents text from wrapping */
-  width: 9ch; /* Matches the length of the text */
-  animation: typing 1.5s steps(9, end) forwards, blink-caret 0.75s step-end infinite;
+  font-family: var(--font-vt323);
+  font-size: clamp(46px, 6vw, 76px);
+  font-weight: 900;
+  line-height: 0.95;
+  white-space: nowrap;
+  animation: typing 1.5s steps(9, end) forwards, blinkCaret 750ms step-end infinite;
 }
 
 .description {
-  font-size: 30px;
+  max-width: 680px;
+  color: #f0f6ff;
   font-family: var(--font-vt323);
-  margin-bottom: 52px;
-  animation: slideInFromLeft 1s ease-out forwards;
+  font-size: clamp(22px, 2.5vw, 32px);
+  line-height: 1.25;
+  animation: slideIn 500ms ease-out forwards;
 }
 
 .heroImg {
-  width: 50%; /* Reduced to 40% of its original size */
+  position: relative;
   z-index: 1;
-  animation: floating 3s ease-in-out infinite; /* Combined rotation and floating */
+  justify-self: center;
+  width: min(100%, 430px);
+  max-height: 88%;
+  object-fit: contain;
+  animation: floating 3s ease-in-out infinite;
+}
+
+.topBlur,
+.bottomBlur {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(75, 132, 194, 0.22);
+  filter: blur(70px);
+}
+
+.topBlur {
+  top: -35%;
+  left: -8%;
+  width: 55%;
+  height: 85%;
+}
+
+.bottomBlur {
+  right: -12%;
+  bottom: -45%;
+  width: 65%;
+  height: 90%;
 }
 
 @keyframes typing {
@@ -53,64 +78,77 @@
   to { width: 9ch; }
 }
 
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: var(--color-text); }
+@keyframes blinkCaret {
+  50% { border-color: transparent; }
 }
 
-@keyframes slideInFromLeft {
+@keyframes slideIn {
   from {
-    transform: translateX(-100%);
+    opacity: 0;
+    transform: translateX(-24px);
   }
+
   to {
+    opacity: 1;
     transform: translateX(0);
   }
 }
 
 @keyframes floating {
-  0% {
-    transform: rotate(10deg) translate(0, 0px) scale(0.8);
-  }
-  50% {
-    transform: rotate(10deg) translate(0, 10px) scale(0.8);
-  }
-  100% {
-    transform: rotate(10deg) translate(0, 0px) scale(0.8);
-  }
+  0%, 100% { transform: rotate(7deg) translateY(-4px) scale(0.88); }
+  50% { transform: rotate(7deg) translateY(7px) scale(0.88); }
 }
 
-.topBlur {
-  position: absolute;
-  width: 50vw;
-  height: 50vw;
-  min-width: 350px;
-  top: -128px;
-  left: -10vw;
-  border-radius: 764px;
-  background: rgba(25, 55, 109, 0.7);
-  filter: blur(100px);
-  z-index: 0;
-}
-
-.bottomBlur {
-  position: absolute;
-  width: 70vw;
-  height: 50vw;
-  min-width: 250px;
-  top: 246px;
-  right: -25vw;
-  border-radius: 764px;
-  background: rgba(25, 55, 109, 0.7);
-  filter: blur(100px);
-  z-index: 0;
-}
-
-@media screen and (max-width: 830px) {
+@media (max-width: 700px) and (orientation: portrait) {
   .container {
-    flex-direction: column-reverse;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 43%) minmax(0, 57%);
+    gap: 4px;
+    padding: 16px 22px 18px;
+    text-align: center;
   }
 
   .content {
-    align-items: center;
+    grid-row: 2;
+    align-self: start;
+  }
+
+  .title {
+    margin-right: auto;
+    margin-left: auto;
+    font-size: clamp(38px, 12vw, 54px);
+  }
+
+  .description {
+    font-size: clamp(19px, 5.5vw, 26px);
+  }
+
+  .heroImg {
+    grid-row: 1;
+    width: min(62%, 210px);
+    height: 100%;
+  }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .container {
+    padding: 12px 24px;
+  }
+
+  .title {
+    margin-bottom: 8px;
+    font-size: clamp(34px, 8svh, 48px);
+  }
+
+  .description {
+    font-size: clamp(18px, 5svh, 24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .description,
+  .heroImg {
+    animation: none;
   }
 }

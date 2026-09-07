@@ -1,226 +1,248 @@
-@import "../vars.css";
+@import '../vars.css';
 
 .experienceContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 5rem;
-  position: relative; /* Ensure the blur is positioned relative to this container */
-  overflow: hidden; /* Hide any overflow caused by the blur */
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(170px, 0.35fr) minmax(0, 0.65fr);
+  gap: clamp(14px, 3vw, 42px);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: clamp(18px, 3vw, 44px);
+  overflow: hidden;
 }
 
 .experienceList {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  flex-basis: 40%;
-  z-index: 1; /* Ensure the experience list stays on top of the blur */
-}
-
-.experienceList p {
-  font-family: var(--font-vt323);
-  color: var(--color-text);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(8px, 1.5svh, 16px);
+  list-style: none;
 }
 
 .listItem {
-  cursor: pointer;
-  padding: 1rem;
-  font-size: 32px;
-  color: #333;
-  margin-bottom: 1rem;
+  padding: clamp(9px, 1.5svh, 16px);
   border-left: 4px solid transparent;
-  transition: border-color 0.3s;
-  background-color: var(--color-dark);
+  border-radius: 0 8px 8px 0;
+  background: rgba(11, 36, 71, 0.74);
+  cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.listItem p {
+  color: var(--color-text);
+  font-family: var(--font-vt323);
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1;
 }
 
 .listItem:hover,
 .listItem.active {
   border-color: var(--color-text);
-  background-color: var(--color-primary);
+  background: rgba(87, 108, 188, 0.78);
 }
 
 .experienceDetailsContainer {
-  flex-basis: 55%;
-  background-color: var(--color-primary);
-  padding: 2rem;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  z-index: 1; /* Ensure the experience details stay on top of the blur */
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(16px, 3vw, 34px);
+  border: 1px solid rgba(183, 210, 238, 0.22);
+  border-radius: 10px;
+  background: rgba(87, 108, 188, 0.72);
+  place-items: center;
   text-align: center;
 }
 
 .experienceDetails h2 {
-  font-size: 28px;
-  margin-bottom: 0.5rem;
-  color: var(--color-bg);
+  color: #050b18;
+  font-size: clamp(24px, 2.8vw, 34px);
 }
 
 .experienceDetails h3 {
-  font-size: 22px;
-  color: var(--color-dark);
-  margin-bottom: 0.5rem;
+  margin-top: 5px;
+  color: #102b50;
+  font-size: clamp(17px, 2vw, 24px);
+}
+
+.experienceDetails p {
+  margin: clamp(5px, 1svh, 10px) 0;
+  color: #102b50;
+  font-size: clamp(16px, 1.6vw, 20px);
 }
 
 .logoContainer {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 2rem; /* Space between logos */
-  margin-bottom: 1rem;
+  gap: clamp(12px, 2vw, 28px);
+  min-height: 0;
+  margin: clamp(8px, 1.5svh, 16px) 0;
 }
 
-.logoContainer.singleLogo .logo {
-  max-width: 80%;
+.logo {
+  width: auto;
+  max-width: 44%;
+  height: clamp(46px, 10svh, 92px);
+  object-fit: contain;
 }
 
-.logoContainer.multipleLogos .logo {
-  max-width: 40%;
-}
-
-.experienceDetails p {
-  font-size: 20px;
-  color: var(--color-secondary);
-  margin-bottom: 1rem;
+.singleLogo .logo {
+  max-width: min(68%, 240px);
 }
 
 .learnMoreButton {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: var(--color-secondary);
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 5px;
   color: var(--color-text);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
   font-family: var(--font-vt323);
-  font-size: 22px;
+  font-size: clamp(19px, 1.8vw, 23px);
+  background: var(--color-secondary);
+  cursor: pointer;
 }
 
 .learnMoreButton:hover {
-  background-color: var(--color-text);
   color: var(--color-secondary);
+  background: var(--color-text);
 }
 
 .modalOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  overflow: auto; /* Allow scrolling if content is too tall */
+  z-index: 2000;
+  inset: 0;
+  display: grid;
+  padding: 20px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.75);
+  place-items: center;
 }
 
 .modalContent {
-  background-color: var(--color-primary);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
+  width: min(90vw, 800px);
+  max-height: 82svh;
+  padding: clamp(24px, 4vw, 44px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid rgba(183, 210, 238, 0.38);
+  border-radius: 10px;
+  color: #eef6ff;
+  background: #576cbc;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.5);
   text-align: center;
-  max-width: 800px; /* Ensure the modal remains wide */
-  width: 90%; /* Ensure it adjusts well on smaller screens */
-  max-height: 80vh; /* Set a maximum height based on the viewport height */
-  overflow-y: auto; /* Add vertical scrolling when content exceeds max-height */
 }
 
 .closeButton {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  background: none;
-  border: none;
-  font-size: 32px;
-  cursor: pointer;
+  top: 10px;
+  right: 14px;
+  padding: 2px 8px;
+  border: 0;
   color: var(--color-text);
+  font-size: 34px;
+  line-height: 1;
+  background: transparent;
+  cursor: pointer;
+}
+
+.modalContent h2 { color: #050b18; }
+.modalContent h3 { margin: 5px 0; color: #102b50; }
+.modalContent > p { color: #19376d; }
+
+.descriptionContainer {
+  margin-top: 18px;
+}
+
+.modalContent .descriptionContainer p {
+  margin-bottom: 10px;
+  font-size: clamp(16px, 1.7vw, 21px);
+  line-height: 1.35;
+  text-align: left;
 }
 
 .modalLogoContainer {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 2rem;
-  margin-bottom: 1rem;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .modalLogo {
-  max-width: 30%; /* Adjust logo size to fit within the wider modal */
-  margin-bottom: 1rem;
-}
-
-.modalContent h2 {
-  font-size: 24px;
-  color: var(--color-bg);
-  margin-bottom: 0.5rem;
-}
-
-.modalContent h3 {
-  font-size: 18px;
-  color: var(--color-dark);
-  margin-bottom: 0.5rem;
-}
-
-.modalContent .descriptionContainer p {
-  font-size: 22px;
-  margin-bottom: 1rem;
-  text-align: left;
+  max-width: 30%;
+  max-height: 100px;
+  object-fit: contain;
 }
 
 .middleBlur {
   position: absolute;
-  width: 30vw;
-  height: 20vw;
-  min-width: 250px;
-  top: 60%; /* Center it vertically */
-  left: 20%; /* Center it horizontally */
-  transform: translate(-50%, -50%); /* Perfectly center the blur */
-  border-radius: 764px;
-  background: rgba(25, 55, 109, 0.7);
-  filter: blur(100px);
-  z-index: 0; /* Ensure it's behind the content */
+  top: 35%;
+  left: 12%;
+  width: 35%;
+  height: 50%;
+  border-radius: 50%;
+  background: rgba(79, 137, 197, 0.2);
+  filter: blur(60px);
 }
 
-/* Responsive Adjustments */
-@media screen and (max-width: 1000px) {
+@media (max-width: 700px) {
   .experienceContainer {
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px;
   }
 
   .experienceList {
-    width: 100%;
-    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .listItem {
+    display: grid;
+    min-width: 0;
+    padding: 8px 5px;
+    border-bottom: 3px solid transparent;
+    border-left: 0;
+    border-radius: 6px;
+    place-items: center;
+    text-align: center;
+  }
+
+  .listItem p {
+    font-size: clamp(16px, 4.7vw, 21px);
   }
 
   .experienceDetailsContainer {
-    width: 100%;
-    padding: 1.5rem;
+    padding: 12px;
+  }
+
+  .logo {
+    height: clamp(38px, 8svh, 62px);
+  }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .experienceContainer {
+    padding: 10px 16px;
+  }
+
+  .experienceDetailsContainer {
+    padding: 8px 16px;
   }
 
   .logoContainer {
-    flex-direction: row;
-    gap: 1rem;
+    margin: 4px 0;
   }
 
-  .logoContainer.singleLogo .logo {
-    max-width: 60%;
-  }
-
-  .logoContainer.multipleLogos .logo {
-    max-width: 60%;
-  }
-
-  .modalContent {
-    max-width: 95%;
-    padding: 1.5rem;
-  }
-
-  .modalLogo {
-    max-width: 50%;
+  .logo {
+    height: clamp(30px, 10svh, 46px);
   }
 }

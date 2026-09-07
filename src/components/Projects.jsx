@@ -1,15 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './Projects.module.css';
 import { getImageUrl } from '../utils';
 
-export const Projects = ({ onRenderModal }) => {
+export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState('SightSteer');
   const [showModal, setShowModal] = useState(false);
   
-    useEffect(() => {
-      onRenderModal?.(showModal);
-    }, [showModal, onRenderModal]);
-
   const projects = {
     SightSteer: {
       title: 'SightSteer',

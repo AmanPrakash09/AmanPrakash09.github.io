@@ -1,14 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './Experience.module.css';
 import { getImageUrl } from '../utils';
 
-export const Experience = ({ onRenderModal }) => {
+export const Experience = () => {
   const [selectedExperience, setSelectedExperience] = useState('Asana');
   const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    onRenderModal?.(showModal);
-  }, [showModal, onRenderModal]);
 
   const experiences = {
     Asana: {
