@@ -11,6 +11,7 @@ const JOKER_REVEAL_DELAY = 300;
 const JOKER_DAMAGE_FRAME_DURATION = 130;
 const JOKER_HIT_DURATION = JOKER_DAMAGE_FRAME_DURATION * 3 * 2;
 const JOKER_COLLAPSE_DURATION = JOKER_DAMAGE_FRAME_DURATION * 4;
+const JOKER_FALL_DURATION = 600;
 
 const randomBetween = (minimum, maximum) => minimum + Math.random() * (maximum - minimum);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
@@ -312,18 +313,18 @@ export function useBatmanMovement({
         direction: encounter.jokerDirection,
         damage: null,
       });
-      return encounter.batmanDestination;
+      return encounter;
     };
 
     const runJokerEncounter = async () => {
-      const batmanDestination = spawnJoker();
+      const encounter = spawnJoker();
       if (!(await wait(JOKER_REVEAL_DELAY))) return false;
 
       setJoker((currentJoker) => ({ ...currentJoker, visible: true }));
       if (!(await wait(JOKER_SMOKE_DURATION - JOKER_REVEAL_DELAY))) return false;
 
       setJoker((currentJoker) => ({ ...currentJoker, smokeVisible: false }));
-      if (!(await dropBatman(batmanDestination))) return false;
+      if (!(await dropBatman(encounter.batmanDestination))) return false;
 
       setMotion('melee-attacking');
       setJoker((currentJoker) => ({ ...currentJoker, damage: 'hit' }));
@@ -332,12 +333,45 @@ export function useBatmanMovement({
       setJoker((currentJoker) => ({ ...currentJoker, damage: 'collapse' }));
       if (!(await wait(JOKER_COLLAPSE_DURATION))) return false;
 
-      setJoker({
-        visible: false,
-        smokeVisible: false,
-        direction: currentDirection === 'right' ? 'left' : 'right',
-        damage: null,
-      });
+      const knockbackDirection = encounter.jokerDirection === 'left' ? 1 : -1;
+      const knockbackDistance = clamp(scene.clientWidth * 0.025, 18, 34);
+      const knockbackDestination = {
+        x: encounter.jokerX + knockbackDistance * knockbackDirection,
+        y: 0,
+      };
+      const knockback = joker.animate(
+        [
+          { transform: translate({ x: encounter.jokerX, y: 0 }) },
+          { transform: translate(knockbackDestination) },
+        ],
+        {
+          duration: JOKER_FALL_DURATION,
+          easing: 'cubic-bezier(0.2, 0.7, 0.35, 1)',
+          fill: 'forwards',
+        },
+      );
+
+      animations.add(knockback);
+      setJoker((currentJoker) => ({ ...currentJoker, damage: 'falling' }));
+      void knockback.finished.then(
+        () => {
+          animations.delete(knockback);
+          if (!isActive) return;
+
+          joker.style.transform = translate(knockbackDestination);
+          knockback.cancel();
+          setJoker({
+            visible: false,
+            smokeVisible: false,
+            direction: encounter.jokerDirection,
+            damage: null,
+          });
+        },
+        () => {
+          animations.delete(knockback);
+        },
+      );
+
       setMotion('grounded');
       return true;
     };
