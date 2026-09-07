@@ -29,7 +29,7 @@
 .scrollLeft,
 .scrollRight {
   border: 1px solid rgba(180, 210, 238, 0.18);
-  color: white;
+  color: var(--color-text);
   background: var(--color-secondary);
   cursor: pointer;
   transition: background-color 180ms ease;
@@ -64,7 +64,7 @@
 
 .scrollLeft.disabled,
 .scrollRight.disabled {
-  color: rgba(151, 174, 201, 0.38);
+  color: rgba(0, 229, 255, 0.38);
   background: var(--color-secondary);
   opacity: 0.45;
   cursor: default;
@@ -107,7 +107,7 @@
 
 .skillItem p {
   margin-top: 8px;
-  color: #c2d8f0;
+  color: var(--color-text);
   font-size: clamp(14px, 1.5vw, 19px);
 }
 

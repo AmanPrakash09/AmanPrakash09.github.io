@@ -24,6 +24,7 @@
   overflow: hidden;
   border: 1px solid rgba(255, 221, 0, 0.32);
   border-radius: clamp(10px, 1.3vw, 18px);
+  color: var(--color-text);
   background:
     radial-gradient(circle at 50% 38%, rgba(255, 221, 0, 0.16), rgba(255, 221, 0, 0.07) 58%, rgba(255, 221, 0, 0.035)),
     rgba(24, 19, 2, 0.3);
@@ -31,6 +32,7 @@
     0 18px 50px rgba(0, 0, 0, 0.35),
     0 0 38px rgba(255, 221, 0, 0.1),
     inset 0 0 42px rgba(255, 221, 0, 0.055);
+  text-shadow: 0 0 7px rgba(0, 229, 255, 0.28);
 }
 
 .panelContent {

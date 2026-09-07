@@ -60,19 +60,19 @@
 }
 
 .experienceDetails h2 {
-  color: #050b18;
+  color: var(--color-text);
   font-size: clamp(24px, 2.8vw, 34px);
 }
 
 .experienceDetails h3 {
   margin-top: 5px;
-  color: #102b50;
+  color: var(--color-text);
   font-size: clamp(17px, 2vw, 24px);
 }
 
 .experienceDetails p {
   margin: clamp(5px, 1svh, 10px) 0;
-  color: #102b50;
+  color: var(--color-text);
   font-size: clamp(16px, 1.6vw, 20px);
 }
 
@@ -108,7 +108,7 @@
 }
 
 .learnMoreButton:hover {
-  color: #24134f;
+  color: var(--color-text);
   background: var(--color-primary);
 }
 
@@ -132,7 +132,7 @@
   overscroll-behavior: contain;
   border: 1px solid rgba(183, 210, 238, 0.38);
   border-radius: 10px;
-  color: #eef6ff;
+  color: var(--color-text);
   background: var(--color-primary);
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.5);
   text-align: center;
@@ -151,9 +151,9 @@
   cursor: pointer;
 }
 
-.modalContent h2 { color: #050b18; }
-.modalContent h3 { margin: 5px 0; color: #102b50; }
-.modalContent > p { color: #19376d; }
+.modalContent h2 { color: var(--color-text); }
+.modalContent h3 { margin: 5px 0; color: var(--color-text); }
+.modalContent > p { color: var(--color-text); }
 
 .descriptionContainer {
   margin-top: 18px;
