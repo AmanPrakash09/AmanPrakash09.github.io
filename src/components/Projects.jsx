@@ -314,13 +314,110 @@ const projects = {
   VCI: {
     tabLabel: 'VCI',
     tabIcon: 'projects/vci-icon.png',
-    title: 'VCI',
+    title: 'Virtual Care Interaction',
     technologies: '',
     date: '',
     subsections: {
-      intro: { title: 'Intro', content: 'hello world' },
-      architecture: { title: 'Architecture', content: 'hello world' },
-      flows: { title: 'Flows', content: 'hello world' },
+      intro: {
+        title: 'Intro',
+        content: [
+          'Virtual Care Interaction is an AI-powered clinical education platform that lets pharmacy students practise interviewing realistic virtual patients with different conditions, histories, and personalities. Instructors can create patient scenarios, provide supporting clinical information, review student interactions, and evaluate competency, offering a scalable way to develop practical communication and diagnostic skills.',
+          'I built this tool specifically for UBC’s Faculty of Pharmaceutical Sciences, working closely with professors and directors to create a tool now used in classes of more than 75 students. I repurposed and extended the serverless AWS architecture from the AI Learning Assistant, transforming a course-question platform into a multi-patient clinical simulator. I adapted its LangChain RAG pipeline to ground each patient in instructor-provided case files, prompts, and answer keys while supporting simulation groups, student sessions, evaluations, and instructor analytics. This demonstrated that the original architecture could be efficiently reused across faculties and learning environments.',
+        ],
+        carousel: [
+          {
+            src: 'projects/vci-intro.png',
+            alt: 'Pixel-art illustration of a healthcare professional interacting with an AI clinical system',
+          },
+        ],
+      },
+      architecture: {
+        title: 'Architecture',
+        numberedPoints: [
+          'The user sends a request to the application hosted on AWS Amplify.',
+          'Amplify integrates with the backend API Gateway.',
+          'Instructors can upload patient data to the application, which is stored in an S3 bucket using a pre-signed upload URL.',
+          'Adding a new file to the S3 bucket triggers the data ingestion workflow. The Lambda function runs a Docker container with Amazon Elastic Container Registry (ECR) and uses LangChain to process documents.',
+          'The Lambda function embeds text from uploaded files into vectors using Amazon Bedrock. This project uses the Amazon Titan Text Embeddings V2 model to generate embeddings.',
+          'The Lambda function stores the vectors in the PostgreSQL database.',
+          'Users can perform simulation-group management and access actions by sending an API request that invokes a Lambda function.',
+          'This Lambda function interacts with Amazon RDS.',
+          'Users can start chatting with the LLM by sending an API request that invokes the Lambda function to generate a response. The Lambda function runs a Docker container with Amazon ECR.',
+          'The Lambda function stores the embedded messages in Amazon DynamoDB.',
+          'This Lambda function uses RAG architecture and LangChain to retrieve responses from LLMs hosted on Amazon Bedrock, augmented with the patient information stored in Amazon RDS. This project uses Meta Llama 3 70B as its selected LLM.',
+        ],
+        carousel: [
+          {
+            src: 'projects/vci-architecture.png',
+            alt: 'AWS architecture diagram for Virtual Care Interaction, including its security, frontend, API, data ingestion, database, generative AI, and conversation-memory services',
+          },
+        ],
+      },
+      flows: {
+        title: 'Flows',
+        views: {
+          student: {
+            title: 'Student',
+            carousel: [
+              {
+                src: 'projects/vci-student-dashboard.png',
+                alt: 'Student dashboard showing enrolled acute pain, chronic pain, and referred pain simulation groups',
+                description: 'A pharmacy student who wants to practise their interviewing skills can log in and view a dashboard showing the simulation groups in which they are enrolled.',
+              },
+              {
+                src: 'projects/vci-student-patients.png',
+                alt: 'Patient list showing LLM evaluation, instructor evaluation, and review statuses',
+                description: 'After selecting a simulation group, the student can view different patients along with their review status, instructor evaluation status, and LLM evaluation status.',
+              },
+              {
+                src: 'projects/vci-student-patient-chat.png',
+                alt: 'Virtual patient conversation with controls for notes, patient information, and revealing the answer',
+                description: 'Once the student enters a conversation with a virtual patient, the solution prompts them to begin with a question. Students can access patient information containing important medical details, record notes for each session, and reveal the answer if they are stuck.',
+              },
+            ],
+          },
+          instructor: {
+            title: 'Instructor',
+            carousel: [
+              {
+                src: 'projects/vci-instructor-groups.png',
+                alt: 'Instructor dashboard listing simulation groups and their statuses',
+                description: 'Upon entering the application, an instructor can select a simulation group they wish to edit. Instructors can only edit simulation groups of which they are a part.',
+              },
+              {
+                src: 'projects/vci-instructor-analytics.png',
+                alt: 'Instructor analytics showing completion percentages and message counts for a virtual patient',
+                description: 'After selecting a simulation group, the instructor can view useful analytics and insights for each patient.',
+              },
+              {
+                src: 'projects/vci-instructor-edit-patient.png',
+                alt: 'Instructor form for editing a virtual patient and their clinical information',
+                description: 'Instructors can edit patients, the patient files that will be ingested by the LLM, and the information displayed directly to students.',
+              },
+              {
+                src: 'projects/vci-instructor-prompt-settings.png',
+                alt: 'Instructor prompt settings for a chronic pain simulation group',
+                description: 'The instructor can also edit prompt settings for the simulation group and manage its students.',
+              },
+            ],
+          },
+          administrator: {
+            title: 'Administrator',
+            carousel: [
+              {
+                src: 'projects/vci-admin-instructors.png',
+                alt: 'Administrator dashboard for viewing and adding instructors',
+                description: 'Administrators can view instructors and add new instructors.',
+              },
+              {
+                src: 'projects/vci-admin-groups.png',
+                alt: 'Administrator dashboard for viewing, editing, and creating simulation groups',
+                description: 'Administrators can also view and edit simulation groups, as well as create new ones.',
+              },
+            ],
+          },
+        },
+      },
     },
   },
   StudentAdvising: {
