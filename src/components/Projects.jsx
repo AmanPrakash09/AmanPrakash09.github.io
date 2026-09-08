@@ -6,12 +6,23 @@ const projects = {
   AILA: {
     tabLabel: 'AILA',
     tabIcon: 'projects/aila-icon.png',
-    title: 'AILA',
+    title: 'AI Learning Assistant',
     technologies: '',
     date: '',
     subsections: {
-      intro: { title: 'Intro', content: 'hello world' },
-      impact: { title: 'Impact', content: 'hello world' },
+      intro: {
+        title: 'Intro',
+        content: [
+          'The AI Learning Assistant is a web-based teaching tool that gives UBC students personalized, course-specific support on demand. Using retrieval-augmented generation, it answers questions from instructor-provided materials, identifies knowledge gaps, and recommends relevant resources while keeping responses grounded in approved course content. Designed to complement instructors, it extends academic support beyond the classroom and helps students learn at their own pace.',
+          'I built this tool specifically for the UBC Computer Science faculty, working directly with a professor who now uses the tool in their classrooms. I designed its serverless, event-driven AWS backend and developed a LangChain RAG pipeline that ingests instructor materials, generates Amazon Titan embeddings, retrieves relevant context through PGVector, and produces course-grounded responses. I also presented the project to UBC’s President, demonstrating its potential to expand personalized AI-supported learning across the university.',
+        ],
+        carousel: [
+          {
+            src: 'projects/aila-intro.png',
+            alt: 'Pixel-art illustration of a robot teaching in front of a glowing classroom display',
+          },
+        ],
+      },
       architecture: { title: 'Architecture', content: 'hello world' },
       flows: { title: 'Flows', content: 'hello world' },
     },
@@ -114,7 +125,6 @@ const projects = {
     date: '',
     subsections: {
       intro: { title: 'Intro', content: 'hello world' },
-      impact: { title: 'Impact', content: 'hello world' },
       architecture: { title: 'Architecture', content: 'hello world' },
       flows: { title: 'Flows', content: 'hello world' },
     },
@@ -127,7 +137,6 @@ const projects = {
     date: '',
     subsections: {
       intro: { title: 'Intro', content: 'hello world' },
-      impact: { title: 'Impact', content: 'hello world' },
       architecture: { title: 'Architecture', content: 'hello world' },
       flows: { title: 'Flows', content: 'hello world' },
     },
@@ -140,7 +149,6 @@ const projects = {
     date: '',
     subsections: {
       intro: { title: 'Intro', content: 'hello world' },
-      impact: { title: 'Impact', content: 'hello world' },
       architecture: { title: 'Architecture', content: 'hello world' },
       flows: { title: 'Flows', content: 'hello world' },
     },
@@ -295,6 +303,9 @@ export const Projects = () => {
     ? selectedMediaIndex % carouselItems.length
     : 0;
   const activeMedia = carouselItems[activeCarouselIndex];
+  const subsectionParagraphs = activeSubsection?.content
+    ? (Array.isArray(activeSubsection.content) ? activeSubsection.content : [activeSubsection.content])
+    : [];
   const subsectionPanelId = `${panelId}-subsection-${activeSubsectionKey}`;
   const bullets = project.section?.bullets ?? [];
   const bulletSplitIndex = Math.ceil(bullets.length / 2);
@@ -415,7 +426,13 @@ export const Projects = () => {
               role="tabpanel"
               aria-labelledby={`${panelId}-subsection-tab-${activeSubsectionKey}`}
             >
-              {activeSubsection.content && <p>{activeSubsection.content}</p>}
+              {subsectionParagraphs.length > 0 && (
+                <div className={styles.subsectionText}>
+                  {subsectionParagraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              )}
               {activeSubsection.embedUrl && (
                 <div className={styles.videoEmbed}>
                   <iframe
@@ -468,9 +485,11 @@ export const Projects = () => {
                       loading="lazy"
                       decoding="async"
                     />
-                    <figcaption className={styles.carouselCaption}>
-                      {activeMedia.title}
-                    </figcaption>
+                    {activeMedia.title && (
+                      <figcaption className={styles.carouselCaption}>
+                        {activeMedia.title}
+                      </figcaption>
+                    )}
                     {carouselItems.length > 1 && (
                       <span className={styles.carouselPosition}>
                         {activeCarouselIndex + 1} / {carouselItems.length}
