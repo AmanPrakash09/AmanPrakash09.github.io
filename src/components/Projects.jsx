@@ -668,6 +668,12 @@ export const Projects = () => {
     ? selectedMediaIndex % carouselItems.length
     : 0;
   const activeMedia = carouselItems[activeCarouselIndex];
+  const opensMediaInNewTab = activeSubsectionKey === 'architecture'
+    || activeSubsectionKey === 'flows'
+    || (
+      selectedProject === 'ObjectIdentificationUAV'
+      && ['modelTraining', 'speedEstimator'].includes(activeSubsectionKey)
+    );
   const subsectionParagraphs = displayedSubsection?.content
     ? (Array.isArray(displayedSubsection.content) ? displayedSubsection.content : [displayedSubsection.content])
     : [];
@@ -891,14 +897,34 @@ export const Projects = () => {
                   )}
 
                   <figure className={styles.carouselFigure} aria-live="polite">
-                    <img
-                      key={activeMedia.src}
-                      className={styles.carouselImage}
-                      src={getImageUrl(activeMedia.src)}
-                      alt={activeMedia.alt}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    {opensMediaInNewTab ? (
+                      <a
+                        key={activeMedia.src}
+                        className={styles.carouselImageLink}
+                        href={getImageUrl(activeMedia.src)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open ${activeMedia.alt} in a new tab`}
+                        title="Open full-size image in a new tab"
+                      >
+                        <img
+                          className={styles.carouselImage}
+                          src={getImageUrl(activeMedia.src)}
+                          alt={activeMedia.alt}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </a>
+                    ) : (
+                      <img
+                        key={activeMedia.src}
+                        className={styles.carouselImage}
+                        src={getImageUrl(activeMedia.src)}
+                        alt={activeMedia.alt}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
                     {activeMedia.description ? (
                       <figcaption className={styles.carouselDescription}>
                         {activeMedia.description}

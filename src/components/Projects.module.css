@@ -375,6 +375,17 @@
   text-align: center;
 }
 
+.carouselImageLink {
+  display: block;
+  border-radius: 4px;
+  cursor: zoom-in;
+}
+
+.carouselImageLink:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+}
+
 .carouselImage {
   display: block;
   width: 100%;
@@ -383,6 +394,13 @@
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.3);
   object-fit: contain;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.carouselImageLink:hover .carouselImage,
+.carouselImageLink:focus-visible .carouselImage {
+  border-color: rgba(0, 229, 255, 0.65);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.16);
 }
 
 .carouselCaption {
@@ -611,6 +629,10 @@
   }
 
   .carouselButton {
+    transition: none;
+  }
+
+  .carouselImage {
     transition: none;
   }
 }
