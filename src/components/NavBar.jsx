@@ -34,7 +34,7 @@ export const NavBar = ({ activeSection, sections, onSectionChange }) => {
           type="button"
         >
           <img
-            src={getImageUrl(menuOpen ? 'closeIcon.png' : 'menuIcon.png')}
+            src={getImageUrl(menuOpen ? 'closeIcon.png' : 'burgerMenu.png')}
             alt=""
             aria-hidden="true"
           />
