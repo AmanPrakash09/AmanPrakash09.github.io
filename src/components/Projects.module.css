@@ -218,6 +218,23 @@
   gap: clamp(12px, 1.5svh, 18px);
 }
 
+.projectLink {
+  width: fit-content;
+  color: var(--color-text);
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.2;
+  text-decoration-color: var(--color-signal-yellow);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+
+.projectLink:hover,
+.projectLink:focus-visible {
+  color: var(--color-signal-yellow);
+  text-decoration-color: var(--color-text);
+}
+
 .flowSubsection {
   display: flex;
   min-height: 100%;

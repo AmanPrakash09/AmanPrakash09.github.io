@@ -127,6 +127,11 @@ const projects = {
       intro: {
         title: 'Intro',
         content: 'I engineered an onboard perception system. It automatically detects, classifies, and tracks people and vehicles from live RGB and infrared UAV footage while estimating vehicle speeds during flight. Designed for long-range missions in remote environments, the system runs on lightweight embedded hardware without relying on cloud connectivity. It reduces manual video review, improves situational awareness, and establishes a foundation for autonomous alerts and decision-making.',
+        resourceLink: {
+          text: 'Check out the project poster here',
+          href: 'projects/UBC_ECE_PN03.pdf',
+          ariaLabel: 'Open the Object Identification via UAV Camera project poster in a new tab',
+        },
         images: [
           {
             src: 'projects/uav-infrared-tracking.png',
@@ -817,11 +822,22 @@ export const Projects = () => {
                   })}
                 </div>
               )}
-              {(subsectionParagraphs.length > 0 || subsectionPoints.length > 0) && (
+              {(subsectionParagraphs.length > 0 || subsectionPoints.length > 0 || displayedSubsection.resourceLink) && (
                 <div className={styles.subsectionText}>
                   {subsectionParagraphs.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
+                  {displayedSubsection.resourceLink && (
+                    <a
+                      className={styles.projectLink}
+                      href={getImageUrl(displayedSubsection.resourceLink.href)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={displayedSubsection.resourceLink.ariaLabel}
+                    >
+                      {displayedSubsection.resourceLink.text}
+                    </a>
+                  )}
                   {subsectionPoints.length > 0 && (
                     <ol className={styles.numberedPoints}>
                       {subsectionPoints.map((point) => (
