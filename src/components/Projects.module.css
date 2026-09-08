@@ -216,6 +216,10 @@
   margin-top: clamp(12px, 2svh, 20px);
 }
 
+.singleCarouselItem {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .carouselButton {
   display: grid;
   width: clamp(34px, 3.4vw, 46px);

@@ -88,7 +88,17 @@ const projects = {
           },
         ],
       },
-      architecture: { title: 'Architecture', content: 'hello world' },
+      architecture: {
+        title: 'Architecture',
+        content: 'With each local RF-DETR training epoch taking several hours, I designed a managed Google Cloud workflow to accelerate experimentation and remove its dependence on a single workstation. I used Vertex AI Workbench to prepare the training code and build a Docker image, Artifact Registry to store the versioned container, and Vertex AI Custom Training to execute it on an n1-standard-8 machine with an NVIDIA Tesla V100 GPU. Three Cloud Storage buckets separately managed the COCO dataset, training logs and metrics, and versioned model checkpoints. During each run, the container retrieved its inputs, validated the dataset, performed a forward-pass sanity check, and continuously persisted metrics and checkpoints. This architecture made long-running experiments reproducible, auditable, and recoverable while providing a clear path toward distributed training in the future.',
+        carousel: [
+          {
+            src: 'projects/uav-google-cloud-training-architecture.png',
+            alt: 'Architecture diagram of an RF-DETR model-training workflow using a local machine, Cloud Storage, Vertex AI, Docker, and Artifact Registry',
+            title: 'Architecture Diagram Displaying Model Training on Google Cloud',
+          },
+        ],
+      },
       video: { title: 'Video', content: 'hello world' },
     },
   },
@@ -418,18 +428,20 @@ export const Projects = () => {
               )}
               {activeMedia && (
                 <div
-                  className={styles.subsectionCarousel}
+                  className={`${styles.subsectionCarousel} ${carouselItems.length === 1 ? styles.singleCarouselItem : ''}`}
                   role="group"
                   aria-label={`${activeSubsection.title} images`}
                 >
-                  <button
-                    className={styles.carouselButton}
-                    type="button"
-                    aria-label="Show previous image"
-                    onClick={showPreviousMedia}
-                  >
-                    <span aria-hidden="true">&#8249;</span>
-                  </button>
+                  {carouselItems.length > 1 && (
+                    <button
+                      className={styles.carouselButton}
+                      type="button"
+                      aria-label="Show previous image"
+                      onClick={showPreviousMedia}
+                    >
+                      <span aria-hidden="true">&#8249;</span>
+                    </button>
+                  )}
 
                   <figure className={styles.carouselFigure} aria-live="polite">
                     <img
@@ -443,19 +455,23 @@ export const Projects = () => {
                     <figcaption className={styles.carouselCaption}>
                       {activeMedia.title}
                     </figcaption>
-                    <span className={styles.carouselPosition}>
-                      {activeCarouselIndex + 1} / {carouselItems.length}
-                    </span>
+                    {carouselItems.length > 1 && (
+                      <span className={styles.carouselPosition}>
+                        {activeCarouselIndex + 1} / {carouselItems.length}
+                      </span>
+                    )}
                   </figure>
 
-                  <button
-                    className={styles.carouselButton}
-                    type="button"
-                    aria-label="Show next image"
-                    onClick={showNextMedia}
-                  >
-                    <span aria-hidden="true">&#8250;</span>
-                  </button>
+                  {carouselItems.length > 1 && (
+                    <button
+                      className={styles.carouselButton}
+                      type="button"
+                      aria-label="Show next image"
+                      onClick={showNextMedia}
+                    >
+                      <span aria-hidden="true">&#8250;</span>
+                    </button>
+                  )}
                 </div>
               )}
             </section>
