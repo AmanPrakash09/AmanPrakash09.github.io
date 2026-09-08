@@ -30,14 +30,17 @@ export const Skills = () => {
     Node: { title: 'Node.js', logo: 'node.png' },
     Express: { title: 'Express', logo: 'express.png' },
     LangChain: { title: 'LangChain', logo: 'langchain.png' },
-    Locust: { title: 'Locust', logo: 'locust.png' },
-    Vite: { title: 'Vite', logo: 'vite.png' },
+    PyTorch: { title: 'PyTorch', logo: 'pytorch.png' },
+    OpenCV: { title: 'OpenCV', logo: 'opencv.png' },
     Espresso: { title: 'Espresso', logo: 'espresso.png' },
     JUnit: { title: 'JUnit', logo: 'junit.png' },
   };
 
   const tools = {
     AWS: { title: 'AWS', logo: 'AWS.png' },
+    GCP: { title: 'GCP', logo: 'gcp.png' },
+    DataBricks: { title: 'DataBricks', logo: 'databricks.png' },
+    Datadog: { title: 'Datadog', logo: 'datadog.png' },
     GitHub: { title: 'GitHub', logo: 'github-og.png' },
     Git: { title: 'Git', logo: 'git.png' },
     Graphite: { title: 'Graphite', logo: 'graphite.png' },
@@ -45,10 +48,6 @@ export const Skills = () => {
     MongoDB: { title: 'MongoDB', logo: 'mongodb.png' },
     PostgreSQL: { title: 'PostgreSQL', logo: 'postgresql.png' },
     Docker: { title: 'Docker', logo: 'docker.png' },
-    VSCode: { title: 'VS Code', logo: 'vscode.png' },
-    IntelliJ: { title: 'IntelliJ', logo: 'intellij.png' },
-    AndroidStudio: { title: 'Android Studio', logo: 'androidstudio.png' },
-    Figma: { title: 'Figma', logo: 'figma.png' },
   };
 
   const tabs = {
