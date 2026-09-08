@@ -107,19 +107,6 @@
   opacity: 0.82;
 }
 
-.logoContainer {
-  display: grid;
-  max-width: clamp(90px, 13vw, 180px);
-  flex: 0 0 auto;
-  place-items: center;
-}
-
-.logo {
-  width: 100%;
-  max-height: clamp(48px, 8svh, 76px);
-  object-fit: contain;
-}
-
 .projectBody {
   min-height: 0;
   padding: clamp(14px, 2svh, 22px) clamp(6px, 1vw, 14px) 8px;
@@ -247,14 +234,6 @@
     font-size: clamp(14px, 3.7vw, 17px);
   }
 
-  .logoContainer {
-    max-width: 28%;
-  }
-
-  .logo {
-    max-height: 44px;
-  }
-
   .projectBody {
     padding: 12px 5px 6px;
   }
@@ -319,10 +298,6 @@
     display: inline;
     margin-right: 12px;
     font-size: 14px;
-  }
-
-  .logo {
-    max-height: 34px;
   }
 
   .projectBody {

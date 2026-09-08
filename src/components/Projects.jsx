@@ -9,7 +9,6 @@ const projects = {
     title: 'AILA',
     technologies: '',
     date: '',
-    logo: null,
     subsections: {
       intro: { title: 'Intro', content: [] },
       impact: { title: 'Impact', content: [] },
@@ -23,7 +22,6 @@ const projects = {
     title: 'Specialization Explorer',
     technologies: '',
     date: '',
-    logo: null,
     subsections: {
       intro: { title: 'Intro', content: [] },
       impact: { title: 'Impact', content: [] },
@@ -37,7 +35,6 @@ const projects = {
     title: 'VCI',
     technologies: '',
     date: '',
-    logo: null,
     subsections: {
       intro: { title: 'Intro', content: [] },
       impact: { title: 'Impact', content: [] },
@@ -51,7 +48,6 @@ const projects = {
     title: 'Student Advising',
     technologies: '',
     date: '',
-    logo: null,
     subsections: {
       intro: { title: 'Intro', content: [] },
       impact: { title: 'Impact', content: [] },
@@ -65,7 +61,6 @@ const projects = {
     title: 'SightSteer – Client-Server Based Remote Control System',
     technologies: 'Rust, Python, Networking, Computer Vision, ESP32',
     date: 'April 2025',
-    logo: 'sightsteer.png',
     section: {
       bullets: [
         {
@@ -89,7 +84,6 @@ const projects = {
     title: 'EasyText - Messaging App with AI Features',
     technologies: 'Node.js, Express.js, MongoDB Atlas, OpenAI, Amazon EC2, Docker, WebSocket, face-api.js',
     date: 'April 2024',
-    logo: 'easytext.png',
     section: {
       bullets: [
         {
@@ -121,7 +115,6 @@ const projects = {
     title: 'PokéDex Master - Pokémon Database Web App',
     technologies: 'Django, React.tsx, SQL, Amazon RDS, MySQL Workbench, JSON Web Token',
     date: 'March 2024',
-    logo: 'PokedexLogo.png',
     section: {
       bullets: [
         {
@@ -149,7 +142,6 @@ const projects = {
     title: 'BookIt - Study Space Booking System Android App',
     technologies: 'Java, Python, Node.js, Express.js, MongoDB, GoogleOAuth & Maps, Firebase, Geoapify, Espresso, Microsoft Azure',
     date: 'December 2023',
-    logo: 'bookit.png',
     section: {
       bullets: [
         {
@@ -247,16 +239,6 @@ export const Projects = () => {
             {project.date && <p>{project.date}</p>}
           </div>
 
-          {project.logo && (
-            <div className={styles.logoContainer}>
-              <img
-                src={getImageUrl(project.logo)}
-                alt={`${project.tabLabel} logo`}
-                className={styles.logo}
-                decoding="async"
-              />
-            </div>
-          )}
         </header>
 
         <div className={styles.projectBody}>
