@@ -23,7 +23,33 @@ const projects = {
           },
         ],
       },
-      architecture: { title: 'Architecture', content: 'hello world' },
+      architecture: {
+        title: 'Architecture',
+        numberedPoints: [
+          'The user sends a request to the application hosted on AWS Amplify.',
+          'Amplify integrates with the backend API Gateway.',
+          'Instructors can upload course materials to the application, which are stored in an S3 bucket using a pre-signed upload URL.',
+          'Adding a new course file to the S3 bucket triggers the data ingestion workflow. The Lambda function runs a Docker container with Amazon Elastic Container Registry (ECR).',
+          'The Lambda function embeds the text from uploaded files into vectors using Amazon Bedrock. This project uses the Amazon Titan Text Embeddings V2 model to generate embeddings.',
+          'The Lambda function stores the vectors in the PostgreSQL database.',
+          'Users can perform course management and access actions by sending an API request that invokes a Lambda function.',
+          'This Lambda function interacts with Amazon RDS.',
+          'Users can start chatting with the LLM by sending an API request that invokes the Lambda function to generate a response. The Lambda function runs a Docker container with Amazon ECR.',
+          'The Lambda function stores the embedded messages in Amazon DynamoDB.',
+          'This Lambda function uses RAG architecture to retrieve responses from LLMs hosted on Amazon Bedrock, augmented with the course information stored in Amazon RDS.',
+          'When an instructor clicks download chat logs, the request is queued in Amazon SQS.',
+          'An AWS Lambda function is triggered by the SQS queue to process the chat messages asynchronously.',
+          'The processed chat messages are then stored in the Amazon RDS database for structured storage and retrieval.',
+          'Additionally, chat logs are stored in Amazon S3.',
+          'The Lambda function also interacts with AWS AppSync (GraphQL) to update the frontend chat interface in real time and notify the instructor when the CSV has finished downloading.',
+        ],
+        carousel: [
+          {
+            src: 'projects/aila-architecture.png',
+            alt: 'AWS architecture diagram for the AI Learning Assistant, including its security, frontend, API, data ingestion, chat history, database, and generative AI pipelines',
+          },
+        ],
+      },
       flows: { title: 'Flows', content: 'hello world' },
     },
   },
@@ -306,6 +332,7 @@ export const Projects = () => {
   const subsectionParagraphs = activeSubsection?.content
     ? (Array.isArray(activeSubsection.content) ? activeSubsection.content : [activeSubsection.content])
     : [];
+  const subsectionPoints = activeSubsection?.numberedPoints ?? [];
   const subsectionPanelId = `${panelId}-subsection-${activeSubsectionKey}`;
   const bullets = project.section?.bullets ?? [];
   const bulletSplitIndex = Math.ceil(bullets.length / 2);
@@ -426,11 +453,18 @@ export const Projects = () => {
               role="tabpanel"
               aria-labelledby={`${panelId}-subsection-tab-${activeSubsectionKey}`}
             >
-              {subsectionParagraphs.length > 0 && (
+              {(subsectionParagraphs.length > 0 || subsectionPoints.length > 0) && (
                 <div className={styles.subsectionText}>
                   {subsectionParagraphs.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
+                  {subsectionPoints.length > 0 && (
+                    <ol className={styles.numberedPoints}>
+                      {subsectionPoints.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ol>
+                  )}
                 </div>
               )}
               {activeSubsection.embedUrl && (

@@ -218,6 +218,22 @@
   gap: clamp(12px, 1.5svh, 18px);
 }
 
+.numberedPoints {
+  padding-left: 1.45em;
+  color: var(--color-text);
+}
+
+.numberedPoints li {
+  margin-bottom: clamp(3px, 0.5svh, 6px);
+  padding-left: 0.12em;
+  font-size: clamp(14px, 1vw, 17px);
+  line-height: 1.08;
+}
+
+.numberedPoints li::marker {
+  color: var(--color-signal-yellow);
+}
+
 .videoEmbed {
   width: min(100%, 700px);
   margin: 0 auto;
