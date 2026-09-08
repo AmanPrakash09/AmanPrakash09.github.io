@@ -192,7 +192,7 @@
 }
 
 .videoEmbed {
-  width: min(100%, 760px);
+  width: min(100%, 700px);
   margin: 0 auto;
   overflow: hidden;
   border: 1px solid rgba(255, 221, 0, 0.28);
