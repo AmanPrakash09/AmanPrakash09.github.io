@@ -38,7 +38,7 @@ export const Hero = () => {
           <span aria-hidden="true" className={styles.cursor} />
         </h1>
         <p className={styles.description}>
-          {"I'm a Software Engineer who builds cool things"}
+          {"a driven Software Engineer dedicated to crafting innovative and impactful solutions"}
         </p>
       </div>
       <img
