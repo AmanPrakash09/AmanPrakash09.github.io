@@ -149,17 +149,17 @@ const projects = {
           {
             src: 'projects/uav-rgb-training-comparison.png',
             alt: 'Bar chart comparing initial and enhanced RGB training evaluation metrics',
-            title: 'Comparison between Initial vs. Enhanced RGB Training.',
+            title: 'Comparison between Initial vs. Enhanced RGB Training',
           },
           {
             src: 'projects/uav-infrared-validation-metrics.png',
             alt: 'Line chart of infrared validation detection metrics across training epochs',
-            title: 'Validation Metrics during Infrared Training across Epochs.',
+            title: 'Validation Metrics during Infrared Training across Epochs',
           },
           {
             src: 'projects/uav-infrared-over-rgb-validation-metrics.png',
             alt: 'Line chart of infrared-over-RGB validation detection metrics across training epochs',
-            title: 'Validation Metrics during Infrared Training over RGB Training across Epochs.',
+            title: 'Validation Metrics during Infrared Training over RGB Training across Epochs',
           },
           {
             src: 'projects/uav-infrared-checkpoint-comparison.png',
@@ -175,7 +175,7 @@ const projects = {
           {
             src: 'projects/uav-speed-ground-truth-comparison.png',
             alt: 'Line chart comparing class-aware vehicle speed estimates with ground-truth speed values',
-            title: 'Class Aware Speed Estimations vs. Ground Truth Values.',
+            title: 'Class Aware Speed Estimations vs. Ground Truth Values',
           },
           {
             src: 'projects/uav-speed-annotated-output.png',
