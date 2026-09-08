@@ -41,7 +41,32 @@ const projects = {
           },
         ],
       },
-      modelTraining: { title: 'Model Training', content: 'hello world' },
+      modelTraining: {
+        title: 'Model Training',
+        content: 'I developed and evaluated several RF-DETR Nano training strategies to identify the strongest detector for each camera modality. Higher-resolution enhanced RGB training preserved more detail for small aerial targets and improved performance over the initial RGB baseline, while training on video-derived frames caused overfitting because adjacent frames were highly correlated. For infrared inputs, isolated training learned modality-specific features more consistently than fine-tuning an RGB checkpoint, which introduced noise into the model. I therefore selected the enhanced RGB and isolated infrared checkpoints for the final pipeline. Their detections are passed to ByteTrack, which associates each object across consecutive frames and assigns it a persistent ID. Maintaining that identity is essential for constructing trajectories, producing consistent annotations, and measuring frame-to-frame displacement for vehicle speed estimation.',
+        carousel: [
+          {
+            src: 'projects/uav-rgb-training-comparison.png',
+            alt: 'Bar chart comparing initial and enhanced RGB training evaluation metrics',
+            title: 'Comparison between Initial vs. Enhanced RGB Training.',
+          },
+          {
+            src: 'projects/uav-infrared-validation-metrics.png',
+            alt: 'Line chart of infrared validation detection metrics across training epochs',
+            title: 'Validation Metrics during Infrared Training across Epochs.',
+          },
+          {
+            src: 'projects/uav-infrared-over-rgb-validation-metrics.png',
+            alt: 'Line chart of infrared-over-RGB validation detection metrics across training epochs',
+            title: 'Validation Metrics during Infrared Training over RGB Training across Epochs.',
+          },
+          {
+            src: 'projects/uav-infrared-checkpoint-comparison.png',
+            alt: 'Bar chart comparing isolated infrared and infrared-over-RGB checkpoints',
+            title: 'Comparison between Isolated Infrared vs. Infrared over RGB Training',
+          },
+        ],
+      },
       speedEstimator: { title: 'Speed Estimator', content: 'hello world' },
       architecture: { title: 'Architecture', content: 'hello world' },
       video: { title: 'Video', content: 'hello world' },
@@ -223,6 +248,7 @@ const renderBulletText = ({ text, highlights }) => {
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState('SightSteer');
   const [selectedSubsection, setSelectedSubsection] = useState(null);
+  const [selectedMediaIndex, setSelectedMediaIndex] = useState(0);
   const project = projects[selectedProject];
   const panelId = `project-panel-${selectedProject.toLowerCase()}`;
   const subsectionEntries = Object.entries(project.subsections ?? {});
@@ -230,6 +256,11 @@ export const Projects = () => {
     ? selectedSubsection
     : subsectionEntries[0]?.[0];
   const activeSubsection = project.subsections?.[activeSubsectionKey];
+  const carouselItems = activeSubsection?.carousel ?? [];
+  const activeCarouselIndex = carouselItems.length
+    ? selectedMediaIndex % carouselItems.length
+    : 0;
+  const activeMedia = carouselItems[activeCarouselIndex];
   const subsectionPanelId = `${panelId}-subsection-${activeSubsectionKey}`;
   const bullets = project.section?.bullets ?? [];
   const bulletSplitIndex = Math.ceil(bullets.length / 2);
@@ -241,6 +272,22 @@ export const Projects = () => {
   const selectProject = (key) => {
     setSelectedProject(key);
     setSelectedSubsection(Object.keys(projects[key].subsections ?? {})[0] ?? null);
+    setSelectedMediaIndex(0);
+  };
+
+  const selectSubsection = (key) => {
+    setSelectedSubsection(key);
+    setSelectedMediaIndex(0);
+  };
+
+  const showPreviousMedia = () => {
+    setSelectedMediaIndex((index) => (
+      (index - 1 + carouselItems.length) % carouselItems.length
+    ));
+  };
+
+  const showNextMedia = () => {
+    setSelectedMediaIndex((index) => (index + 1) % carouselItems.length);
   };
 
   return (
@@ -300,7 +347,7 @@ export const Projects = () => {
                     role="tab"
                     aria-selected={isSelected}
                     aria-controls={isSelected ? subsectionPanelId : undefined}
-                    onClick={() => setSelectedSubsection(key)}
+                    onClick={() => selectSubsection(key)}
                   >
                     {subsection.title}
                   </button>
@@ -347,6 +394,48 @@ export const Projects = () => {
                       decoding="async"
                     />
                   ))}
+                </div>
+              )}
+              {activeMedia && (
+                <div
+                  className={styles.subsectionCarousel}
+                  role="group"
+                  aria-label={`${activeSubsection.title} images`}
+                >
+                  <button
+                    className={styles.carouselButton}
+                    type="button"
+                    aria-label="Show previous image"
+                    onClick={showPreviousMedia}
+                  >
+                    <span aria-hidden="true">&#8249;</span>
+                  </button>
+
+                  <figure className={styles.carouselFigure} aria-live="polite">
+                    <img
+                      key={activeMedia.src}
+                      className={styles.carouselImage}
+                      src={getImageUrl(activeMedia.src)}
+                      alt={activeMedia.alt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <figcaption className={styles.carouselCaption}>
+                      {activeMedia.title}
+                    </figcaption>
+                    <span className={styles.carouselPosition}>
+                      {activeCarouselIndex + 1} / {carouselItems.length}
+                    </span>
+                  </figure>
+
+                  <button
+                    className={styles.carouselButton}
+                    type="button"
+                    aria-label="Show next image"
+                    onClick={showNextMedia}
+                  >
+                    <span aria-hidden="true">&#8250;</span>
+                  </button>
                 </div>
               )}
             </section>

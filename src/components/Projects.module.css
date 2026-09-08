@@ -208,6 +208,69 @@
   object-fit: contain;
 }
 
+.subsectionCarousel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(7px, 1.2vw, 16px);
+  margin-top: clamp(12px, 2svh, 20px);
+}
+
+.carouselButton {
+  display: grid;
+  width: clamp(34px, 3.4vw, 46px);
+  height: clamp(34px, 3.4vw, 46px);
+  padding: 0 0 3px;
+  border: 1px solid rgba(255, 221, 0, 0.28);
+  border-radius: 50%;
+  color: var(--color-text);
+  font-family: var(--font-vt323);
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1;
+  background: var(--color-secondary);
+  cursor: pointer;
+  place-items: center;
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.carouselButton:hover,
+.carouselButton:focus-visible {
+  border-color: rgba(0, 229, 255, 0.58);
+  background: var(--color-primary);
+  transform: scale(1.06);
+}
+
+.carouselFigure {
+  min-width: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.carouselImage {
+  display: block;
+  width: 100%;
+  height: clamp(180px, 27svh, 285px);
+  border: 1px solid rgba(255, 221, 0, 0.22);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+}
+
+.carouselCaption {
+  margin-top: 7px;
+  color: var(--color-signal-yellow);
+  font-size: clamp(16px, 1.3vw, 20px);
+  line-height: 1.1;
+}
+
+.carouselPosition {
+  display: block;
+  margin-top: 3px;
+  color: var(--color-text);
+  font-size: clamp(14px, 1vw, 16px);
+  opacity: 0.72;
+}
+
 @keyframes openFolder {
   from {
     opacity: 0;
@@ -306,6 +369,21 @@
   .subsectionImages {
     grid-template-columns: 1fr;
   }
+
+  .subsectionCarousel {
+    grid-template-columns: 32px minmax(0, 1fr) 32px;
+    gap: 5px;
+  }
+
+  .carouselButton {
+    width: 32px;
+    height: 32px;
+    font-size: 28px;
+  }
+
+  .carouselImage {
+    height: clamp(145px, 24svh, 220px);
+  }
 }
 
 @media (max-height: 560px) and (orientation: landscape) {
@@ -365,5 +443,9 @@
   .folderContent,
   .subsectionContent {
     animation: none;
+  }
+
+  .carouselButton {
+    transition: none;
   }
 }
