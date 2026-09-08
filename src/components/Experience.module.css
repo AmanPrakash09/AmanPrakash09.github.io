@@ -112,10 +112,7 @@
   object-fit: contain;
 }
 
-.experienceSections {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: clamp(16px, 3vw, 42px);
+.experienceSection {
   min-height: 0;
   padding: clamp(14px, 2svh, 22px) clamp(6px, 1vw, 14px) 8px;
   overflow-y: auto;
@@ -124,8 +121,15 @@
   scrollbar-width: thin;
 }
 
-.experienceSection {
+.highlightColumns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 5vw, 70px);
   min-width: 0;
+}
+
+.highlightColumns[data-column-count='1'] {
+  grid-template-columns: 1fr;
 }
 
 .experienceSection h4 {
@@ -140,17 +144,21 @@
   padding-left: 1.1em;
 }
 
-.experienceSections[data-section-count='1'] .highlights {
-  columns: 2;
-  column-gap: clamp(28px, 5vw, 70px);
-}
-
 .highlights li {
   margin-bottom: clamp(8px, 1.15svh, 13px);
   break-inside: avoid;
   color: var(--color-text);
   font-size: clamp(16px, 1.3vw, 20px);
   line-height: 1.15;
+}
+
+.highlights mark {
+  padding: 0 0.08em;
+  color: inherit;
+  background: var(--color-secondary);
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .highlights li::marker {
@@ -166,24 +174,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@media (min-width: 701px) {
-  .experienceSections[data-section-count='2'] {
-    padding-top: 10px;
-    padding-bottom: 6px;
-  }
-
-  .experienceSections[data-section-count='2'] .experienceSection h4 {
-    margin-bottom: 6px;
-    font-size: 18px;
-  }
-
-  .experienceSections[data-section-count='2'] .highlights li {
-    margin-bottom: 4px;
-    font-size: clamp(14px, 1vw, 16px);
-    line-height: 1.05;
   }
 }
 
@@ -243,14 +233,13 @@
     height: 36px;
   }
 
-  .experienceSections {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .experienceSection {
     padding: 12px 5px 6px;
   }
 
-  .experienceSections[data-section-count='1'] .highlights {
-    columns: 1;
+  .highlightColumns {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .highlights li {
@@ -292,8 +281,7 @@
     height: 30px;
   }
 
-  .experienceSections {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  .experienceSection {
     padding-top: 7px;
   }
 
