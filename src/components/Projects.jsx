@@ -99,7 +99,11 @@ const projects = {
           },
         ],
       },
-      video: { title: 'Video', content: 'hello world' },
+      video: {
+        title: 'Video',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/jMFFpLjFEec',
+        embedTitle: 'Object Identification via UAV Camera demonstration',
+      },
     },
   },
   SpecializationExplorer: {
@@ -411,7 +415,19 @@ export const Projects = () => {
               role="tabpanel"
               aria-labelledby={`${panelId}-subsection-tab-${activeSubsectionKey}`}
             >
-              <p>{activeSubsection.content}</p>
+              {activeSubsection.content && <p>{activeSubsection.content}</p>}
+              {activeSubsection.embedUrl && (
+                <div className={styles.videoEmbed}>
+                  <iframe
+                    src={activeSubsection.embedUrl}
+                    title={activeSubsection.embedTitle}
+                    loading="lazy"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              )}
               {activeSubsection.images?.length > 0 && (
                 <div className={styles.subsectionImages}>
                   {activeSubsection.images.map((image) => (
