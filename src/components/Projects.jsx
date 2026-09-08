@@ -411,7 +411,7 @@ export const Projects = () => {
             <section
               key={activeSubsectionKey}
               id={subsectionPanelId}
-              className={styles.subsectionContent}
+              className={`${styles.subsectionContent} ${activeMedia ? styles.mediaSubsection : ''}`}
               role="tabpanel"
               aria-labelledby={`${panelId}-subsection-tab-${activeSubsectionKey}`}
             >

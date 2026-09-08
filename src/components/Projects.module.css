@@ -185,6 +185,28 @@
   animation: revealSubsection 180ms ease-out;
 }
 
+.mediaSubsection {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(22px, 3vw, 48px);
+}
+
+.mediaSubsection > p {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.mediaSubsection > .subsectionCarousel {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: 0;
+}
+
+.mediaSubsection .carouselImage {
+  height: clamp(240px, 38svh, 440px);
+}
+
 .subsectionContent p {
   color: var(--color-text);
   font-size: clamp(18px, 1.5vw, 22px);
@@ -233,7 +255,7 @@
   margin-top: clamp(12px, 2svh, 20px);
 }
 
-.singleCarouselItem {
+.subsectionCarousel.singleCarouselItem {
   grid-template-columns: minmax(0, 1fr);
 }
 
@@ -321,6 +343,27 @@
   }
 }
 
+@media (max-width: 900px) {
+  .mediaSubsection {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(12px, 2svh, 18px);
+  }
+
+  .mediaSubsection > .subsectionCarousel {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .mediaSubsection > p {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .mediaSubsection .carouselImage {
+    height: clamp(180px, 32svh, 300px);
+  }
+}
+
 @media (max-width: 700px) {
   .projectContainer {
     padding: 12px 10px 13px;
@@ -403,6 +446,10 @@
   }
 
   .carouselImage {
+    height: clamp(145px, 24svh, 220px);
+  }
+
+  .mediaSubsection .carouselImage {
     height: clamp(145px, 24svh, 220px);
   }
 }
