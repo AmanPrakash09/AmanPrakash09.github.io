@@ -88,10 +88,14 @@
   position: relative;
   z-index: 1;
   justify-self: center;
-  width: min(100%, 430px);
-  max-height: 88%;
-  object-fit: contain;
-  animation: floating 3s ease-in-out infinite;
+  width: min(100%, 380px);
+  max-height: 82%;
+  border: 2px solid rgba(0, 229, 255, 0.82);
+  border-radius: 8px;
+  box-shadow:
+    0 0 10px rgba(0, 229, 255, 0.34),
+    0 0 24px rgba(0, 229, 255, 0.14);
+  object-fit: cover;
 }
 
 @keyframes blinkCursor {
@@ -109,11 +113,6 @@
     opacity: 1;
     transform: translateX(0);
   }
-}
-
-@keyframes floating {
-  0%, 100% { transform: rotate(7deg) translateY(-4px) scale(0.88); }
-  50% { transform: rotate(7deg) translateY(7px) scale(0.88); }
 }
 
 @media (max-width: 700px) and (orientation: portrait) {
@@ -147,7 +146,8 @@
   .heroImg {
     grid-row: 1;
     width: min(62%, 210px);
-    height: 100%;
+    height: auto;
+    max-height: 100%;
   }
 }
 
@@ -167,8 +167,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .description,
-  .heroImg {
+  .description {
     animation: none;
   }
 
