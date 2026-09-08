@@ -26,10 +26,24 @@
 }
 
 .title {
-  padding: 4px 0;
-  font-size: clamp(25px, 2.3vw, 32px);
-  font-weight: 600;
-  white-space: nowrap;
+  display: grid;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 5px 0;
+  place-items: center;
+}
+
+.title img {
+  display: block;
+  width: clamp(64px, 5.8vw, 84px);
+  height: auto;
+  transition: filter 180ms ease, transform 180ms ease;
+}
+
+.title:hover img,
+.title:focus-visible img {
+  filter: drop-shadow(0 0 7px rgba(255, 221, 0, 0.58));
+  transform: scale(1.04);
 }
 
 .menu {
@@ -160,8 +174,8 @@
     padding: 0 12px;
   }
 
-  .title {
-    font-size: 23px;
+  .title img {
+    width: 62px;
   }
 
   .icons a {

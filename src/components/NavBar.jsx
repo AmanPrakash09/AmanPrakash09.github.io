@@ -14,8 +14,14 @@ export const NavBar = ({ activeSection, sections, onSectionChange }) => {
 
   return (
     <nav className={styles.navbar} aria-label="Primary">
-      <button className={styles.title} type="button" onClick={() => selectSection('home')}>
-        Aman Prakash
+      <button
+        className={styles.title}
+        type="button"
+        aria-label="Home"
+        aria-current={activeSection === 'home' ? 'page' : undefined}
+        onClick={() => selectSection('home')}
+      >
+        <img src={getImageUrl('batsymbol.png')} alt="" aria-hidden="true" />
       </button>
 
       <div className={styles.menu}>
@@ -38,7 +44,9 @@ export const NavBar = ({ activeSection, sections, onSectionChange }) => {
           id="primary-menu"
           className={`${styles.menuItems} ${menuOpen ? styles.menuOpen : ''}`}
         >
-          {Object.entries(sections).map(([section, { label }]) => (
+          {Object.entries(sections)
+            .filter(([section]) => section !== 'home')
+            .map(([section, { label }]) => (
             <li key={section}>
               <button
                 className={activeSection === section ? styles.activeSection : ''}
@@ -49,7 +57,7 @@ export const NavBar = ({ activeSection, sections, onSectionChange }) => {
                 {label}
               </button>
             </li>
-          ))}
+            ))}
         </ul>
 
         <div className={styles.icons}>
