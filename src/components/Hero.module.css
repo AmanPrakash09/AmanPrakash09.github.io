@@ -53,6 +53,37 @@
   animation: slideIn 500ms ease-out forwards;
 }
 
+.resumeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-top: clamp(10px, 1.6svh, 18px);
+  color: var(--color-text);
+  font-family: var(--font-vt323);
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1;
+  text-decoration: none;
+  opacity: 0.82;
+  transition: opacity 180ms ease;
+}
+
+.resumeLink img {
+  width: 1.25em;
+  height: 1.25em;
+  object-fit: contain;
+  transition: transform 180ms ease;
+}
+
+.resumeLink:hover,
+.resumeLink:focus-visible {
+  opacity: 1;
+}
+
+.resumeLink:hover img,
+.resumeLink:focus-visible img {
+  transform: translateY(-2px);
+}
+
 .heroImg {
   position: relative;
   z-index: 1;
@@ -107,6 +138,10 @@
 
   .description {
     font-size: clamp(19px, 5.5vw, 26px);
+  }
+
+  .resumeLink {
+    font-size: clamp(16px, 4.5vw, 20px);
   }
 
   .heroImg {

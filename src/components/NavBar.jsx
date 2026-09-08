@@ -77,6 +77,14 @@ export const NavBar = ({ activeSection, sections, onSectionChange }) => {
           >
             <img src={getImageUrl('GitHub.png')} alt="" decoding="async" />
           </a>
+          <a
+            href={getImageUrl('Aman_Prakash_Resume_2026_27.pdf')}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open résumé in a new tab"
+          >
+            <img src={getImageUrl('resume.png')} alt="" decoding="async" />
+          </a>
           <a href="mailto:apraka01@student.ubc.ca" aria-label="Email Aman">
             <img src={getImageUrl('Mail.png')} alt="" decoding="async" />
           </a>

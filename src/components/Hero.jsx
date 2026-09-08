@@ -40,6 +40,15 @@ export const Hero = () => {
         <p className={styles.description}>
           {"a driven Software Engineer dedicated to crafting innovative and impactful solutions"}
         </p>
+        <a
+          className={styles.resumeLink}
+          href={getImageUrl('Aman_Prakash_Resume_2026_27.pdf')}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>check out my resume</span>
+          <img src={getImageUrl('resumeBlue.png')} alt="" aria-hidden="true" />
+        </a>
       </div>
       <img
         src={getImageUrl("hero.png")}
