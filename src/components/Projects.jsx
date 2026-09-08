@@ -3,9 +3,10 @@ import styles from './Projects.module.css';
 import { getImageUrl } from '../utils';
 
 const projects = {
-  Project1: {
-    tabLabel: 'Project 1',
-    title: 'Project 1',
+  AILA: {
+    tabLabel: 'AILA',
+    tabIcon: 'projects/aila-icon.png',
+    title: 'AILA',
     technologies: '',
     date: '',
     logo: null,
@@ -16,9 +17,10 @@ const projects = {
       flows: { title: 'Flows', content: [] },
     },
   },
-  Project2: {
-    tabLabel: 'Project 2',
-    title: 'Project 2',
+  SpecializationExplorer: {
+    tabLabel: 'Specialization Explorer',
+    tabIcon: 'projects/specializationexplorer-icon.png',
+    title: 'Specialization Explorer',
     technologies: '',
     date: '',
     logo: null,
@@ -29,9 +31,10 @@ const projects = {
       flows: { title: 'Flows', content: [] },
     },
   },
-  Project3: {
-    tabLabel: 'Project 3',
-    title: 'Project 3',
+  VCI: {
+    tabLabel: 'VCI',
+    tabIcon: 'projects/vci-icon.png',
+    title: 'VCI',
     technologies: '',
     date: '',
     logo: null,
@@ -42,9 +45,10 @@ const projects = {
       flows: { title: 'Flows', content: [] },
     },
   },
-  Project4: {
-    tabLabel: 'Project 4',
-    title: 'Project 4',
+  StudentAdvising: {
+    tabLabel: 'Student Advising',
+    tabIcon: 'projects/studentadvising-icon.png',
+    title: 'Student Advising',
     technologies: '',
     date: '',
     logo: null,
@@ -57,6 +61,7 @@ const projects = {
   },
   SightSteer: {
     tabLabel: 'SightSteer',
+    tabIcon: 'projects/sightsteer-icon.png',
     title: 'SightSteer – Client-Server Based Remote Control System',
     technologies: 'Rust, Python, Networking, Computer Vision, ESP32',
     date: 'April 2025',
@@ -80,6 +85,7 @@ const projects = {
   },
   EasyText: {
     tabLabel: 'EasyText',
+    tabIcon: 'projects/easytext-icon.png',
     title: 'EasyText - Messaging App with AI Features',
     technologies: 'Node.js, Express.js, MongoDB Atlas, OpenAI, Amazon EC2, Docker, WebSocket, face-api.js',
     date: 'April 2024',
@@ -111,6 +117,7 @@ const projects = {
   },
   PokeDex: {
     tabLabel: 'PokéDex',
+    tabIcon: 'projects/pokedex-icon.png',
     title: 'PokéDex Master - Pokémon Database Web App',
     technologies: 'Django, React.tsx, SQL, Amazon RDS, MySQL Workbench, JSON Web Token',
     date: 'March 2024',
@@ -138,6 +145,7 @@ const projects = {
   },
   BookIt: {
     tabLabel: 'BookIt',
+    tabIcon: 'projects/bookit-icon.png',
     title: 'BookIt - Study Space Booking System Android App',
     technologies: 'Java, Python, Node.js, Express.js, MongoDB, GoogleOAuth & Maps, Firebase, Geoapify, Espresso, Microsoft Azure',
     date: 'December 2023',
@@ -215,9 +223,11 @@ export const Projects = () => {
               role="tab"
               aria-selected={isSelected}
               aria-controls={isSelected ? panelId : undefined}
+              aria-label={item.tabLabel}
+              title={item.tabLabel}
               onClick={() => setSelectedProject(key)}
             >
-              <span>{item.tabLabel}</span>
+              <img src={getImageUrl(item.tabIcon)} alt="" aria-hidden="true" />
             </button>
           );
         })}

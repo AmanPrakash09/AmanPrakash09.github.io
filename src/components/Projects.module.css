@@ -37,14 +37,17 @@
   transition: background-color 180ms ease, transform 180ms ease;
 }
 
-.folderTab span {
-  display: -webkit-box;
-  overflow: hidden;
-  font-size: clamp(14px, 1.25vw, 20px);
-  line-height: 0.9;
-  text-align: center;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+.folderTab img {
+  width: clamp(24px, 2.4vw, 34px);
+  height: clamp(24px, 2.4vw, 34px);
+  object-fit: contain;
+  transition: filter 180ms ease, transform 180ms ease;
+}
+
+.folderTab:hover img,
+.folderTab:focus-visible img,
+.folderTab.active img {
+  filter: drop-shadow(0 0 5px rgba(0, 229, 255, 0.36));
 }
 
 .folderTab:hover,
@@ -218,8 +221,9 @@
     clip-path: polygon(0 22%, 7% 22%, 13% 0, 80% 0, 87% 22%, 100% 22%, 100% 100%, 0 100%);
   }
 
-  .folderTab span {
-    font-size: clamp(14px, 4vw, 18px);
+  .folderTab img {
+    width: clamp(22px, 7vw, 27px);
+    height: clamp(22px, 7vw, 27px);
   }
 
   .folderContent {
@@ -293,8 +297,9 @@
     padding: 12px 3px 4px;
   }
 
-  .folderTab span {
-    font-size: 14px;
+  .folderTab img {
+    width: 24px;
+    height: 24px;
   }
 
   .folderContent {
