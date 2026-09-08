@@ -14,11 +14,12 @@
 }
 
 .portfolioPanel {
+  --skyline-overlap: clamp(40px, 6svh, 64px);
   position: absolute;
   z-index: 10;
   top: clamp(76px, 10svh, 96px);
   right: clamp(18px, 6vw, 100px);
-  bottom: calc(clamp(70px, 22.1svh, 360px) + clamp(24px, 4svh, 44px) + 16px);
+  bottom: calc(clamp(70px, 22.1svh, 360px) + clamp(24px, 4svh, 44px) + 16px - var(--skyline-overlap));
   left: clamp(18px, 6vw, 100px);
   min-height: 0;
   overflow: hidden;
@@ -58,15 +59,16 @@
   .portfolioPanel {
     top: 68px;
     right: 12px;
-    bottom: calc(clamp(70px, 22.1svh, 360px) + clamp(28px, 5svh, 46px) + 16px);
+    bottom: calc(clamp(70px, 22.1svh, 360px) + clamp(28px, 5svh, 46px) + 16px - var(--skyline-overlap));
     left: 12px;
   }
 }
 
 @media (max-height: 560px) and (orientation: landscape) {
   .portfolioPanel {
+    --skyline-overlap: clamp(32px, 7svh, 44px);
     top: 58px;
-    bottom: calc(clamp(52px, 22.1svh, 210px) + clamp(20px, 5svh, 30px) + 12px);
+    bottom: calc(clamp(52px, 22.1svh, 210px) + clamp(20px, 5svh, 30px) + 12px - var(--skyline-overlap));
   }
 }
 
