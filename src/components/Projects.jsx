@@ -214,9 +214,101 @@ const projects = {
     technologies: '',
     date: '',
     subsections: {
-      intro: { title: 'Intro', content: 'hello world' },
-      architecture: { title: 'Architecture', content: 'hello world' },
-      flows: { title: 'Flows', content: 'hello world' },
+      intro: {
+        title: 'Intro',
+        content: [
+          'Specialization Explorer is a conversational AI tool that helps UBC Bachelor of Science students navigate specialization choices. It combines institutional academic information with public alumni data to help students explore their interests, compare programs, and discover academic pathways aligned with their goals through personalized, source-grounded conversations.',
+          'I worked directly with a director in UBC’s Faculty of Science to translate academic advising needs into a scalable, serverless system using newer managed AWS services. I built a RAG pipeline with Amazon Bedrock Knowledge Bases and OpenSearch Serverless, then created a novel ingestion state machine for S3 files and websites. The workflow tracks each source from pending through completion, uses EventBridge Scheduler to poll asynchronous Bedrock jobs without holding Lambda functions open, sequences file and website ingestion, preserves an audit trail, and automatically retries eligible crawler-capacity failures. This introduced a Knowledge Base orchestration pattern never seen before.',
+        ],
+        carousel: [
+          {
+            src: 'projects/specialization-explorer-intro.png',
+            alt: 'Pixel-art illustration of an AI assistant helping a student choose between academic paths',
+          },
+        ],
+      },
+      architecture: {
+        title: 'Architecture',
+        numberedPoints: [
+          'The user request is first sent through a security layer comprising AWS WAF, Amazon CloudFront, and AWS Shield, which flag potential threats.',
+          'Users access the application through a React frontend hosted on AWS Amplify. AWS Cognito handles authentication for admins, ensuring only authorized administrators can access admin analytics and features. Public users do not authenticate, preserving their anonymity.',
+          'The frontend communicates with backend services through a REST API using API Gateway and Lambda for CRUD operations. IAM roles and policies control access to the services required by the application. A WebSocket endpoint streams live LLM responses to the user’s frontend.',
+          'Application data is managed through AWS Lambda functions and stored in Amazon RDS through RDS Proxy, allowing the system to securely handle database requests while improving connection management and performance.',
+          'Amazon RDS acts as the platform’s main SQL database, storing the structured application data required to support the user experience.',
+          'The database contains LLM settings and prompts that guide how it responds to a user. It also stores the chat history needed by the LLM to continue the conversation.',
+          'The API also connects to a text-generation Lambda function responsible for preparing and sending user prompts into the generative AI workflow.',
+          'Amazon Bedrock processes the user query together with the retrieved context to generate a grounded response based on the ingested knowledge base content.',
+          'Appointed administrators can upload files into Amazon S3 using pre-signed URLs or provide website sources for ingestion into the knowledge base.',
+          'Content from files and websites is stored as embeddings in Amazon OpenSearch Serverless. The system uses Retrieval-Augmented Generation (RAG) to search the stored content for the most relevant context before generating a response.',
+          'AWS CodePipeline and AWS CodeBuild are used to create the Bedrock Knowledge Base and OpenSearch Serverless collection.',
+        ],
+        carousel: [
+          {
+            src: 'projects/specialization-explorer-architecture.png',
+            alt: 'AWS architecture diagram for Specialization Explorer, including its security, frontend, API, database, generative AI, and data ingestion pipeline',
+          },
+        ],
+      },
+      flows: {
+        title: 'Flows',
+        views: {
+          student: {
+            title: 'Student',
+            carousel: [
+              {
+                src: 'projects/specialization-explorer-student-home.png',
+                alt: 'Specialization Explorer welcome screen prompting a student to start a conversation',
+                description: 'When landing on the Specialization Explorer homepage, users are greeted with a welcome message and prompted to start a new conversation. An informational note also reminds users that they can interact with verified university sources and encourages them to confirm important details before making final decisions.',
+              },
+              {
+                src: 'projects/specialization-explorer-student-chat.png',
+                alt: 'Anonymous Specialization Explorer chat asking a student about academic interests and career goals',
+                description: 'Each new chat begins as an anonymous session, with the LLM guiding users through a series of questions to learn about their academic interests and career goals. Using these insights, Specialization Explorer transitions to making suggestions. Through the left sidebar, users can start a new chat, switch between sessions, or delete sessions. Users can also download a transcript of their session at any point.',
+              },
+              {
+                src: 'projects/specialization-explorer-student-recommendation.png',
+                alt: 'Specialization Explorer recommendation with program focus, admission details, courses, and careers',
+                description: 'After a specialization is suggested, users can ask follow-up questions to explore specific courses, career paths, admissions requirements, or how different programs compare.',
+              },
+              {
+                src: 'projects/specialization-explorer-student-warning.png',
+                alt: 'Warning that an AI response may not be reliably grounded in retrieved UBC source content',
+                description: 'If the LLM’s response is not fully supported by the knowledge base, a warning banner appears below the message, advising users to verify the information with the official UBC Academic Calendar, including program overviews and course catalogues.',
+              },
+              {
+                src: 'projects/specialization-explorer-student-references.png',
+                alt: 'Expandable references panel showing a UBC Academic Calendar source used by the response',
+                description: 'LLM responses may include source references. Users can expand a tab below the chat to view the original documents or web pages on which the response is based.',
+              },
+            ],
+          },
+          administrator: {
+            title: 'Administrator',
+            carousel: [
+              {
+                src: 'projects/specialization-explorer-admin-dashboard.png',
+                alt: 'Specialization Explorer admin dashboard showing platform metrics and knowledge base data sources',
+                description: 'Through the admin dashboard, administrators can view platform-wide metrics, manage knowledge base data sources and system settings, and review user interactions across the platform.',
+              },
+              {
+                src: 'projects/specialization-explorer-admin-data-source.png',
+                alt: 'Administrator form for adding a website data source with inclusion and exclusion rules',
+                description: 'Administrators can manage knowledge base data sources, including website URLs with inclusion and exclusion rules, and upload files. Once added, sources can be synced to update the system, with status updates provided throughout the process.',
+              },
+              {
+                src: 'projects/specialization-explorer-admin-analytics.png',
+                alt: 'Administrator analytics showing user and chat-session activity over time',
+                description: 'The analytics page provides an overview of platform usage over time, including total users, chat sessions, and questions asked to the chatbot. Administrators can adjust the date range to explore trends in engagement, such as spikes in usage during peak periods.',
+              },
+              {
+                src: 'projects/specialization-explorer-admin-settings.png',
+                alt: 'System settings for user limits, language-model behavior, specializations, and hallucination checks',
+                description: 'The system settings page controls key aspects of how the platform behaves, including user message limits, LLM response style, and how recommendations are generated. For instance, it manages guardrails: built-in rules that keep the LLM focused on relevant topics, prevent misuse, and ensure responses remain accurate and appropriate.',
+              },
+            ],
+          },
+        },
+      },
     },
   },
   VCI: {
