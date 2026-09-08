@@ -10,10 +10,24 @@ const projects = {
     technologies: '',
     date: '',
     subsections: {
-      intro: { title: 'Intro', content: [] },
-      impact: { title: 'Impact', content: [] },
-      architecture: { title: 'Architecture', content: [] },
-      flows: { title: 'Flows', content: [] },
+      intro: { title: 'Intro', content: 'hello world' },
+      impact: { title: 'Impact', content: 'hello world' },
+      architecture: { title: 'Architecture', content: 'hello world' },
+      flows: { title: 'Flows', content: 'hello world' },
+    },
+  },
+  ObjectIdentificationUAV: {
+    tabLabel: 'Object Identification via UAV Camera',
+    tabIcon: 'projects/uav-icon.png',
+    title: 'Object Identification via UAV Camera',
+    technologies: '',
+    date: '',
+    subsections: {
+      intro: { title: 'Intro', content: 'hello world' },
+      modelTraining: { title: 'Model Training', content: 'hello world' },
+      speedEstimator: { title: 'Speed Estimator', content: 'hello world' },
+      architecture: { title: 'Architecture', content: 'hello world' },
+      video: { title: 'Video', content: 'hello world' },
     },
   },
   SpecializationExplorer: {
@@ -23,10 +37,10 @@ const projects = {
     technologies: '',
     date: '',
     subsections: {
-      intro: { title: 'Intro', content: [] },
-      impact: { title: 'Impact', content: [] },
-      architecture: { title: 'Architecture', content: [] },
-      flows: { title: 'Flows', content: [] },
+      intro: { title: 'Intro', content: 'hello world' },
+      impact: { title: 'Impact', content: 'hello world' },
+      architecture: { title: 'Architecture', content: 'hello world' },
+      flows: { title: 'Flows', content: 'hello world' },
     },
   },
   VCI: {
@@ -36,10 +50,10 @@ const projects = {
     technologies: '',
     date: '',
     subsections: {
-      intro: { title: 'Intro', content: [] },
-      impact: { title: 'Impact', content: [] },
-      architecture: { title: 'Architecture', content: [] },
-      flows: { title: 'Flows', content: [] },
+      intro: { title: 'Intro', content: 'hello world' },
+      impact: { title: 'Impact', content: 'hello world' },
+      architecture: { title: 'Architecture', content: 'hello world' },
+      flows: { title: 'Flows', content: 'hello world' },
     },
   },
   StudentAdvising: {
@@ -49,10 +63,10 @@ const projects = {
     technologies: '',
     date: '',
     subsections: {
-      intro: { title: 'Intro', content: [] },
-      impact: { title: 'Impact', content: [] },
-      architecture: { title: 'Architecture', content: [] },
-      flows: { title: 'Flows', content: [] },
+      intro: { title: 'Intro', content: 'hello world' },
+      impact: { title: 'Impact', content: 'hello world' },
+      architecture: { title: 'Architecture', content: 'hello world' },
+      flows: { title: 'Flows', content: 'hello world' },
     },
   },
   SightSteer: {
@@ -191,14 +205,26 @@ const renderBulletText = ({ text, highlights }) => {
 
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState('SightSteer');
+  const [selectedSubsection, setSelectedSubsection] = useState(null);
   const project = projects[selectedProject];
   const panelId = `project-panel-${selectedProject.toLowerCase()}`;
+  const subsectionEntries = Object.entries(project.subsections ?? {});
+  const activeSubsectionKey = subsectionEntries.some(([key]) => key === selectedSubsection)
+    ? selectedSubsection
+    : subsectionEntries[0]?.[0];
+  const activeSubsection = project.subsections?.[activeSubsectionKey];
+  const subsectionPanelId = `${panelId}-subsection-${activeSubsectionKey}`;
   const bullets = project.section?.bullets ?? [];
   const bulletSplitIndex = Math.ceil(bullets.length / 2);
   const bulletColumns = [
     bullets.slice(0, bulletSplitIndex),
     bullets.slice(bulletSplitIndex),
   ].filter((column) => column.length > 0);
+
+  const selectProject = (key) => {
+    setSelectedProject(key);
+    setSelectedSubsection(Object.keys(projects[key].subsections ?? {})[0] ?? null);
+  };
 
   return (
     <section className={styles.projectContainer} id="projects">
@@ -217,7 +243,7 @@ export const Projects = () => {
               aria-controls={isSelected ? panelId : undefined}
               aria-label={item.tabLabel}
               title={item.tabLabel}
-              onClick={() => setSelectedProject(key)}
+              onClick={() => selectProject(key)}
             >
               <img src={getImageUrl(item.tabIcon)} alt="" aria-hidden="true" />
             </button>
@@ -233,12 +259,38 @@ export const Projects = () => {
         aria-labelledby={`project-tab-${selectedProject.toLowerCase()}`}
       >
         <header className={styles.projectHeader}>
-          <div>
+          <div className={styles.projectIdentity}>
             <h2>{project.title}</h2>
             {project.technologies && <h3>{project.technologies}</h3>}
             {project.date && <p>{project.date}</p>}
           </div>
 
+          {subsectionEntries.length > 0 && (
+            <div
+              className={styles.subsectionTabs}
+              role="tablist"
+              aria-label={`${project.title} sections`}
+            >
+              {subsectionEntries.map(([key, subsection]) => {
+                const isSelected = activeSubsectionKey === key;
+
+                return (
+                  <button
+                    key={key}
+                    id={`${panelId}-subsection-tab-${key}`}
+                    className={`${styles.subsectionTab} ${isSelected ? styles.activeSubsection : ''}`}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    aria-controls={isSelected ? subsectionPanelId : undefined}
+                    onClick={() => setSelectedSubsection(key)}
+                  >
+                    {subsection.title}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </header>
 
         <div className={styles.projectBody}>
@@ -257,15 +309,16 @@ export const Projects = () => {
             </div>
           )}
 
-          {project.subsections && (
-            <div className={styles.subsectionGrid}>
-              {Object.entries(project.subsections).map(([key, subsection]) => (
-                <section className={styles.subsection} key={key}>
-                  <h3>{subsection.title}</h3>
-                  {subsection.content.map((item) => <p key={item}>{item}</p>)}
-                </section>
-              ))}
-            </div>
+          {activeSubsection && (
+            <section
+              key={activeSubsectionKey}
+              id={subsectionPanelId}
+              className={styles.subsectionContent}
+              role="tabpanel"
+              aria-labelledby={`${panelId}-subsection-tab-${activeSubsectionKey}`}
+            >
+              <p>{activeSubsection.content}</p>
+            </section>
           )}
         </div>
       </article>
