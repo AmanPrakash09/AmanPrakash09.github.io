@@ -50,7 +50,71 @@ const projects = {
           },
         ],
       },
-      flows: { title: 'Flows', content: 'hello world' },
+      flows: {
+        title: 'Flows',
+        views: {
+          student: {
+            title: 'Student',
+            carousel: [
+              {
+                src: 'projects/aila-student-courses.png',
+                alt: 'Student dashboard showing an enrolled CPSC 210 course',
+                description: 'Students enrolled in a course offering the AI Learning Assistant can access the web application anytime to engage with the tool. When they need help, they can log in to view their course.',
+              },
+              {
+                src: 'projects/aila-student-learning-journey.png',
+                alt: 'CPSC 210 learning journey with module progress and review controls',
+                description: 'After selecting their course, students can see their progress in the course learning journey and select a module they want to review. The screenshot shows the learning journey in red because the student has yet to begin. As the student progresses, these icons go from red to yellow, then green.',
+              },
+              {
+                src: 'projects/aila-student-chat.png',
+                alt: 'AI Learning Assistant chat guiding a student through a Java program structure module',
+                description: 'When the student selects “Review,” they are brought to the chat feature of the web application. The LLM prompts the student, engaging in constructive and kind dialogue until the student has achieved competency for the concept.',
+              },
+            ],
+          },
+          instructor: {
+            title: 'Instructor',
+            carousel: [
+              {
+                src: 'projects/aila-instructor-courses.png',
+                alt: 'Instructor dashboard listing courses and their statuses',
+                description: 'An instructor logging into the AI Learning Assistant is brought to a dashboard displaying their courses. Here, they can view each course’s status and enter the “Student View” as well.',
+              },
+              {
+                src: 'projects/aila-instructor-analytics.png',
+                alt: 'Instructor analytics dashboard showing message counts across course concepts',
+                description: 'After selecting the course “CPSC 210 Software Construction,” the instructor is brought to the Analytics dashboard. Here, they can view relevant insights about the course, such as the “Message count” in relation to different concepts.',
+              },
+              {
+                src: 'projects/aila-instructor-course-settings.png',
+                alt: 'Instructor course dashboard for editing concepts and other course settings',
+                description: 'Within the selected course, instructors can edit the concepts, modules, and prompt setting for their course, as well as view students.',
+              },
+            ],
+          },
+          admin: {
+            title: 'Admin',
+            carousel: [
+              {
+                src: 'projects/aila-admin-instructors.png',
+                alt: 'Administrator dashboard for managing and assigning instructors',
+                description: 'A user with administrator permissions can assign instructors to different courses.',
+              },
+              {
+                src: 'projects/aila-admin-courses.png',
+                alt: 'Administrator courses view showing course access codes and statuses',
+                description: 'In the “Courses” view, administrators can activate and deactivate courses, as well as view the course name, course access code, and status.',
+              },
+              {
+                src: 'projects/aila-admin-create-course.png',
+                alt: 'Administrator form for creating a course and entering its settings',
+                description: 'If administrators wish to create a new course, they must enter relevant information such as the Course Name, Course Department, and Course Code. They must also assign instructors to the course who have already registered with the application.',
+              },
+            ],
+          },
+        },
+      },
     },
   },
   ObjectIdentificationUAV: {
@@ -316,6 +380,7 @@ const renderBulletText = ({ text, highlights }) => {
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState('SightSteer');
   const [selectedSubsection, setSelectedSubsection] = useState(null);
+  const [selectedView, setSelectedView] = useState(null);
   const [selectedMediaIndex, setSelectedMediaIndex] = useState(0);
   const project = projects[selectedProject];
   const panelId = `project-panel-${selectedProject.toLowerCase()}`;
@@ -324,15 +389,21 @@ export const Projects = () => {
     ? selectedSubsection
     : subsectionEntries[0]?.[0];
   const activeSubsection = project.subsections?.[activeSubsectionKey];
-  const carouselItems = activeSubsection?.carousel ?? [];
+  const viewEntries = Object.entries(activeSubsection?.views ?? {});
+  const activeViewKey = viewEntries.some(([key]) => key === selectedView)
+    ? selectedView
+    : viewEntries[0]?.[0];
+  const activeView = activeSubsection?.views?.[activeViewKey];
+  const displayedSubsection = activeView ?? activeSubsection;
+  const carouselItems = displayedSubsection?.carousel ?? [];
   const activeCarouselIndex = carouselItems.length
     ? selectedMediaIndex % carouselItems.length
     : 0;
   const activeMedia = carouselItems[activeCarouselIndex];
-  const subsectionParagraphs = activeSubsection?.content
-    ? (Array.isArray(activeSubsection.content) ? activeSubsection.content : [activeSubsection.content])
+  const subsectionParagraphs = displayedSubsection?.content
+    ? (Array.isArray(displayedSubsection.content) ? displayedSubsection.content : [displayedSubsection.content])
     : [];
-  const subsectionPoints = activeSubsection?.numberedPoints ?? [];
+  const subsectionPoints = displayedSubsection?.numberedPoints ?? [];
   const subsectionPanelId = `${panelId}-subsection-${activeSubsectionKey}`;
   const bullets = project.section?.bullets ?? [];
   const bulletSplitIndex = Math.ceil(bullets.length / 2);
@@ -344,11 +415,18 @@ export const Projects = () => {
   const selectProject = (key) => {
     setSelectedProject(key);
     setSelectedSubsection(Object.keys(projects[key].subsections ?? {})[0] ?? null);
+    setSelectedView(null);
     setSelectedMediaIndex(0);
   };
 
   const selectSubsection = (key) => {
     setSelectedSubsection(key);
+    setSelectedView(null);
+    setSelectedMediaIndex(0);
+  };
+
+  const selectView = (key) => {
+    setSelectedView(key);
     setSelectedMediaIndex(0);
   };
 
@@ -449,10 +527,33 @@ export const Projects = () => {
             <section
               key={activeSubsectionKey}
               id={subsectionPanelId}
-              className={`${styles.subsectionContent} ${activeMedia ? styles.mediaSubsection : ''}`}
+              className={`${styles.subsectionContent} ${activeMedia && viewEntries.length === 0 ? styles.mediaSubsection : ''} ${viewEntries.length > 0 ? styles.flowSubsection : ''}`}
               role="tabpanel"
               aria-labelledby={`${panelId}-subsection-tab-${activeSubsectionKey}`}
             >
+              {viewEntries.length > 0 && (
+                <div
+                  className={styles.viewTabs}
+                  role="group"
+                  aria-label={`${project.title} flow views`}
+                >
+                  {viewEntries.map(([key, view]) => {
+                    const isSelected = activeViewKey === key;
+
+                    return (
+                      <button
+                        key={key}
+                        className={`${styles.viewTab} ${isSelected ? styles.activeView : ''}`}
+                        type="button"
+                        aria-pressed={isSelected}
+                        onClick={() => selectView(key)}
+                      >
+                        {view.title}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
               {(subsectionParagraphs.length > 0 || subsectionPoints.length > 0) && (
                 <div className={styles.subsectionText}>
                   {subsectionParagraphs.map((paragraph) => (
@@ -467,11 +568,11 @@ export const Projects = () => {
                   )}
                 </div>
               )}
-              {activeSubsection.embedUrl && (
+              {displayedSubsection.embedUrl && (
                 <div className={styles.videoEmbed}>
                   <iframe
-                    src={activeSubsection.embedUrl}
-                    title={activeSubsection.embedTitle}
+                    src={displayedSubsection.embedUrl}
+                    title={displayedSubsection.embedTitle}
                     loading="lazy"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -479,9 +580,9 @@ export const Projects = () => {
                   />
                 </div>
               )}
-              {activeSubsection.images?.length > 0 && (
+              {displayedSubsection.images?.length > 0 && (
                 <div className={styles.subsectionImages}>
-                  {activeSubsection.images.map((image) => (
+                  {displayedSubsection.images.map((image) => (
                     <img
                       key={image.src}
                       className={styles.subsectionImage}
@@ -497,7 +598,7 @@ export const Projects = () => {
                 <div
                   className={`${styles.subsectionCarousel} ${carouselItems.length === 1 ? styles.singleCarouselItem : ''}`}
                   role="group"
-                  aria-label={`${activeSubsection.title} images`}
+                  aria-label={`${activeView?.title ?? activeSubsection.title} images`}
                 >
                   {carouselItems.length > 1 && (
                     <button
@@ -519,7 +620,11 @@ export const Projects = () => {
                       loading="lazy"
                       decoding="async"
                     />
-                    {activeMedia.title && (
+                    {activeMedia.description ? (
+                      <figcaption className={styles.carouselDescription}>
+                        {activeMedia.description}
+                      </figcaption>
+                    ) : activeMedia.title && (
                       <figcaption className={styles.carouselCaption}>
                         {activeMedia.title}
                       </figcaption>

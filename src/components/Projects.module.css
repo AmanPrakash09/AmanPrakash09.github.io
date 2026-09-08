@@ -218,6 +218,54 @@
   gap: clamp(12px, 1.5svh, 18px);
 }
 
+.flowSubsection {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+}
+
+.viewTabs {
+  display: flex;
+  order: 0;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-bottom: clamp(7px, 1svh, 11px);
+}
+
+.viewTab {
+  padding: 3px 9px;
+  border: 1px solid rgba(255, 221, 0, 0.2);
+  border-radius: 3px;
+  color: var(--color-text);
+  font-family: var(--font-vt323);
+  font-size: clamp(15px, 1vw, 17px);
+  line-height: 1;
+  background: rgba(255, 183, 0, 0.2);
+  cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.viewTab:hover,
+.viewTab:focus-visible,
+.activeView {
+  border-color: rgba(0, 229, 255, 0.52);
+  background: var(--color-primary);
+}
+
+.flowSubsection > .subsectionCarousel,
+.flowSubsection > .subsectionImages,
+.flowSubsection > .videoEmbed {
+  order: 1;
+}
+
+.flowSubsection > .subsectionText {
+  order: 2;
+}
+
+.flowSubsection .carouselImage {
+  height: clamp(220px, 34svh, 360px);
+}
+
 .numberedPoints {
   padding-left: 1.45em;
   color: var(--color-text);
@@ -325,6 +373,13 @@
   color: var(--color-text);
   font-size: clamp(16px, 1.3vw, 20px);
   line-height: 1.1;
+}
+
+.carouselDescription {
+  margin-top: 7px;
+  color: var(--color-text);
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.12;
 }
 
 .carouselPosition {
@@ -471,6 +526,10 @@
   }
 
   .mediaSubsection .carouselImage {
+    height: clamp(145px, 24svh, 220px);
+  }
+
+  .flowSubsection .carouselImage {
     height: clamp(145px, 24svh, 220px);
   }
 }
