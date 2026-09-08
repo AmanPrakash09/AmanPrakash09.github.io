@@ -23,7 +23,24 @@ const projects = {
     technologies: '',
     date: '',
     subsections: {
-      intro: { title: 'Intro', content: 'hello world' },
+      intro: {
+        title: 'Intro',
+        content: 'I developed an onboard perception system. It automatically detects, classifies, and tracks people and vehicles from live RGB and infrared UAV footage while estimating vehicle speeds during flight. Designed for long-range missions in remote environments, the system runs on lightweight embedded hardware without relying on cloud connectivity. It reduces manual video review, improves situational awareness, and establishes a foundation for autonomous alerts and decision-making.',
+        images: [
+          {
+            src: 'projects/uav-infrared-tracking.png',
+            alt: 'Infrared UAV footage with tracked cars and identification labels',
+          },
+          {
+            src: 'projects/uav-rgb-tracking.png',
+            alt: 'RGB UAV footage with cars and trucks identified in a parking lot',
+          },
+          {
+            src: 'projects/uav-speed-estimation.png',
+            alt: 'UAV vehicle tracking with estimated speeds on a roundabout',
+          },
+        ],
+      },
       modelTraining: { title: 'Model Training', content: 'hello world' },
       speedEstimator: { title: 'Speed Estimator', content: 'hello world' },
       architecture: { title: 'Architecture', content: 'hello world' },
@@ -318,6 +335,20 @@ export const Projects = () => {
               aria-labelledby={`${panelId}-subsection-tab-${activeSubsectionKey}`}
             >
               <p>{activeSubsection.content}</p>
+              {activeSubsection.images?.length > 0 && (
+                <div className={styles.subsectionImages}>
+                  {activeSubsection.images.map((image) => (
+                    <img
+                      key={image.src}
+                      className={styles.subsectionImage}
+                      src={getImageUrl(image.src)}
+                      alt={image.alt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ))}
+                </div>
+              )}
             </section>
           )}
         </div>
