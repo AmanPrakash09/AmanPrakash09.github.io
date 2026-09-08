@@ -126,7 +126,7 @@ const projects = {
     subsections: {
       intro: {
         title: 'Intro',
-        content: 'I developed an onboard perception system. It automatically detects, classifies, and tracks people and vehicles from live RGB and infrared UAV footage while estimating vehicle speeds during flight. Designed for long-range missions in remote environments, the system runs on lightweight embedded hardware without relying on cloud connectivity. It reduces manual video review, improves situational awareness, and establishes a foundation for autonomous alerts and decision-making.',
+        content: 'I engineered an onboard perception system. It automatically detects, classifies, and tracks people and vehicles from live RGB and infrared UAV footage while estimating vehicle speeds during flight. Designed for long-range missions in remote environments, the system runs on lightweight embedded hardware without relying on cloud connectivity. It reduces manual video review, improves situational awareness, and establishes a foundation for autonomous alerts and decision-making.',
         images: [
           {
             src: 'projects/uav-infrared-tracking.png',
@@ -144,7 +144,7 @@ const projects = {
       },
       modelTraining: {
         title: 'Model Training',
-        content: 'I developed and evaluated several RF-DETR Nano training strategies to identify the strongest detector for each camera modality. Higher-resolution enhanced RGB training preserved more detail for small aerial targets and improved performance over the initial RGB baseline, while training on video-derived frames caused overfitting because adjacent frames were highly correlated. For infrared inputs, isolated training learned modality-specific features more consistently than fine-tuning an RGB checkpoint, which introduced noise into the model. I therefore selected the enhanced RGB and isolated infrared checkpoints for the final pipeline. Their detections are passed to ByteTrack, which associates each object across consecutive frames and assigns it a persistent ID. Maintaining that identity is essential for constructing trajectories, producing consistent annotations, and measuring frame-to-frame displacement for vehicle speed estimation.',
+        content: 'I created and evaluated several RF-DETR Nano training strategies to identify the strongest detector for each camera modality. Higher-resolution enhanced RGB training preserved more detail for small aerial targets and improved performance over the initial RGB baseline, while training on video-derived frames caused overfitting because adjacent frames were highly correlated. For infrared inputs, isolated training learned modality-specific features more consistently than fine-tuning an RGB checkpoint, which introduced noise into the model. I therefore selected the enhanced RGB and isolated infrared checkpoints for the final pipeline. Their detections are passed to ByteTrack, which associates each object across consecutive frames and assigns it a persistent ID. Maintaining that identity is essential for constructing trajectories, producing consistent annotations, and measuring frame-to-frame displacement for vehicle speed estimation.',
         carousel: [
           {
             src: 'projects/uav-rgb-training-comparison.png',
@@ -367,7 +367,7 @@ const projects = {
               {
                 src: 'projects/vci-student-patients.png',
                 alt: 'Patient list showing LLM evaluation, instructor evaluation, and review statuses',
-                description: 'After selecting a simulation group, the student can view different patients along with their review status, instructor evaluation status, and LLM evaluation status.',
+                description: 'After selecting a simulation group, the student can view different patients along with their review status, instructor evaluation status, and LLM evaluation status (model checks if student properly diagnosed the patient).',
               },
               {
                 src: 'projects/vci-student-patient-chat.png',
@@ -431,7 +431,7 @@ const projects = {
         title: 'Intro',
         content: [
           'The Student Advising Assistant is a conversational AI tool that helps university students find answers to academic, course, and policy questions. It retrieves information from official university websites and uses retrieval-augmented generation to produce clear, source-grounded responses tailored to each student’s faculty, program, specialization, and year level.',
-          'I architected and developed Version 2 while working with the Dean of UBC’s Faculty of Science, later presenting the project to UBC’s President. I replaced its always-on, self-hosted language model with serverless Amazon Bedrock, saving $4,897 USD annually while increasing request capacity by 16 times and reducing generation latency by 85%. I also built a personalized retriever that searches both document content and academic titles, using KNN search with HNSW vector indexing in PostgreSQL through PGVector. This delivered faster, context-aware retrieval and helped advance plans for university-wide deployment.',
+          'I architected and built Version 2 while working with the Dean of UBC’s Faculty of Science, later presenting the project to UBC’s President. I replaced its always-on, self-hosted language model with serverless Amazon Bedrock, saving $4,897 USD annually while increasing request capacity by 16 times and reducing generation latency by 85%. I also built a personalized retriever that searches both document content and academic titles, using KNN search with HNSW vector indexing in PostgreSQL through PGVector. This delivered faster, context-aware retrieval and helped advance plans for university-wide deployment.',
         ],
         carousel: [
           {
