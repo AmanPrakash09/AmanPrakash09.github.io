@@ -14,7 +14,7 @@ const projects = {
         title: 'Intro',
         content: [
           'The AI Learning Assistant is a web-based teaching tool that gives UBC students personalized, course-specific support on demand. Using retrieval-augmented generation, it answers questions from instructor-provided materials, identifies knowledge gaps, and recommends relevant resources while keeping responses grounded in approved course content. Designed to complement instructors, it extends academic support beyond the classroom and helps students learn at their own pace.',
-          'I built this tool specifically for the UBC Computer Science faculty, working directly with a professor who now uses the tool in their classrooms. I designed its serverless, event-driven AWS backend and developed a LangChain RAG pipeline that ingests instructor materials, generates Amazon Titan embeddings, retrieves relevant context through PGVector, and produces course-grounded responses. I also presented the project to UBC’s President, demonstrating its potential to expand personalized AI-supported learning across the university.',
+          'I built this tool specifically for the UBC Computer Science faculty, working directly with a professor who now uses the tool in their classes with more than 100 students. I designed its serverless, event-driven AWS backend and developed a LangChain RAG pipeline that ingests instructor materials, generates Amazon Titan embeddings, retrieves relevant context through PGVector, and produces course-grounded responses. I also presented the project to UBC’s President, demonstrating its potential to expand personalized AI-supported learning across the university.',
         ],
         carousel: [
           {
@@ -423,13 +423,86 @@ const projects = {
   StudentAdvising: {
     tabLabel: 'Student Advising',
     tabIcon: 'projects/studentadvising-icon.png',
-    title: 'Student Advising',
+    title: 'Student Advising Assistant',
     technologies: '',
     date: '',
     subsections: {
-      intro: { title: 'Intro', content: 'hello world' },
-      architecture: { title: 'Architecture', content: 'hello world' },
-      flows: { title: 'Flows', content: 'hello world' },
+      intro: {
+        title: 'Intro',
+        content: [
+          'The Student Advising Assistant is a conversational AI tool that helps university students find answers to academic, course, and policy questions. It retrieves information from official university websites and uses retrieval-augmented generation to produce clear, source-grounded responses tailored to each student’s faculty, program, specialization, and year level.',
+          'I architected and developed Version 2 while working with the Dean of UBC’s Faculty of Science, later presenting the project to UBC’s President. I replaced its always-on, self-hosted language model with serverless Amazon Bedrock, saving $4,897 USD annually while increasing request capacity by 16 times and reducing generation latency by 85%. I also built a personalized retriever that searches both document content and academic titles, using KNN search with HNSW vector indexing in PostgreSQL through PGVector. This delivered faster, context-aware retrieval and helped advance plans for university-wide deployment.',
+        ],
+        carousel: [
+          {
+            src: 'projects/student-advising-intro.png',
+            alt: 'Pixel-art illustration of a student speaking with an AI academic advising assistant',
+          },
+        ],
+      },
+      architecture: {
+        title: 'Architecture',
+        numberedPoints: [
+          'A user, such as a student, interacts with the application’s web interface hosted on AWS Elastic Beanstalk and submits a query. The response collected from the model is displayed back to the user.',
+          'Using semantic search over the embedded documents in the Amazon RDS PostgreSQL database, the application fetches documents most closely related to the user’s query.',
+          'The application makes an API request to a model hosted on Amazon Bedrock, prompting it to respond to the user’s query using the documents retrieved in Step 2 as context. It then displays the response and reference documents in the web interface.',
+          'The system logs all questions and answers in the Amazon RDS PostgreSQL database through an AWS Lambda function acting as a proxy. Users can also provide feedback to improve the solution, which is stored through the same Lambda function.',
+          'Logs and feedback are stored in their respective tables in the Amazon RDS PostgreSQL database.',
+          'During the Inference Stack, a request is made to an AWS Lambda function to create a database user with fewer privileges. The credentials for this user are used in Step 2 to retrieve documents from the Amazon RDS PostgreSQL database. For security, the user can only create, update, and delete data without administrator privileges.',
+          'The Lambda function obtains the database credentials created in the Database Stack from AWS Secrets Manager, then creates the lower-privileged user.',
+          'During the Inference Stack, a request is made to an AWS Lambda function to create the feedback, logging, and update-logs tables if they do not already exist.',
+          'The Lambda function obtains the Database Stack credentials from AWS Secrets Manager, then creates the feedback, logging, and update-logs tables.',
+          'An administrator can navigate to AWS Lambda through the AWS Management Console, open the fetch_feedback_logs function, select the Test tab, and run the function using the Test button.',
+          'The Lambda function retrieves logs and feedback from the Amazon RDS PostgreSQL database, formats the data into readable CSV files, and stores them in the documents folder of an S3 bucket created during the Inference Stack.',
+          'When an administrator wants to configure the data-processing pipeline, such as its website-scraping settings, they can modify and upload a dump_config.json5 file to the document_scraping folder in the S3 bucket created during the Inference Stack.',
+          'The S3 bucket triggers an AWS Lambda function that starts tasks in the Amazon ECS container cluster.',
+          'The Lambda function starts an ECS task that scrapes configured websites, processes the pages into extracts, computes vector embeddings, and stores the embeddings in Amazon RDS PostgreSQL with PGVector enabled. A CRON expression schedules the task every four months, and an administrator or developer can modify the schedule through the ECS console.',
+          'The embedding task running on Amazon Elastic Container Service populates the Amazon RDS PostgreSQL database with vector embeddings.',
+          'Amazon Elastic Container Registry securely stores and manages the Docker images used by Amazon ECS. ECS automatically pulls the required image from ECR whenever a task or service launches, keeping container deployments current and manageable.',
+        ],
+        carousel: [
+          {
+            src: 'projects/student-advising-architecture.png',
+            alt: 'AWS architecture diagram for Student Advising Assistant, including text generation, database, feedback, and data ingestion services',
+          },
+        ],
+      },
+      flows: {
+        title: 'Flows',
+        layout: 'flow',
+        carousel: [
+          {
+            src: 'projects/student-advising-flow-context.png',
+            alt: 'Student Advising Assistant form for selecting faculty, program, specialization, year level, and a question topic',
+            description: 'To get help from the solution, the user can enter information about their Faculty, Program, or other context. The more detail they enter, the more refined the prompt becomes for the LLM.',
+          },
+          {
+            src: 'projects/student-advising-flow-question.png',
+            alt: 'Completed Student Advising Assistant form containing an Applied Science specialization question',
+            description: 'If the user has a question, they can enter it in the question box and provide relevant information in the fields above.',
+          },
+          {
+            src: 'projects/student-advising-flow-response.png',
+            alt: 'Student Advising Assistant response listing Applied Science specializations and requesting feedback',
+            description: 'The user interface retrieves and displays information from the LLM. Depending on whether the information was helpful or unclear, the user can provide feedback that can be used in the backend to improve the AI response.',
+          },
+          {
+            src: 'projects/student-advising-flow-feedback.png',
+            alt: 'Optional feedback form for rating the response and its references',
+            description: 'If desired, the user can submit feedback regarding the response and references.',
+          },
+          {
+            src: 'projects/student-advising-flow-references.png',
+            alt: 'Reference list describing a source about the UBC Faculty of Applied Science',
+            description: 'The solution produces a list of references pertaining to the response.',
+          },
+          {
+            src: 'projects/student-advising-flow-reference-details.png',
+            alt: 'Reference details showing the source URL and relevant UBC Academic Calendar links',
+            description: 'The user can view details about the references, including relevant links.',
+          },
+        ],
+      },
     },
   },
   SightSteer: {
@@ -567,7 +640,7 @@ const renderBulletText = ({ text, highlights }) => {
 };
 
 export const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState('SightSteer');
+  const [selectedProject, setSelectedProject] = useState('AILA');
   const [selectedSubsection, setSelectedSubsection] = useState(null);
   const [selectedView, setSelectedView] = useState(null);
   const [selectedMediaIndex, setSelectedMediaIndex] = useState(0);
@@ -584,6 +657,7 @@ export const Projects = () => {
     : viewEntries[0]?.[0];
   const activeView = activeSubsection?.views?.[activeViewKey];
   const displayedSubsection = activeView ?? activeSubsection;
+  const usesFlowLayout = viewEntries.length > 0 || activeSubsection?.layout === 'flow';
   const carouselItems = displayedSubsection?.carousel ?? [];
   const activeCarouselIndex = carouselItems.length
     ? selectedMediaIndex % carouselItems.length
@@ -716,7 +790,7 @@ export const Projects = () => {
             <section
               key={activeSubsectionKey}
               id={subsectionPanelId}
-              className={`${styles.subsectionContent} ${activeMedia && viewEntries.length === 0 ? styles.mediaSubsection : ''} ${viewEntries.length > 0 ? styles.flowSubsection : ''}`}
+              className={`${styles.subsectionContent} ${activeMedia && !usesFlowLayout ? styles.mediaSubsection : ''} ${usesFlowLayout ? styles.flowSubsection : ''}`}
               role="tabpanel"
               aria-labelledby={`${panelId}-subsection-tab-${activeSubsectionKey}`}
             >
