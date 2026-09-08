@@ -67,7 +67,27 @@ const projects = {
           },
         ],
       },
-      speedEstimator: { title: 'Speed Estimator', content: 'hello world' },
+      speedEstimator: {
+        title: 'Speed Estimator',
+        content: 'I designed a class-aware speed estimator that converts tracked image motion into real-world vehicle speed using only information available during flight. For each ByteTrack ID, the estimator divides the object’s known physical dimensions by its bounding-box dimensions to calculate horizontal and vertical metres-per-pixel ratios, then combines and smooths them into a local scale. It measures the frame-to-frame displacement of a representative point and uses the video’s frame rate to convert that pixel movement into physical speed. To compensate for UAV movement, I used Lucas-Kanade optical flow to estimate background motion and infer the camera’s direction. That direction is combined with speed data from the UAV’s sensors to form a camera-velocity vector, which is added to the vehicle’s relative-velocity vector to recover its estimated ground speed.',
+        carousel: [
+          {
+            src: 'projects/uav-speed-ground-truth-comparison.png',
+            alt: 'Line chart comparing class-aware vehicle speed estimates with ground-truth speed values',
+            title: 'Class Aware Speed Estimations vs. Ground Truth Values.',
+          },
+          {
+            src: 'projects/uav-speed-annotated-output.png',
+            alt: 'UAV footage showing calculated camera motion, a tracked car with its estimated speed, and the ground-truth speed',
+            title: 'Calculated Camera Motion on Top Left, Calculated Speed of Tracked Car over Bounding Box, Ground Truth speed at Bottom Right',
+          },
+          {
+            src: 'projects/uav-speed-estimator-explanation.png',
+            alt: 'Diagram explaining how object dimensions, frame rate, tracked motion, and UAV motion are combined to estimate vehicle speed',
+            title: 'Simplified Explanation of Speed Estimator',
+          },
+        ],
+      },
       architecture: { title: 'Architecture', content: 'hello world' },
       video: { title: 'Video', content: 'hello world' },
     },
