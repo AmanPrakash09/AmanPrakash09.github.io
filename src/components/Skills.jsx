@@ -1,144 +1,97 @@
-import { useState, useRef, useEffect } from 'react';
 import styles from './Skills.module.css';
 import { getImageUrl } from '../utils';
 
-export const Skills = () => {
-  const [selectedTab, setSelectedTab] = useState('Languages');
-  const [isAtStart, setIsAtStart] = useState(true);
-  const [isAtEnd, setIsAtEnd] = useState(false);
-  const skillsListRef = useRef(null);
-  const scrollIntervalRef = useRef(null);
+const skillGroups = [
+  {
+    title: 'Languages',
+    skills: [
+      { title: 'Python', logo: 'python.png' },
+      { title: 'TypeScript', logo: 'typescript.png' },
+      { title: 'JavaScript', logo: 'javascript.png' },
+      { title: 'Java', logo: 'java.png' },
+      { title: 'Rust', logo: 'rust.png' },
+      { title: 'C++', logo: 'cpp.png' },
+      { title: 'C', logo: 'c.png' },
+      { title: 'SQL', logo: 'sql.png' },
+      { title: 'GraphQL', logo: 'graphql.png' },
+      { title: 'HTML', logo: 'html.png' },
+      { title: 'CSS', logo: 'css.png' },
+    ],
+  },
+  {
+    title: 'Frameworks',
+    skills: [
+      { title: 'React', logo: 'react.png' },
+      { title: 'Flask', logo: 'flask.png' },
+      { title: 'Django', logo: 'django.png' },
+      { title: 'Node.js', logo: 'node.png' },
+      { title: 'Express', logo: 'express.png' },
+      { title: 'LangChain', logo: 'langchain.png' },
+      { title: 'PyTorch', logo: 'pytorch.png' },
+      { title: 'OpenCV', logo: 'opencv.png' },
+      { title: 'Espresso', logo: 'espresso.png' },
+      { title: 'JUnit', logo: 'junit.png' },
+    ],
+  },
+  {
+    title: 'Tools & Platforms',
+    skills: [
+      { title: 'AWS', logo: 'AWS.png' },
+      { title: 'GCP', logo: 'gcp.png' },
+      { title: 'DataBricks', logo: 'databricks.png' },
+      { title: 'Datadog', logo: 'datadog.png' },
+      { title: 'GitHub', logo: 'github-og.png' },
+      { title: 'Git', logo: 'git.png' },
+      { title: 'Graphite', logo: 'graphite.png' },
+      { title: 'MySQL', logo: 'mysql.png' },
+      { title: 'MongoDB', logo: 'mongodb.png' },
+      { title: 'PostgreSQL', logo: 'postgresql.png' },
+      { title: 'Docker', logo: 'docker.png' },
+    ],
+  },
+];
 
-  const languages = {
-    Python: { title: 'Python', logo: 'python.png' },
-    TypeScript: { title: 'TypeScript', logo: 'typescript.png' },
-    JavaScript: { title: 'JavaScript', logo: 'javascript.png' },
-    Java: { title: 'Java', logo: 'java.png' },
-    Rust: { title: 'Rust', logo: 'rust.png' },
-    Cpp: { title: 'C++', logo: 'cpp.png' },
-    C: { title: 'C', logo: 'c.png' },
-    SQL: { title: 'SQL', logo: 'sql.png' },
-    GraphQL: { title: 'GraphQL', logo: 'graphql.png' },
-    HTML: { title: 'HTML', logo: 'html.png' },
-    CSS: { title: 'CSS', logo: 'css.png' },
-  };
+export const Skills = () => (
+  <section className={styles.skills} id="skills">
+    <header className={styles.skillsHeader}>
+      <h2>Skills</h2>
+    </header>
 
-  const frameworks = {
-    React: { title: 'React', logo: 'react.png' },
-    Flask: { title: 'Flask', logo: 'flask.png' },
-    Django: { title: 'Django', logo: 'django.png' },
-    Node: { title: 'Node.js', logo: 'node.png' },
-    Express: { title: 'Express', logo: 'express.png' },
-    LangChain: { title: 'LangChain', logo: 'langchain.png' },
-    PyTorch: { title: 'PyTorch', logo: 'pytorch.png' },
-    OpenCV: { title: 'OpenCV', logo: 'opencv.png' },
-    Espresso: { title: 'Espresso', logo: 'espresso.png' },
-    JUnit: { title: 'JUnit', logo: 'junit.png' },
-  };
+    <div className={styles.skillGroups}>
+      {skillGroups.map((group) => {
+        const headingId = `skills-${group.title
+          .toLowerCase()
+          .replace(/[^a-z]+/g, '-')}`;
 
-  const tools = {
-    AWS: { title: 'AWS', logo: 'AWS.png' },
-    GCP: { title: 'GCP', logo: 'gcp.png' },
-    DataBricks: { title: 'DataBricks', logo: 'databricks.png' },
-    Datadog: { title: 'Datadog', logo: 'datadog.png' },
-    GitHub: { title: 'GitHub', logo: 'github-og.png' },
-    Git: { title: 'Git', logo: 'git.png' },
-    Graphite: { title: 'Graphite', logo: 'graphite.png' },
-    MySQL: { title: 'MySQL', logo: 'mysql.png' },
-    MongoDB: { title: 'MongoDB', logo: 'mongodb.png' },
-    PostgreSQL: { title: 'PostgreSQL', logo: 'postgresql.png' },
-    Docker: { title: 'Docker', logo: 'docker.png' },
-  };
+        return (
+          <section
+            key={group.title}
+            className={styles.skillGroup}
+            aria-labelledby={headingId}
+          >
+            <header className={styles.groupHeader}>
+              <h3 id={headingId}>{group.title}</h3>
+            </header>
 
-  const tabs = {
-    Languages: languages,
-    Frameworks: frameworks,
-    Tools: tools,
-  };
-
-  const updateArrowsState = () => {
-    const scrollLeft = skillsListRef.current.scrollLeft;
-    const scrollWidth = skillsListRef.current.scrollWidth;
-    const clientWidth = skillsListRef.current.clientWidth;
-
-    setIsAtStart(scrollLeft === 0);
-    setIsAtEnd(Math.ceil(scrollLeft + clientWidth) >= Math.floor(scrollWidth));
-  };
-
-  const startScrolling = (direction) => {
-    if (skillsListRef.current) {
-      scrollIntervalRef.current = setInterval(() => {
-        skillsListRef.current.scrollLeft += direction * 10;
-        updateArrowsState();
-      }, 10);
-    }
-  };
-
-  const stopScrolling = () => {
-    clearInterval(scrollIntervalRef.current);
-    updateArrowsState();
-  };
-
-  useEffect(() => {
-    updateArrowsState(); // Check arrow states on mount and whenever the selected tab changes
-
-    // Add event listener to update arrows on window resize
-    window.addEventListener('resize', updateArrowsState);
-
-    // Cleanup event listener on component unmount
-    return () => {
-      clearInterval(scrollIntervalRef.current);
-      window.removeEventListener('resize', updateArrowsState);
-    };
-  }, [selectedTab]);
-
-  const renderSkills = (skills) => (
-    <div className={styles.skillsContainer}>
-      {Object.keys(skills).map((key) => (
-        <div key={key} className={styles.skillItem}>
-          <img src={getImageUrl(skills[key].logo)} alt={skills[key].title} />
-          <p>{skills[key].title}</p>
-        </div>
-      ))}
+            <ul className={styles.skillGrid}>
+              {group.skills.map((skill) => (
+                <li key={skill.title} className={styles.skillCard}>
+                  <span className={styles.iconFrame}>
+                    <img
+                      src={getImageUrl(skill.logo)}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </span>
+                  <span className={styles.skillName}>{skill.title}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
     </div>
-  );
-
-  return (
-    <div className={styles.skills} id="skills">
-      <div className={styles.tabsContainer}>
-        <button
-          className={`${styles.scrollLeft} ${isAtStart ? styles.disabled : ''}`}
-          onMouseDown={() => !isAtStart && startScrolling(-1)}
-          onMouseUp={stopScrolling}
-          onMouseLeave={stopScrolling}
-          disabled={isAtStart}
-        >
-          ←
-        </button>
-        <div className={styles.tabs}>
-          {Object.keys(tabs).map((tab) => (
-            <button
-              key={tab}
-              className={`${styles.tabButton} ${selectedTab === tab ? styles.active : ''}`}
-              onClick={() => setSelectedTab(tab)}
-            >
-              <p>{tab}</p>
-            </button>
-          ))}
-        </div>
-        <button
-          className={`${styles.scrollRight} ${isAtEnd ? styles.disabled : ''}`}
-          onMouseDown={() => !isAtEnd && startScrolling(1)}
-          onMouseUp={stopScrolling}
-          onMouseLeave={stopScrolling}
-          disabled={isAtEnd}
-        >
-          →
-        </button>
-      </div>
-      <div className={styles.skillsList} ref={skillsListRef} onScroll={updateArrowsState}>
-        {renderSkills(tabs[selectedTab])}
-      </div>
-    </div>
-  );
-};
+  </section>
+);
